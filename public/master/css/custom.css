@@ -125,10 +125,9 @@ table.table-hover tbody tr:hover td{
     opacity: 0;
 }
 
-/* td, th {
+td, th {
     white-space: nowrap;
-    overflow: hidden;
-  } */
+  }
 
 .select2-container--open {
     z-index: 999999999;
