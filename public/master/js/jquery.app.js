@@ -358,7 +358,7 @@ function toggle_slimscroll(item){
       $(item).css("overflow","inherit").parent().css("overflow","inherit");
       $(item). siblings(".slimScrollBar").css("visibility","hidden");
     }else{
-      $(item).css("overflow","hidden").parent().css("overflow","hidden");
+      $(item).css("overflow","auto").parent().css("overflow","auto");
       $(item). siblings(".slimScrollBar").css("visibility","visible");
     }
 }
