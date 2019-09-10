@@ -57,9 +57,11 @@ var app = new Vue({
 
             axios.post('/get_product', data)
                 .then(response => {
+                    let tax_name = (response.data.tax) ? response.data.tax.name : ''
+                    let tax_rate = (response.data.tax) ? response.data.tax.rate : 0
                     this.order_items[i].cost = response.data.cost
-                    this.order_items[i].tax_name = response.data.tax.name
-                    this.order_items[i].tax_rate = response.data.tax.rate
+                    this.order_items[i].tax_name = tax_name
+                    this.order_items[i].tax_rate = tax_rate
                     this.order_items[i].quantity = 1
                     this.order_items[i].discount_string = 0
                     this.order_items[i].sub_total = response.data.cost

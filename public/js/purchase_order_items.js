@@ -31,12 +31,14 @@ var app = new Vue({
 
             axios.get('/get_first_product')
                 .then(response => {
+                    let tax_name = (response.data.tax) ? response.data.tax.name : ''
+                    let tax_rate = (response.data.tax) ? response.data.tax.rate : 0
                     this.order_items.push({
                         product_id: response.data.id,
                         product_name_code: response.data.name + "(" + response.data.code + ")",
                         cost: response.data.cost,
-                        tax_name: response.data.tax.name,
-                        tax_rate: response.data.tax.rate,
+                        tax_name: tax_name,
+                        tax_rate: tax_rate,
                         quantity: 1,
                         expiry_date: "",
                         sub_total: 0,
