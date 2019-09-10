@@ -238,7 +238,7 @@ class PreOrderController extends Controller
     public function receive($id){
         config(['site.page' => 'purchase_order']);    
         $order = PreOrder::find($id);
-        $stores = Auth::user()->company->stores;
+        $stores = Store::all();
 
         return view('pre_order.receive', compact('order', 'stores'));
     }
