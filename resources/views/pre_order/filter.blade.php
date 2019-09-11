@@ -14,7 +14,7 @@
     @endif
     <input type="text" class="form-control form-control-sm mr-sm-2 mb-2" name="reference_no" id="search_reference_no" value="{{$reference_no}}" placeholder="{{__('page.reference_no')}}">
     <select class="form-control form-control-sm mr-sm-2 mb-2 select2" name="supplier_id" id="search_supplier" data-placeholder="{{__('page.select_supplier')}}">
-        <option label="{{__('page.select_supplier')}}">{{__('page.select_supplier')}}</option>
+        <option value="" hidden>{{__('page.select_supplier')}}</option>
         @foreach ($suppliers as $item)
             <option value="{{$item->id}}" @if ($supplier_id == $item->id) selected @endif>{{$item->company}}</option>
         @endforeach

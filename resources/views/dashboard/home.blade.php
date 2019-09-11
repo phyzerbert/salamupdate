@@ -63,7 +63,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row row-sm mt-3">
+            <div class="row mt-3">
                 <div class="col-md-6 col-xl-3">
                     <div class="mini-stat clearfix bx-shadow bg-white">
                         <span class="mini-stat-icon bg-info"><i class="fa fa-sign-out"></i></span>
