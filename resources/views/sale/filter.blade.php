@@ -19,7 +19,7 @@
     </select>
     <input type="text" class="form-control form-control-sm mr-sm-2 mb-2" name="reference_no" id="search_reference_no" value="{{$reference_no}}" placeholder="{{__('page.reference_no')}}">
     <select class="form-control form-control-sm mr-sm-2 mb-2 select2-show-search" name="customer_id" id="search_customer" data-placeholder="{{__('page.select_customer')}}">
-        <option label="{{__('page.select_customer')}}"></option>
+        <option value="">{{__('page.select_customer')}}</option>
         @foreach ($customers as $item)
             <option value="{{$item->id}}" @if ($customer_id == $item->id) selected @endif>{{$item->name}}</option>
         @endforeach

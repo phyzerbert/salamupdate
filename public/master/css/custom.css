@@ -168,3 +168,8 @@ table.dataTable thead .sorting_desc {
    background-repeat: no-repeat;
    background-position: center right;
 }
+/* *********** equal block *********** */
+.row.row-deck>div{
+    display: flex;
+    align-items: stretch;
+}

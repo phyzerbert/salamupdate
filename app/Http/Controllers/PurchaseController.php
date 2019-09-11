@@ -27,7 +27,6 @@ class PurchaseController extends Controller
         $stores = Store::all();
         $suppliers = Supplier::all();
         $companies = Company::all();
-
         $mod = new Purchase();
         if($user->role->slug == 'user'){
             $mod = $user->company->purchases();

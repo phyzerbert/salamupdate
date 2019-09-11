@@ -31,7 +31,7 @@
                 $role = Auth::user()->role->slug;
             @endphp
             <div class="card card-body">
-                <div class="row">
+                <div class="row row-deck">
                     <div class="col-lg-4">
                         <div class="card card-fill card-body bg-success detail-card">
                             <div class="row">
@@ -118,7 +118,7 @@
                                 @endphp
                                 @foreach ($purchase->orders as $item)
                                 @php
-                                    $tax = $item->product->tax->rate;
+                                    $tax = ($item->product->tax) ? $item->product->tax->rate : 0;
                                     $quantity = $item->quantity;
                                     $cost = $item->cost;
                                     $tax_rate = $cost * $tax / 100;
