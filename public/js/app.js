@@ -1913,6 +1913,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2040,6 +2041,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     onResponse: function onResponse(e) {
       console.log('onrespnse file up', e);
+    },
+    toggleSide: function toggleSide() {
+      $(".online-users").toggleClass('collapsed-user');
     }
   },
   mounted: function mounted() {
@@ -4114,7 +4118,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n#privateMessageBox[data-v-80d584ac] {        \n    overflow: auto;\n    position: relative;\n}\n#msgArea[data-v-80d584ac] {\n    height: 73.6vh;\n}\n#user_sidebar[data-v-80d584ac] {\n    height: 73.6vh;\n    position: relative;\n}\n.icon-attach[data-v-80d584ac] {\n    font-size: 25px;\n    margin-right: 10px;\n    cursor: pointer;\n}\n.card-header .avatar[data-v-80d584ac] {\n    position: relative;\n}\n.card-header .icon-online[data-v-80d584ac] {\n    color: #a0d269;\n    position: absolute;\n    bottom: 0;\n    left: 31px;\n}\n.card-header .name[data-v-80d584ac] {\n    font-size: 18px;\n    color: #444444;\n    font-weight: 500;\n}\n#chatbox-footer[data-v-80d584ac] {\n    height: 15px;\n    position: absolute;\n    bottom: 75px;\n    padding-left: 60px;\n}\n", ""]);
+exports.push([module.i, "\n#privateMessageBox[data-v-80d584ac] {        \n    overflow: auto;\n    position: relative;\n}\n#msgArea[data-v-80d584ac] {\n    height: 73.6vh;\n}\n#user_sidebar[data-v-80d584ac] {\n    height: 73.6vh;\n    z-index: 1;\n}\n@media(max-width: 768px) {\n#user_sidebar[data-v-80d584ac] {\n        left: 0;\n}\n.collapsed-user #user_sidebar[data-v-80d584ac] {\n        left: -240px;\n}\n}\n.icon-attach[data-v-80d584ac] {\n    font-size: 25px;\n    margin-right: 10px;\n    cursor: pointer;\n}\n.card-header .avatar[data-v-80d584ac] {\n    position: relative;\n}\n.card-header .icon-online[data-v-80d584ac] {\n    color: #a0d269;\n    position: absolute;\n    bottom: 0;\n    left: 31px;\n}\n.card-header .name[data-v-80d584ac] {\n    font-size: 18px;\n    color: #444444;\n    font-weight: 500;\n}\n#chatbox-footer[data-v-80d584ac] {\n    height: 15px;\n    position: absolute;\n    bottom: 75px;\n    padding-left: 60px;\n}\n.toggle-chat-sidebar[data-v-80d584ac] {\n    font-size: 24px;\n    margin-top: 3px;\n    cursor: pointer;\n}\n", ""]);
 
 // exports
 
@@ -30724,7 +30728,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row" }, [
-    _c("div", { staticClass: "col-md-3 online-users" }, [
+    _c("div", { staticClass: "col-md-3 online-users collapsed-user" }, [
       _c(
         "div",
         { staticClass: "side-bar nicescroll", attrs: { id: "user_sidebar" } },
@@ -30780,7 +30784,7 @@ var render = function() {
           { staticClass: "card-header", staticStyle: { "min-height": "62px" } },
           [
             this.activeFriend
-              ? _c("a", { attrs: { href: "#" } }, [
+              ? _c("a", { staticClass: "float-left", attrs: { href: "#" } }, [
                   _c("div", { staticClass: "avatar" }, [
                     _c("img", {
                       staticClass: "rounded-circle",
@@ -30795,6 +30799,15 @@ var render = function() {
                   ])
                 ])
               : _vm._e(),
+            _vm._v(" "),
+            _c(
+              "span",
+              {
+                staticClass: "toggle-chat-sidebar d-md-none float-right",
+                on: { click: _vm.toggleSide }
+              },
+              [_c("i", { staticClass: "fa fa-bars" })]
+            ),
             _vm._v(" "),
             _c("span", { staticClass: "clearfix" })
           ]
@@ -45309,8 +45322,7 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 
 var VueUploadComponent = __webpack_require__(/*! vue-upload-component */ "./node_modules/vue-upload-component/dist/vue-upload-component.js");
 
-Vue.component('file-upload', VueUploadComponent); // Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-
+Vue.component('file-upload', VueUploadComponent);
 Vue.component('chat-component', __webpack_require__(/*! ./components/ChatComponent.vue */ "./resources/js/components/ChatComponent.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to

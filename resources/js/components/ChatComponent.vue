@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-        <div class="col-md-3 online-users">
+        <div class="col-md-3 online-users collapsed-user">
             <div class="side-bar nicescroll" id="user_sidebar">
                 <h4 class="text-center">Users</h4>
                 <hr />
@@ -29,13 +29,14 @@
         <div class="col-md-9 messages">
             <div class="card" id="msgArea">
                 <div class="card-header" style="min-height: 62px">
-                    <a href="#" v-if="this.activeFriend">
+                    <a href="#" class="float-left" v-if="this.activeFriend">
                         <div class="avatar">
                             <img src="/images/avatar.png" width="42" class="rounded-circle" alt="">
                             <i class="fa fa-circle icon-online"></i>
                             <span class="name ml-2">{{this.activeFriendData[0].name}}</span>
                         </div>
                     </a>
+                    <span class="toggle-chat-sidebar d-md-none float-right" @click="toggleSide"><i class="fa fa-bars"></i></span>
                     <span class="clearfix"></span>
                 </div>
                 <div class="card-body" id="privateMessageBox">
@@ -179,6 +180,9 @@
             },
             onResponse(e){
                 console.log('onrespnse file up',e);
+            },
+            toggleSide() {
+                $(".online-users").toggleClass('collapsed-user');
             }
         },
         mounted() {
@@ -232,8 +236,17 @@
 
     #user_sidebar {
         height: 73.6vh;
-        position: relative;
+        z-index: 1;
     }
+    @media(max-width: 768px) {
+        #user_sidebar {
+            left: 0;
+        }
+        .collapsed-user #user_sidebar {
+            left: -240px;
+        }
+    }
+    
 
     .icon-attach {
         font-size: 25px;
@@ -259,5 +272,10 @@
         position: absolute;
         bottom: 75px;
         padding-left: 60px;
+    }
+    .toggle-chat-sidebar {
+        font-size: 24px;
+        margin-top: 3px;
+        cursor: pointer;
     }
 </style>

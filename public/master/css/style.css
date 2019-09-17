@@ -4512,6 +4512,9 @@ File: Responsive
   .hide-phone {
     display: none !important;
   }
+  .show-phone {
+    display: block !important;
+  }
   .topbar-left {
     width: 50px !important;
   }
