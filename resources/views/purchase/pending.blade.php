@@ -11,11 +11,10 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-12">
-                    <h3 class="pull-left page-title"><i class="fa fa-credit-card"></i> {{__('page.purchases_list')}}</h3>
+                    <h3 class="pull-left page-title"><i class="fa fa-filter"></i> {{__('page.pending_purchases')}}</h3>
                     <ol class="breadcrumb pull-right">
                         <li><a href="{{route('home')}}">{{__('page.home')}}</a></li>
-                        <li><a href="{{route('purchase.index')}}">{{__('page.purchase')}}</a></li>
-                        <li class="active">{{__('page.list')}}</li>
+                        <li class="active">{{__('page.pending_purchases')}}</li>
                     </ol>
                 </div>
             </div>        
@@ -47,11 +46,9 @@
                                     </span>
                                 </th>
                                 <th>{{__('page.reference_no')}}</th>
+                                <th>{{__('page.user')}}</th>
                                 <th>{{__('page.supplier')}}</th>
                                 <th>{{__('page.grand_total')}}</th>
-                                <th>{{__('page.paid')}}</th>
-                                <th>{{__('page.balance')}}</th>
-                                <th>{{__('page.payment_status')}}</th>
                                 <th width="150">{{__('page.action')}}</th>
                             </tr>
                         </thead>
@@ -65,25 +62,15 @@
                                     $grand_total = $item->grand_total;
                                     if(($expiry_period != '') && ($grand_total == $paid)) continue;
                                     $footer_grand_total += $grand_total;
-                                    $footer_paid += $paid;
+                                    // $footer_paid += $paid;
                                 @endphp
                                 <tr>
                                     <td>{{ (($data->currentPage() - 1 ) * $data->perPage() ) + $loop->iteration }}</td>
                                     <td class="timestamp">{{date('Y-m-d H:i', strtotime($item->timestamp))}}</td>
                                     <td class="reference_no">{{$item->reference_no}}</td>
-                                    <td class="supplier" data-id="{{$item->supplier_id}}">@isset($item->supplier->company){{$item->supplier->company}}@endisset</td>
+                                    <td class="user"> @if($item->user) {{$item->user->name}} @endif </td>
+                                    <td class="supplier" data-id="{{$item->supplier_id}}"> @isset($item->supplier->company) {{$item->supplier->company}} @endisset</td>
                                     <td class="grand_total"> {{number_format($grand_total)}} </td>
-                                    <td class="paid"> {{ number_format($paid) }} </td>
-                                    <td class="balance" data-value="{{$grand_total - $paid}}"> {{number_format($grand_total - $paid)}} </td>
-                                    <td>
-                                        @if ($paid == 0)
-                                            <span class="badge badge-danger">{{__('page.pending')}}</span>
-                                        @elseif($paid < $grand_total)
-                                            <span class="badge badge-primary">{{__('page.partial')}}</span>
-                                        @else
-                                            <span class="badge badge-success">{{__('page.paid')}}</span>
-                                        @endif
-                                    </td>
                                     <td class="py-2" align="center">
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-sm btn-info dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -91,12 +78,9 @@
                                             </button>
                                             <ul class="dropdown-menu dropdown-menu-right">
                                                 <li><a href="{{route('purchase.detail', $item->id)}}" class="dropdown-item">{{__('page.details')}}</a></li>
-                                                <li><a href="{{route('payment.index', ['purchase', $item->id])}}" class="dropdown-item">{{__('page.payment_list')}}</a></li>
-                                                @if ($item->status == 1)
-                                                    <li><a href="#" data-id="{{$item->id}}" data-status={{$item->status}} class="dropdown-item btn-add-payment">{{__('page.add_payment')}}</a></li>
-                                                @endif
                                                 @if(in_array($role, ['admin', 'user']))
                                                     <li><a href="{{route('purchase.edit', $item->id)}}" class="dropdown-item">{{__('page.edit')}}</a></li>
+                                                    <li><a href="{{route('purchase.approve', $item->id)}}" class="dropdown-item" onclick="return window.confirm('Are you sure?')">{{__('page.approve')}}</a></li>
                                                     <li><a href="{{route('purchase.delete', $item->id)}}" class="dropdown-item" onclick="return window.confirm('Are you sure?')">{{__('page.delete')}}</a></li>
                                                 @endif
                                             </ul>
@@ -107,10 +91,8 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <th colspan="4">{{__('page.total')}}</th>
+                                <th colspan="5">{{__('page.total')}}</th>
                                 <th>{{number_format($footer_grand_total)}}</th>
-                                <th>{{number_format($footer_paid)}}</th>
-                                <th>{{number_format($footer_grand_total - $footer_paid)}}</th>
                                 <th colspan="2"></th>
                             </tr>
                         </tfoot>
@@ -193,7 +175,7 @@
         
         $(".btn-add-payment").click(function(){
             // $("#payment_form input.form-control").val('');
-            let status = $(this).data('status');
+            let status = $(this).parents('tr').find('.status').data('value');
             if(status != 1){
                 return alert("{{__('page.can_not_add_payment')}}");
             }

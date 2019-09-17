@@ -286,4 +286,12 @@ return [
     'buyer' => 'Buyer',
 
     'chatting' => 'Chatting',
+    'ip_address' => 'IP Address',
+    'secretary' => 'Secretary',
+    'not_allowed_page' => 'You can not access to this page.',
+    'can_not_add_payment' => 'You can not add payment to this purchase',
+    'pending_purchases' => 'Pending Purchases',
+    'approve' => 'Approve',
+    'approved' => 'Approved',
+    'approved_successfully' => 'Approved Successfully',
 ];

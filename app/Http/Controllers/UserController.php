@@ -84,17 +84,23 @@ class UserController extends Controller
     }
 
     public function edituser(Request $request){
-        $request->validate([
+        $user = User::find($request->get("id"));
+        $validate_array = array(
             'name'=>'required',
             'phone_number'=>'required',
             'password' => 'confirmed',
-        ]);
-        $user = User::find($request->get("id"));
+        );
+        if($user->role_id == "4"){
+            $validate_array = array_merge($validate_array, ['ip_address' => 'required|ip|ipv4']);
+        }
+        $request->validate($validate_array);
+        
         $user->name = $request->get("name");
         $user->first_name = $request->get("first_name");
         $user->last_name = $request->get("last_name");
         $user->phone_number = $request->get("phone_number");
         $user->company_id = $request->get("company_id");
+        $user->ip_address = $request->get("ip_address");
 
         if($request->get('password') != ''){
             $user->password = Hash::make($request->get('password'));
@@ -104,18 +110,23 @@ class UserController extends Controller
     }
 
     public function create(Request $request){
-        $request->validate([
+        $validate_array = array(
             'name'=>'required|string|unique:users',
             'role'=>'required',
             'phone_number'=>'required',
             'password'=>'required|string|min:6|confirmed'
-        ]);
+        );
+        if($request->get('role') == "4"){
+            $validate_array = array_merge($validate_array, ['ip_address' => 'required|ip|ipv4']);
+        }
+        $request->validate($validate_array);
         
         User::create([
             'name' => $request->get('name'),
             'phone_number' => $request->get('phone_number'),
             'company_id' => $request->get('company_id'),
             'role_id' => $request->get('role'),
+            'ip_address' => $request->get('ip_address'),
             'password' => Hash::make($request->get('password'))
         ]);
         return response()->json('success');

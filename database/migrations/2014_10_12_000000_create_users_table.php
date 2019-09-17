@@ -26,6 +26,8 @@ class CreateUsersTable extends Migration
             $table->integer('company_id')->nullable();
             $table->integer('status')->default(1);
             $table->string('picture')->nullable();
+            $table->string('last_ip')->nullable();
+            $table->string('ip_address')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

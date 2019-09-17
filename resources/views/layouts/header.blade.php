@@ -17,7 +17,7 @@
     
                 <ul class="nav navbar-right float-right list-inline">
                     <li class="user-company hide-phone mr-5 pt-2">
-                        @if (Auth::user()->hasRole('user'))
+                        @if (Auth::user()->hasRole('user') || Auth::user()->hasRole('secretary'))
                             <span class="text-light">{{ Auth::user()->company->name }}</span>
                         @endif
                     </li>

@@ -10,7 +10,7 @@
         .image_viewer_inner_container {
             width: 100% !important;
         }
-    </style>    
+    </style>
     <script src="{{ asset('js/app.js') }}" defer></script>
 @endsection
 

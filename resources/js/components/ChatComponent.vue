@@ -206,6 +206,8 @@
             Echo.private('chat.'+this.user.id)
                 .listen('MessageSent',(e)=>{
                     console.log('Message Sent')
+                    let audio = new Audio('Ring.wav')
+                    audio.play()
                     this.activeFriend=e.message.user_id;
                     this.allMessages.push(e.message)
                     setTimeout(this.scrollToEnd,50);

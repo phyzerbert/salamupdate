@@ -2066,6 +2066,8 @@ __webpack_require__.r(__webpack_exports__);
     });
     Echo["private"]('chat.' + this.user.id).listen('MessageSent', function (e) {
       console.log('Message Sent');
+      var audio = new Audio('Ring.wav');
+      audio.play();
       _this6.activeFriend = e.message.user_id;
 
       _this6.allMessages.push(e.message);

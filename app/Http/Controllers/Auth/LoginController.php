@@ -47,29 +47,37 @@ class LoginController extends Controller
         return 'name';
     }
 
-    // public function authenticated(Request $request, Authenticatable $user)
-    // {
-    //     Auth::logout();
+    public function authenticated(Request $request, Authenticatable $user)
+    {
+        // $ip_address = $_SERVER['REMOTE_ADDR'];
+        // if($user->hasRole('secretary') && $ip_address != $user->ip_address){
+        //     Auth::logout();
+        //     return redirect(route('login'))->withErrors(['name' => 'This computer does not allowed.']);
+        // }else {
+        //     $user->update(['last_ip' => $ip_address]);
+        // }
         
-    //     $request->session()->put('verify:user:id', $user->id);
+        // Auth::logout();
+            
+        // $request->session()->put('verify:user:id', $user->id);
 
-    //     $url = 'https://api.nexmo.com/verify/json?' . http_build_query([
-    //         'api_key' => env('NEXMO_KEY'),
-    //         'api_secret' => env('NEXMO_SECRET'),
-    //         'number' => $user->phone_number,
-    //         'brand' => config('app.name'),
-    //     ]);
+        // $url = 'https://api.nexmo.com/verify/json?' . http_build_query([
+        //     'api_key' => env('NEXMO_KEY'),
+        //     'api_secret' => env('NEXMO_SECRET'),
+        //     'number' => $user->phone_number,
+        //     'brand' => config('app.name'),
+        // ]);
 
-    //     $ch = curl_init($url);
-    //     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    //     $response = curl_exec($ch);
-    //     $response = json_decode($response);
-    //     // dd($response);
-    //     if($response->status == 0){
-    //         $request->session()->put('verify:request_id', $response->request_id);
-    //         return redirect(route('verify'));
-    //     }else{
-    //         return redirect(route('login'))->withErrors(['phone' => $response->status]);
-    //     }
+        // $ch = curl_init($url);
+        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        // $response = curl_exec($ch);
+        // $response = json_decode($response);
+        // // dd($response);
+        // if($response->status == 0){
+        //     $request->session()->put('verify:request_id', $response->request_id);
+        //     return redirect(route('verify'));
+        // }else{
+        //     return redirect(route('login'))->withErrors(['phone' => $response->status]);
     // }
+    }
 }

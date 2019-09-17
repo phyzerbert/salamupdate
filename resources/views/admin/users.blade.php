@@ -45,8 +45,9 @@
                                 <th>{{__('page.first_name')}}</th>
                                 <th>{{__('page.last_name')}}</th>
                                 <th>{{__('page.company')}}</th>
-                                <th>{{__('page.role')}}</th>
                                 <th>{{__('page.phone_number')}}</th>
+                                <th>{{__('page.role')}}</th>
+                                <th>{{__('page.ip_address')}}</th>
                                 <th>{{__('page.action')}}</th>
                             </tr>
                         </thead>
@@ -58,8 +59,9 @@
                                     <td class="first_name">{{$item->first_name}}</td>
                                     <td class="last_name">{{$item->last_name}}</td>
                                     <td class="company" data-id="{{$item->company_id}}">@isset($item->company->name){{$item->company->name}}@endisset</td>
-                                    <td class="role" data-id="{{$item->role_id}}">{{$item->role->name}}</td>
                                     <td class="phone">{{$item->phone_number}}</td>
+                                    <td class="role" data-id="{{$item->role_id}}">{{$item->role->name}}</td>
+                                    <td class="ip_address">{{$item->ip_address}}</td>
                                     <td class="py-1">
                                         <a href="#" class="btn btn-sm btn-primary btn-icon mr-1 btn-edit" data-id="{{$item->id}}"><div><i class="fa fa-edit"></i></div></a>
                                         <a href="{{route('user.delete', $item->id)}}" class="btn btn-sm btn-danger btn-icon mr-1" data-id="{{$item->id}}" onclick="return window.confirm('{{__('page.are_you_sure')}}')"><div><i class="fa fa-trash-o"></i></div></a>
@@ -112,6 +114,7 @@
                                 <option value="1">{{__('page.admin')}}</option>
                                 <option value="2" selected>{{__('page.user')}}</option>
                                 <option value="3">{{__('page.buyer')}}</option>
+                                <option value="4">{{__('page.secretary')}}</option>
                             </select>
                             <span id="role_error" class="invalid-feedback">
                                 <strong></strong>
@@ -126,6 +129,13 @@
                                 @endforeach
                             </select>
                             <span id="company_error" class="invalid-feedback">
+                                <strong></strong>
+                            </span>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">{{__('page.ip_address')}}</label>
+                            <input class="form-control" type="text" name="ip_address" id="ip_address" placeholder="{{__('page.ip_address')}}">
+                            <span id="ip_address_error" class="invalid-feedback">
                                 <strong></strong>
                             </span>
                         </div>
@@ -203,6 +213,13 @@
                                 <strong></strong>
                             </span>
                         </div>
+                        <div class="form-group">
+                            <label class="control-label">{{__('page.ip_address')}}</label>
+                            <input class="form-control" type="text" name="ip_address" id="edit_ip_address" placeholder="{{__('page.ip_address')}}">
+                            <span id="edit_ip_address_error" class="invalid-feedback">
+                                <strong></strong>
+                            </span>
+                        </div>
                         <div class="form-group password-field">
                             <label class="control-label">{{__('page.new_password')}}</label>
                             <input type="password" name="password" class="form-control" placeholder="{{__('page.new_password')}}">
@@ -271,6 +288,12 @@
                             $('#create_form #role').focus();
                         }
 
+                        if(messages.ip_address) {
+                            $('#ip_address_error strong').text(data.responseJSON.errors.ip_address[0]);
+                            $('#ip_address_error').show();
+                            $('#create_form #ip_address').focus();
+                        }
+
                         if(messages.password) {
                             $('#password_error strong').text(data.responseJSON.errors.password[0]);
                             $('#password_error').show();
@@ -332,6 +355,12 @@
                             $('#edit_name_error strong').text(data.responseJSON.errors.name[0]);
                             $('#edit_name_error').show();
                             $('#edit_form #edit_name').focus();
+                        }
+
+                        if(messages.ip_address) {
+                            $('#edit_ip_address_error strong').text(data.responseJSON.errors.ip_address[0]);
+                            $('#ip_address_error').show();
+                            $('#edit_ip_address').focus();
                         }
 
                         if(messages.password) {

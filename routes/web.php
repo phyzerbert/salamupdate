@@ -76,11 +76,13 @@ Route::get('/product/detail/{id}', 'ProductController@detail')->name('product.de
 Route::get('/product/delete/{id}', 'ProductController@delete')->name('product.delete');
 
 Route::any('/purchase/index', 'PurchaseController@index')->name('purchase.index');
-Route::get('/purchase/create', 'PurchaseController@create')->name('purchase.create')->middleware('role:user');
+Route::any('/purchase/pending_purchases', 'PurchaseController@pending_purchases')->name('purchase.pending_purchases');
+Route::get('/purchase/create', 'PurchaseController@create')->name('purchase.create');
 Route::post('/purchase/save', 'PurchaseController@save')->name('purchase.save');
 Route::get('/purchase/edit/{id}', 'PurchaseController@edit')->name('purchase.edit');
 Route::post('/purchase/update', 'PurchaseController@update')->name('purchase.update');
 Route::get('/purchase/detail/{id}', 'PurchaseController@detail')->name('purchase.detail');
+Route::get('/purchase/approve/{id}', 'PurchaseController@approve')->name('purchase.approve');
 Route::get('/purchase/delete/{id}', 'PurchaseController@delete')->name('purchase.delete');
 
 Route::any('/pre_order/index', 'PreOrderController@index')->name('pre_order.index');
@@ -100,7 +102,7 @@ Route::get('/received_order/detail/{id}', 'PreOrderController@detail_received_or
 Route::get('/received_order/delete/{id}', 'PreOrderController@delete_received_order')->name('received_order.delete');
 
 Route::any('/sale/index', 'SaleController@index')->name('sale.index');
-Route::get('/sale/create', 'SaleController@create')->name('sale.create')->middleware('role:user');
+Route::get('/sale/create', 'SaleController@create')->name('sale.create');
 Route::post('/sale/save', 'SaleController@save')->name('sale.save');
 Route::get('/sale/edit/{id}', 'SaleController@edit')->name('sale.edit');
 Route::post('/sale/update', 'SaleController@update')->name('sale.update');

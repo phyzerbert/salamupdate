@@ -67,7 +67,7 @@
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <div class="col-md-6 col-lg-3">
+                        <div class="col-md-6 col-lg-4">
                             <div class="form-group mb-2">
                                 <label class="form-control-label">{{__('page.supplier')}}:</label>
                                 <div class="input-group">                                  
@@ -78,7 +78,7 @@
                                         @endforeach
                                     </select>
                                     <span class="input-group-btn">
-                                        <button class="btn bd bg-primary tx-white ml-1" id="btn-add-supplier" style="border-radius:100px !important" type="button"><i class="fa fa-plus"></i></button>
+                                        <button class="btn bd bg-primary text-white ml-1" id="btn-add-supplier" style="border-radius:100px !important" type="button"><i class="fa fa-plus"></i></button>
                                     </span>  
                                 </div>
                                 @error('supplier')
@@ -88,13 +88,13 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="col-md-6 col-lg-3">
+                        <div class="col-md-6 col-lg-4">
                             <div class="form-group mb-2">
                                 <label class="form-control-label">{{__('page.attachment')}}:</label>
                                 <input type="file" name="attachment" id="file2" class="file-input-styled">
                             </div>
                         </div>
-                        <div class="col-md-6 col-lg-3">
+                        {{-- <div class="col-md-6 col-lg-4">
                             <div class="form-group mb-2">
                                 <label class="form-control-label">{{__('page.status')}}:</label>
                                 <select class="form-control select2" name="status" data-placeholder="{{__('page.status')}}">
@@ -103,8 +103,8 @@
                                     <option value="1" selected>{{__('page.received')}}</option>
                                 </select>
                             </div>
-                        </div>
-                        <div class="col-md-6 col-lg-3">
+                        </div> --}}
+                        <div class="col-md-6 col-lg-4">
                             <div class="form-group mb-2">
                                 <label class="form-control-label">{{__('page.credit_days')}}:</label>
                                 <input type="number" class="form-control" name="credit_days" min=0 value="{{old('credit_days')}}" required placeholder="{{__('page.credit_days')}}" />
@@ -319,7 +319,6 @@
                 data: $('#create_form').serialize(),
                 success : function(data) {
                     $("#ajax-loading").hide();
-                    console.log(data);
                     if(data.id != null) {
                         $("#addSupplierModal").modal('hide');
                         $("#search_supplier").append(`
@@ -332,7 +331,6 @@
                 },
                 error: function(data) {
                     $("#ajax-loading").hide();
-                    console.log(data.responseJSON);
                     if(data.responseJSON.message == 'The given data was invalid.') {
                         let messages = data.responseJSON.errors;
                         if(messages.name) {
