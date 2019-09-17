@@ -133,7 +133,7 @@
                     return alert('Please enter message');
                 }
                 if(!this.activeFirend){
-                    return alert('Please select friend');
+                    return alert('Please select user');
                 }
                 axios.post('/chat/message/' + this.activeFirend, {message: this.message})
                     .then(response => {
@@ -144,7 +144,7 @@
             },
             fetchMessages() {
                 if(!this.activeFirend){
-                    return alert('Please select friend');
+                    return alert('Please select user');
                 }
                 axios.get('/chat/messages/' + this.activeFirend)
                     .then(response => {

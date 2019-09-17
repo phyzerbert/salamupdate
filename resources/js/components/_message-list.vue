@@ -12,8 +12,7 @@
                             <img v-if="message.is_image" width="180" class="attachment-image" :src="'/'+message.attachment" alt="" @click="imageView('/'+message.attachment)">
                             <a v-if="!message.is_image" width="100" :href="'/'+message.attachment" download><span class="icon-attach"><i class="fa fa-paperclip"></i></span></a>
                         </div>
-                    </div><br />
-                    <!-- <i>{{message.created_at}}</i> -->
+                    </div>
                 </div>
             </li>
         </ul>

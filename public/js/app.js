@@ -1983,7 +1983,7 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       if (!this.activeFirend) {
-        return alert('Please select friend');
+        return alert('Please select user');
       }
 
       axios.post('/chat/message/' + this.activeFirend, {
@@ -2000,7 +2000,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this4 = this;
 
       if (!this.activeFirend) {
-        return alert('Please select friend');
+        return alert('Please select user');
       }
 
       axios.get('/chat/messages/' + this.activeFirend).then(function (response) {
@@ -2091,7 +2091,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
 //
 //
 //
@@ -31011,8 +31010,7 @@ var render = function() {
                       ])
                     : _vm._e()
                 ]
-              ),
-              _c("br")
+              )
             ])
           ]
         )
