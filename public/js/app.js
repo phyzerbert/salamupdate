@@ -2067,16 +2067,16 @@ __webpack_require__.r(__webpack_exports__);
       _this6.allMessages.push(e.message);
 
       Object(timers__WEBPACK_IMPORTED_MODULE_0__["setTimeout"])(_this6.scrollToEnd, 50);
-    }).listenForWhisper('typing', function (e) {
-      if (e.user.id == _this6.activeFriend) {
-        _this6.typing = true;
-        if (_this6.typingClock) clearTimeout();
-        _this6.typingClock = Object(timers__WEBPACK_IMPORTED_MODULE_0__["setTimeout"])(function () {
-          _this6.typingFriend = {};
-          _this6.typing = false;
-        }, 5000);
-      }
-    });
+    }); // .listenForWhisper('typing', (e) => {
+    //     if(e.user.id==this.activeFriend){
+    //         this.typing = true;
+    //         if(this.typingClock) clearTimeout();
+    //         this.typingClock=setTimeout(()=>{
+    //             this.typingFriend={};
+    //             this.typing = false;
+    //         },5000);
+    //     }                 
+    // });
   }
 });
 
@@ -30881,7 +30881,6 @@ var render = function() {
                   attrs: { type: "text", placeholder: "Enter Message" },
                   domProps: { value: _vm.message },
                   on: {
-                    keydown: _vm.onTyping,
                     keyup: function($event) {
                       if (
                         !$event.type.indexOf("key") &&
@@ -45379,8 +45378,8 @@ if (token) {
 window.Pusher = __webpack_require__(/*! pusher-js */ "./node_modules/pusher-js/dist/web/pusher.js");
 window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   broadcaster: 'pusher',
-  key: '0032483ae6c5643bf8a4',
-  cluster: 'ap3',
+  key: "0032483ae6c5643bf8a4",
+  cluster: "ap3",
   forceTLS: true,
   encrypted: true
 });

@@ -58,7 +58,7 @@
                             :headers="{'X-CSRF-TOKEN': token}"
                         ><span class="icon-attach text-primary"><i class="fa fa-paperclip"></i></span></file-upload>
                         <div class="input-group">
-                            <input type="text" class="form-control" v-model="message" placeholder="Enter Message" @keydown="onTyping" @keyup.enter="sendMessage" />
+                            <input type="text" class="form-control" v-model="message" placeholder="Enter Message" @keyup.enter="sendMessage" />
                             <span class="input-group-append">
                                 <button type="button" class="btn waves-effect waves-light btn-primary" @click="sendMessage">Send</button>
                             </span>
@@ -206,16 +206,16 @@
                     this.allMessages.push(e.message)
                     setTimeout(this.scrollToEnd,50);
                 })
-                .listenForWhisper('typing', (e) => {
-                    if(e.user.id==this.activeFriend){
-                        this.typing = true;
-                        if(this.typingClock) clearTimeout();
-                        this.typingClock=setTimeout(()=>{
-                            this.typingFriend={};
-                            this.typing = false;
-                        },5000);
-                    }                 
-                });
+                // .listenForWhisper('typing', (e) => {
+                //     if(e.user.id==this.activeFriend){
+                //         this.typing = true;
+                //         if(this.typingClock) clearTimeout();
+                //         this.typingClock=setTimeout(()=>{
+                //             this.typingFriend={};
+                //             this.typing = false;
+                //         },5000);
+                //     }                 
+                // });
         }
     }
 </script>
