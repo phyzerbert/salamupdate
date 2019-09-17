@@ -19,7 +19,7 @@
         
         <div id="sidebar-menu">
             <ul>
-                @if ($role != 'buyer' && $role != 'secretary')
+                @if ($role != 'buyer')
                     <li class="@if($page == 'home') active @endif">
                         <a href="{{route('home')}}" class="waves-effect @if($page == 'home') active @endif"><i class="fa fa-dashboard"></i><span> {{__('page.dashboard')}} </span></a>
                     </li>
@@ -40,21 +40,19 @@
                             @endif
                         </ul>
                     </li>
-                    @if($role != 'secretary')
-                        {{-- Sale --}}
-                        @php
-                            $sale_items = ['sale', 'sale_list', 'sale_create'];
-                        @endphp
-                        <li class="has_sub">
-                            <a href="#" class="waves-effect @if($page == in_array($page, $sale_items)) active subdrop @endif"><i class="fa fa-sign-out"></i><span> {{__('page.sales')}} </span><span class="pull-right"><i class="md md-add"></i></span></a>
-                            <ul class="list-unstyled">
-                                <li class="@if($page == 'sale_list') active @endif"><a href="{{route('sale.index')}}" class="@if($page == 'purchase_list') active @endif">{{__('page.sales_list')}}</a></li>
-                                @if($user->hasRole('user') || $user->hasRole('secretary'))
-                                    <li class="@if($page == 'sale_create') active @endif"><a href="{{route('sale.create')}}" class="@if($page == 'purchase_create') active @endif">{{__('page.add_sale')}}</a></li>
-                                @endif
-                            </ul>
-                        </li>
-                    @endif
+                    {{-- Sale --}}
+                    @php
+                        $sale_items = ['sale', 'sale_list', 'sale_create'];
+                    @endphp
+                    <li class="has_sub">
+                        <a href="#" class="waves-effect @if($page == in_array($page, $sale_items)) active subdrop @endif"><i class="fa fa-sign-out"></i><span> {{__('page.sales')}} </span><span class="pull-right"><i class="md md-add"></i></span></a>
+                        <ul class="list-unstyled">
+                            <li class="@if($page == 'sale_list') active @endif"><a href="{{route('sale.index')}}" class="@if($page == 'purchase_list') active @endif">{{__('page.sales_list')}}</a></li>
+                            @if($user->hasRole('user') || $user->hasRole('secretary'))
+                                <li class="@if($page == 'sale_create') active @endif"><a href="{{route('sale.create')}}" class="@if($page == 'purchase_create') active @endif">{{__('page.add_sale')}}</a></li>
+                            @endif
+                        </ul>
+                    </li>
 
                     <li class="@if($page == 'pending_purchases') active @endif">
                         <a href="{{route('purchase.pending_purchases')}}" class="waves-effect @if($page == 'pending_purchases') active @endif"><i class="fa fa-filter"></i><span> {{__('page.pending_purchases')}} </span></a>
@@ -64,28 +62,26 @@
                         <a href="{{route('product.index')}}" class="waves-effect @if($page == 'product') active @endif"><i class="fa fa-cube"></i><span> {{__('page.product')}} </span></a>
                     </li>
                 @endif
-                @if($role != 'secretary')
-                    {{-- Pre Order --}}
-                    @php
-                        $pre_order_items = ['pre_order', 'pre_order_list', 'pre_order_create'];
-                    @endphp
+                {{-- Pre Order --}}
+                @php
+                    $pre_order_items = ['pre_order', 'pre_order_list', 'pre_order_create'];
+                @endphp
 
-                    <li class="has_sub">
-                        <a href="#" class="waves-effect @if($page == in_array($page, $pre_order_items)) active subdrop @endif"><i class="fa fa-paper-plane-o"></i><span> {{__('page.purchase_orders')}} </span><span class="pull-right"><i class="md md-add"></i></span></a>
-                        <ul class="list-unstyled">
-                            <li class="@if($page == 'pre_order_list') active @endif"><a href="{{route('pre_order.index')}}" class="@if($page == 'purchase_list') active @endif">{{__('page.purchase_orders')}}</a></li>
-                            @if($role == 'user')
-                                <li class="@if($page == 'pre_order_create') active @endif"><a href="{{route('pre_order.create')}}" class="@if($page == 'purchase_create') active @endif">{{__('page.add_purchase_order')}}</a></li>
-                            @endif
-                        </ul>
-                    </li>
+                <li class="has_sub">
+                    <a href="#" class="waves-effect @if($page == in_array($page, $pre_order_items)) active subdrop @endif"><i class="fa fa-paper-plane-o"></i><span> {{__('page.purchase_orders')}} </span><span class="pull-right"><i class="md md-add"></i></span></a>
+                    <ul class="list-unstyled">
+                        <li class="@if($page == 'pre_order_list') active @endif"><a href="{{route('pre_order.index')}}" class="@if($page == 'purchase_list') active @endif">{{__('page.purchase_orders')}}</a></li>
+                        @if($role == 'user')
+                            <li class="@if($page == 'pre_order_create') active @endif"><a href="{{route('pre_order.create')}}" class="@if($page == 'purchase_create') active @endif">{{__('page.add_purchase_order')}}</a></li>
+                        @endif
+                    </ul>
+                </li>
 
-                    <li class="@if($page == 'received_order') active @endif">
-                        <a href="{{route('received_order.index')}}" class="waves-effect @if($page == 'received_order') active @endif"><i class="fa fa-chain"></i><span> {{__('page.received_orders')}} </span></a>
-                    </li>
-                @endif
+                <li class="@if($page == 'received_order') active @endif">
+                    <a href="{{route('received_order.index')}}" class="waves-effect @if($page == 'received_order') active @endif"><i class="fa fa-chain"></i><span> {{__('page.received_orders')}} </span></a>
+                </li>
 
-                @if($role != 'buyer' && $role != 'secretary')
+                @if($role != 'buyer')
 
                     @php
                         $report_items = [
