@@ -16,7 +16,7 @@
                     </ol>
                 </div>
             </div>
-            <div class="card card-body card-fill" id="app">
+            <div class="" id="app">
                 <chat-component :user="{{auth()->user()}}"></chat-component>
             </div>
         </div>                

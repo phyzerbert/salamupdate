@@ -1,23 +1,46 @@
 <template>
     <div class="row">
         <div class="col-md-3 online-users">
-            <ul class="list-group">
-                <li class="list-group-item"
-                    v-for="friend in friends" 
-                    :color="((friend.id==activeFriend) ? 'green' : '')"
-                    :key="friend.id"
-                    @click="activeFriend=friend.id"
-                >
-                    {{friend.name}}
-                </li>
-            </ul>
+            <div class="side-bar nicescroll" id="user_sidebar">
+                <h4 class="text-center">Users</h4>
+                <div class="contact-list nicescroll">
+                    <ul class="list-group contacts-list">
+                        <li class="list-group-item"
+                            v-for="friend in friends" 
+                            :color="((friend.id==activeFriend) ? 'green' : '')"
+                            :key="friend.id"
+                            @click="activeFriend=friend.id"
+                        >
+                            <a href="#">
+                                <div class="avatar">
+                                    <img src="/images/avatar.png" alt="">
+                                </div>
+                                <span class="name">{{friend.name}}</span>
+                            </a>
+                            <span class="clearfix"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
+
         <div class="col-md-9 messages">
             <div class="card">
+                <div class="card-header">
+                    <a href="#">
+                        <div class="avatar">
+                            <img src="/images/avatar.png" width="42" class="rounded-circle" alt="">
+                            <i class="fa fa-circle icon-online"></i>
+                            <span class="name ml-2">Admin</span>
+                        </div>
+                    </a>
+                    <span class="clearfix"></span>
+                </div>
                 <div class="card-body" id="privateMessageBox">
                     <message-list :user="user" :all-messages="allMessages"></message-list>
                 </div>
                 <div class="card-footer">
+                    <img v-show="typing" ref="typing_indicator" src="/images/typing_indicator.gif" width="60" alt="">
                     <div class="d-flex">
                         <file-upload
                             :post-action="'/chat/message/'+activeFriend"
@@ -25,10 +48,14 @@
                             v-model="files"
                             @input-file="$refs.upload.active = true"
                             :headers="{'X-CSRF-TOKEN': token}"
-                        >A</file-upload>
-                        <input type="text" class="form-control" v-model="message" placeholder="Enter Message" @keydown="onTyping" @keyup.enter="sendMessage" />
+                        ><span class="icon-attach text-primary"><i class="fa fa-paperclip"></i></span></file-upload>
+                        <div class="input-group">
+                            <input type="text" class="form-control" v-model="message" placeholder="Enter Message" @keydown="onTyping" @keyup.enter="sendMessage" />
+                            <span class="input-group-append">
+                                <button type="button" class="btn waves-effect waves-light btn-primary" @click="sendMessage">Send</button>
+                            </span>
+                        </div>
                     </div>
-                    <img v-show="typing" ref="typing_indicator" src="/images/typing_indicator.gif" width="60" alt="">
                 </div>
             </div>            
         </div>
@@ -182,5 +209,32 @@
 </script>
 
 <style scoped>
-    
+    #privateMessageBox {
+        height: 61vh;
+        overflow: auto;
+    }
+
+    #user_sidebar {
+        height: 73.6vh;
+    }
+
+    .icon-attach {
+        font-size: 25px;
+        margin-right: 10px;
+        cursor: pointer;
+    }
+    .card-header .avatar {
+        position: relative;
+    }
+    .card-header .icon-online {
+        color: #a0d269;
+        position: absolute;
+        bottom: 0;
+        left: 31px;
+    }
+    .card-header .name {
+        font-size: 18px;
+        color: #444444;
+        font-weight: 500;
+    }
 </style>
