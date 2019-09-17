@@ -43,6 +43,9 @@ var app = new Vue({
                         expiry_date: "",
                         sub_total: 0,
                     })
+                    Vue.nextTick(function() {
+                        app.$refs['product'][app.$refs['product'].length - 1].select()
+                    });
                 })
                 .catch(error => {
                     console.log(error);
@@ -119,8 +122,8 @@ var app = new Vue({
                                     value: item.name + "(" + item.code + ")",
                                     id: item.id,
                                     cost: item.cost,
-                                    tax_name: item.tax.name,
-                                    tax_rate: item.tax.rate,
+                                    tax_name: item.tax ? item.tax.name : '',
+                                    tax_rate: item.tax ? item.tax.rate : 0,
                                 }
                             })
                         );

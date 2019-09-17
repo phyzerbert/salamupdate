@@ -57,18 +57,12 @@
                                     <h3 class="text-white mb-2">{{__('page.store')}}</h3>
                                     <p class="text-light" style="font-size:16px;"><strong>{{__('page.name')}}</strong> : @isset($purchase->store->name){{$purchase->store->name}}@endisset</p>
                                     <p class="text-light" style="font-size:16px;"><strong>{{__('page.company')}}</strong> : @isset($purchase->store->company->name){{$purchase->store->company->name}}@endisset</p>
-                                    <p class="text-light" style="font-size:16px;">
-                                        <strong>{{__('page.attachment')}}</strong> : 
-                                        @if ($purchase->attachment != "")
-                                            <a href="#" class="attachment" data-value="{{$purchase->attachment}}">&nbsp;&nbsp;&nbsp;<i class="fa fa-paperclip"></i></a>
-                                        @endif
-                                    </p>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-4">                    
-                        <div class="card card-fill card-body bg-success detail-card">
+                        <div class="card card-fill card-body bg-secondary detail-card">
                             <div class="row">
                                 <div class="col-xl-3 text-center">
                                     <div class="detail-card-icon bg-primary text-light"><i class="fa fa-file-text-o"></i></div>

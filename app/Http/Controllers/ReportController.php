@@ -318,6 +318,7 @@ class ReportController extends Controller
             $stores = $company->stores;
             $mod = $company->purchases();
         }
+        $mod = $mod->where('status', 1);
         $company_id = $reference_no = $supplier_id = $store_id = $period = '';
         $sort_by_date = 'desc';
         if ($request->get('company_id') != ""){
@@ -603,6 +604,7 @@ class ReportController extends Controller
         $companies = Company::all();
 
         $mod = $supplier->purchases();
+        $mod = $mod->where('status', 1);
         $company_id = $reference_no = $store_id = $period = '';
         if($user->hasRole('user')){
             $company_id = $user->company_id;
@@ -639,7 +641,7 @@ class ReportController extends Controller
         $user = Auth::user();
         $companies = Company::all();
         $mod = new Payment();
-        $purchases_array = $supplier->purchases()->pluck('id')->toArray();
+        $purchases_array = $supplier->purchases()->where('status', 1)->pluck('id')->toArray();
         $mod = $mod->where('paymentable_type', Purchase::class)->whereIn('paymentable_id', $purchases_array);
         $reference_no = $period = $company_id = '';
 
@@ -706,6 +708,7 @@ class ReportController extends Controller
         $companies = Company::all();
 
         $mod = $user->purchases();
+        $mod = $mod->where('status', 1);
         $company_id = $reference_no = $supplier_id = $store_id = $period = '';
         $sort_by_date = 'desc';
         if ($request->get('company_id') != ""){
@@ -778,7 +781,7 @@ class ReportController extends Controller
         config(['site.page' => 'users_report']);
         
         $mod = new Payment();
-        $purchases_array = $user->purchases()->pluck('id')->toArray();
+        $purchases_array = $user->purchases()->where('status', 1)->pluck('id')->toArray();
         $sales_array = $user->sales()->pluck('id')->toArray();
         $mod = $mod->where(function($query) use($purchases_array){
             $query->where('paymentable_type', Purchase::class)->whereIn('paymentable_id', $purchases_array);

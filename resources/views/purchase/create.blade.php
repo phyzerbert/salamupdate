@@ -24,11 +24,11 @@
             @php
                 $role = Auth::user()->role->slug;
             @endphp
-            <div class="card card-body card-fill" id="app">
+            <div class="card card-body card-fill p-md-5" id="app">
                 <form class="form-layout form-layout-1" action="{{route('purchase.save')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="row mb-3">
-                        <div class="col-md-4">
+                        <div class="col-lg-4 col-md-6">
                             <div class="form-group mb-2">
                                 <label class="form-control-label">{{__('page.purchase_date')}}: <span class="text-danger">*</span></label>
                                 <input class="form-control" type="text" name="date" id="purchase_date" value="{{date('Y-m-d H:i')}}"placeholder="{{__('page.purchase_date')}}" autocomplete="off" required>
@@ -39,7 +39,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-lg-4 col-md-6">
                             <div class="form-group mb-2">
                                 <label class="form-control-label">{{__('page.reference_number')}}:</label>
                                 <input class="form-control" type="text" name="reference_number" value="{{ old('reference_number') }}" required placeholder="{{__('page.reference_number')}}">
@@ -50,10 +50,11 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-lg-4 col-md-6">
                             <div class="form-group mb-2">
-                                <label class="form-control-label">{{__('page.store')}}:</label>
-                                <select class="form-control select2" name="store" data-placeholder="{{__('page.select_store')}}">
+                                <label class="form-control-label">{{__('page.store')}}</label>
+                                <select class="form-control" name="store">
+                                    <option value="" hidden>{{__('page.store')}}</option>
                                     @foreach ($stores as $item)
                                         <option value="{{$item->id}}" @if(old('store') == $item->id) selected @endif>{{$item->name}}</option>
                                     @endforeach
@@ -67,7 +68,7 @@
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <div class="col-md-6 col-lg-4">
+                        <div class="col-lg-4 col-md-6">
                             <div class="form-group mb-2">
                                 <label class="form-control-label">{{__('page.supplier')}}:</label>
                                 <div class="input-group">                                  
@@ -88,7 +89,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="col-md-6 col-lg-4">
+                        <div class="col-lg-4 col-md-6">
                             <div class="form-group mb-2">
                                 <label class="form-control-label">{{__('page.attachment')}}:</label>
                                 <input type="file" name="attachment" id="file2" class="file-input-styled">
@@ -104,7 +105,7 @@
                                 </select>
                             </div>
                         </div> --}}
-                        <div class="col-md-6 col-lg-4">
+                        <div class="col-lg-4 col-md-6">
                             <div class="form-group mb-2">
                                 <label class="form-control-label">{{__('page.credit_days')}}:</label>
                                 <input type="number" class="form-control" name="credit_days" min=0 value="{{old('credit_days')}}" required placeholder="{{__('page.credit_days')}}" />
@@ -134,7 +135,7 @@
                                         <tr v-for="(item,i) in order_items" :key="i">
                                             <td>
                                                 <input type="hidden" name="product_id[]" class="product_id" :value="item.product_id" />
-                                                <input type="text" name="product_name[]" class="form-control form-control-sm product" v-model="item.product_name_code" required />
+                                                <input type="text" name="product_name[]" ref="product" class="form-control form-control-sm product" v-model="item.product_name_code" required />
                                             </td>
                                             <td><input type="date" class="form-control form-control-sm expiry_date" name="expiry_date[]" autocomplete="off" v-model="item.expiry_date" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" placeholder="{{__('page.expiry_date')}}" /></td>
                                             <td><input type="number" class="form-control form-control-sm cost" name="cost[]" v-model="item.cost" required placeholder="{{__('page.product_cost')}}" /></td>
@@ -151,10 +152,10 @@
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <td colspan="3">{{__('page.total')}}</td>
-                                            <td class="total_quantity">@{{total.quantity}}</td>
-                                            <td class="total_tax"></td>
-                                            <td colspan="2" class="total">@{{total.cost}}</td>
+                                            <th colspan="3">{{__('page.total')}}</th>
+                                            <th class="total_quantity">@{{total.quantity}}</th>
+                                            <th class="total_tax"></th>
+                                            <th colspan="2" class="total">@{{total.cost}}</th>
                                         </tr>
                                     </tfoot>
                                 </table>

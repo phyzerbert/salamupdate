@@ -30,7 +30,7 @@ class CreatePurchasesTable extends Migration
             $table->date('expiry_date')->nullable();
             $table->string('attachment')->nullable();
             $table->text('note')->nullable();
-            $table->integer('status')->nullable();
+            $table->integer('status')->default(0);
             $table->timestamps();
         });
     }
