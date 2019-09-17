@@ -284,4 +284,6 @@ return [
     'new_product' => 'New Product',
     'right_ctrl_key' => 'Right Ctrl Key',
     'buyer' => 'Buyer',
+
+    'chatting' => 'Chatting',
 ];

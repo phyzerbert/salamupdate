@@ -151,6 +151,10 @@
                         </ul>
                     </li>
                 @endif
+
+                <li class="@if($page == 'chat') active @endif">
+                    <a href="{{route('chat')}}" class="waves-effect @if($page == 'chat') active @endif"><i class="fa fa-wechat"></i><span> {{__('page.chatting')}} </span></a>
+                </li>
             </ul>
             <div class="clearfix"></div>
         </div>

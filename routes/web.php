@@ -150,5 +150,9 @@ Route::any('/report/users_report/purchases/{id}', 'ReportController@user_purchas
 Route::any('/report/users_report/sales/{id}', 'ReportController@user_sales')->name('report.users_report.sales');
 Route::any('/report/users_report/payments/{id}', 'ReportController@user_payments')->name('report.users_report.payments');
 
-
 Route::post('/set_pagesize', 'HomeController@set_pagesize')->name('set_pagesize');
+
+Route::get('/chat', 'ChatController@index')->name('chat');
+Route::get('/chat/messages/{user}', 'ChatController@fetchMessages')->name('fetchMessages');
+Route::post('/chat/message/{user}', 'ChatController@sendMessage')->name('sendMessage');
+Route::get('/users', 'ChatController@users')->name('users');

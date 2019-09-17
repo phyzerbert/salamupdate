@@ -1,0 +1,72 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\Message;
+use App\User;
+use App\Events\MessageSent;
+
+use Auth;
+
+class ChatController extends Controller
+{
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    public function index()
+    {
+        config(['site.page' => 'chat']);
+        return view('chat.index');
+    }
+
+    public function fetchMessages(User $user)
+    {
+        $privateCommunication= Message::with('user')
+            ->where(['user_id'=> auth()->id(), 'receiver_id'=> $user->id])
+            ->orWhere(function($query) use($user){
+                $query->where(['user_id' => $user->id, 'receiver_id' => auth()->id()]);
+            })->get();
+
+        return $privateCommunication;
+    }
+
+    public function sendMessage(Request $request,User $user)
+    {
+        if(request()->has('file')){
+
+            // $filename = request('file')->store('chat');
+            $imageables = ['jpg', 'JPG', 'jpeg', 'png', 'gif'];
+            $attachment = request()->file('file');
+            if(in_array($attachment->getClientOriginalExtension(), $imageables)){
+                $is_image = 1;
+            }else{
+                $is_image = 0;
+            }
+            $imageName = time().'.'.$attachment->getClientOriginalExtension();
+            $attachment->move(public_path('images/messages'), $imageName);
+            $message=Message::create([
+                'user_id' => request()->user()->id,
+                'attachment' => 'images/messages/'.$imageName,
+                'is_image' => $is_image,
+                'receiver_id' => $user->id
+            ]);
+        }else{
+            $input=$request->all();
+            $input['receiver_id']=$user->id;
+            $message=auth()->user()->messages()->create($input);
+        }
+
+        broadcast(new MessageSent($message->load('user')))->toOthers();
+        
+        return response(['status'=>'Message private sent successfully','message'=>$message]);
+
+    }
+
+    public function users()
+    {
+        return User::all();
+    }
+}
