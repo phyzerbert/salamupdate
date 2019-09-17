@@ -3,9 +3,11 @@
         <div class="col-md-3 online-users">
             <div class="side-bar nicescroll" id="user_sidebar">
                 <h4 class="text-center">Users</h4>
+                <hr />
                 <div class="contact-list nicescroll">
                     <ul class="list-group contacts-list">
                         <li class="list-group-item"
+                            :class="[activeFriend == friend.id ? 'active' : '']"
                             v-for="friend in friends" 
                             :color="((friend.id==activeFriend) ? 'green' : '')"
                             :key="friend.id"
@@ -25,22 +27,28 @@
         </div>
 
         <div class="col-md-9 messages">
-            <div class="card">
-                <div class="card-header">
-                    <a href="#">
+            <div class="card" id="msgArea">
+                <div class="card-header" style="min-height: 62px">
+                    <a href="#" v-if="this.activeFriend">
                         <div class="avatar">
                             <img src="/images/avatar.png" width="42" class="rounded-circle" alt="">
                             <i class="fa fa-circle icon-online"></i>
-                            <span class="name ml-2">Admin</span>
+                            <span class="name ml-2">{{this.activeFriendData[0].name}}</span>
                         </div>
                     </a>
                     <span class="clearfix"></span>
                 </div>
                 <div class="card-body" id="privateMessageBox">
-                    <message-list :user="user" :all-messages="allMessages"></message-list>
+                    <message-list :user="user" :all-messages="allMessages" v-if="this.activeFriend"></message-list>
+                    <div class="text-center" v-if="!this.activeFriend">
+                        <h2>Please start chat here !!!</h2>
+                    </div>
+                </div>
+                <div id="chatbox-footer">
+                    <img v-show="typing" ref="typing_indicator" src="/images/typing_indicator.gif" width="60" alt="">
+                    <!-- <img ref="typing_indicator" src="/images/typing_indicator.gif" width="60" alt=""> -->
                 </div>
                 <div class="card-footer">
-                    <img v-show="typing" ref="typing_indicator" src="/images/typing_indicator.gif" width="60" alt="">
                     <div class="d-flex">
                         <file-upload
                             :post-action="'/chat/message/'+activeFriend"
@@ -75,6 +83,7 @@
                 message: null,
                 files: [],
                 activeFriend: null,
+                activeFriendData: {},
                 typingFriend: {},
                 onlineFriends: [],
                 allMessages: [],
@@ -104,6 +113,9 @@
             },
             activeFriend(val){
                 this.activeFirend = val
+                this.activeFriendData = this.users.filter((user) => {
+                    return user.id == this.activeFriend;
+                })
                 this.fetchMessages();
             },
             '$refs.upload'(val){
@@ -209,13 +221,18 @@
 </script>
 
 <style scoped>
-    #privateMessageBox {
-        height: 61vh;
+    #privateMessageBox {        
         overflow: auto;
+        position: relative;
+    }
+
+    #msgArea {
+        height: 73.6vh;
     }
 
     #user_sidebar {
         height: 73.6vh;
+        position: relative;
     }
 
     .icon-attach {
@@ -236,5 +253,11 @@
         font-size: 18px;
         color: #444444;
         font-weight: 500;
+    }
+    #chatbox-footer {
+        height: 15px;
+        position: absolute;
+        bottom: 75px;
+        padding-left: 60px;
     }
 </style>

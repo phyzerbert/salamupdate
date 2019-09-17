@@ -2308,25 +2308,24 @@ body.fixed-left .side-menu.left {
   -moz-box-shadow: none;
   -webkit-box-shadow: none;
   border-color: #DDDDDD;
-  border-radius: 2px;
+  border-radius: 6px;
   box-shadow: none;
-  padding: 30px;
+  padding: 0;
 }
 
 .modal .modal-dialog .modal-content .modal-header {
   border-bottom-width: 2px;
   margin: 0;
-  padding: 0;
+  padding: 1rem;
   padding-bottom: 15px;
 }
 
 .modal .modal-dialog .modal-content .modal-body {
-  padding: 20px 0;
+  padding: 1rem;
 }
 
 .modal .modal-dialog .modal-content .modal-footer {
-  padding: 0;
-  padding-top: 15px;
+  padding: 1rem;
 }
 
 .modal-full {
@@ -2794,6 +2793,7 @@ button.swal2-confirm {
 .conversation-list .ctext-wrap p {
   margin: 0px;
   padding-top: 3px;
+  font-size: 15px;
 }
 
 .conversation-list .ctext-wrap:after {

@@ -6,14 +6,14 @@
                     <img src="/images/avatar.png" alt="male">
                 </div>
                 <div class="conversation-text">
-                    <div class="ctext-wrap">
+                    <div class="ctext-wrap" :title="message.created_at">
                         <p>{{message.message}}</p>
                         <div v-if="message.attachment" class="image-container">
-                            <img v-if="message.is_image" width="100" :src="'/'+message.attachment" alt="">
-                            <a v-if="!message.is_image" width="100" :href="'/'+message.attachment" download="">Click Here</a>
+                            <img v-if="message.is_image" width="180" class="attachment-image" :src="'/'+message.attachment" alt="" @click="imageView('/'+message.attachment)">
+                            <a v-if="!message.is_image" width="100" :href="'/'+message.attachment" download><span class="icon-attach"><i class="fa fa-paperclip"></i></span></a>
                         </div>
                     </div><br />
-                    <i>{{message.created_at}}</i>
+                    <!-- <i>{{message.created_at}}</i> -->
                 </div>
             </li>
         </ul>
@@ -23,6 +23,22 @@
 <script>
     export default {
         props: ['user', 'allMessages'],
+        methods: {
+            imageView(path) {
+                // console.log(path)
+                $("#image_preview").html('')
+                $("#image_preview").verySimpleImageViewer({
+                    imageSource: path,
+                    frame: ['100%', '100%'],
+                    maxZoom: '900%',
+                    zoomFactor: '10%',
+                    mouse: true,
+                    keyboard: true,
+                    toolbar: true,
+                });
+                $("#attachModal").modal();
+            }
+        },
         created() {
             // console.log(this.user)
         }
@@ -31,4 +47,8 @@
 
 
 <style scoped>
+    .icon-attach i {
+        font-size: 30px;
+        color: #5f60b5;
+    }
 </style>
