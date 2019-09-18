@@ -53,11 +53,11 @@
                             @endif
                         </ul>
                     </li>
-
-                    <li class="@if($page == 'pending_purchases') active @endif">
-                        <a href="{{route('purchase.pending_purchases')}}" class="waves-effect @if($page == 'pending_purchases') active @endif"><i class="fa fa-filter"></i><span> {{__('page.pending_purchases')}} </span></a>
-                    </li>
-                    
+                    @if($role != 'secretary')
+                        <li class="@if($page == 'pending_purchases') active @endif">
+                            <a href="{{route('purchase.pending_purchases')}}" class="waves-effect @if($page == 'pending_purchases') active @endif"><i class="fa fa-filter"></i><span> {{__('page.pending_purchases')}} </span></a>
+                        </li>
+                    @endif
                     <li class="@if($page == 'product') active @endif">
                         <a href="{{route('product.index')}}" class="waves-effect @if($page == 'product') active @endif"><i class="fa fa-cube"></i><span> {{__('page.product')}} </span></a>
                     </li>
