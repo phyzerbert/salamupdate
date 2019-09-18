@@ -6,6 +6,12 @@
     <link href="{{asset('master/plugins/jquery-ui/timepicker/jquery-ui-timepicker-addon.min.css')}}" rel="stylesheet">
     <script src="{{asset('master/plugins/vuejs/vue.js')}}"></script>
     <script src="{{asset('master/plugins/vuejs/axios.js')}}"></script>
+    <style>
+        .table>tbody>tr>td {
+            padding-top: .5rem;
+            padding-bottom: .5rem;
+        }
+    </style>
 @endsection
 @section('content')
     <div class="content">
@@ -24,7 +30,7 @@
                 $role = Auth::user()->role->slug;
             @endphp
             
-            <div class="card card-body" id="app">
+            <div class="card card-body p-md-5" id="app">
                 <form class="form-layout form-layout-1" action="{{route('purchase.update')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="id" value="{{$purchase->id}}">  
@@ -70,7 +76,7 @@
                         </div>
                     </div>
                     <div class="row mb-4">
-                        <div class="col-lg-3 col-md-6">
+                        <div class="col-lg-4 col-md-6">
                             <div class="form-group">
                                 <label class="form-control-label">{{__('page.supplier')}}:</label>
                                 <select class="form-control select2-show-search" name="supplier" data-placeholder="{{__('page.supplier')}}">
@@ -86,13 +92,13 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="col-lg-3 col-md-6">
+                        <div class="col-lg-4 col-md-6">
                             <div class="form-group">
                                 <label class="form-control-label">{{__('page.attachment')}}:</label>
                                 <input type="file" name="attachment" id="file2" class="file-input-styled">
                             </div>
                         </div>
-                        <div class="col-lg-3 col-md-6">
+                        <div class="col-lg-4 col-md-6">
                             <div class="form-group">
                                 <label class="form-control-label">{{__('page.credit_days')}}:</label>
                                 <input type="number" class="form-control" name="credit_days" min="0" value="{{$purchase->credit_days}}">
@@ -126,7 +132,7 @@
                                         <tr v-for="(item,i) in order_items" :key="i">
                                             <td>
                                                 <input type="hidden" name="product_id[]" class="product_id" :value="item.product_id" />
-                                                <input type="text" name="product_name[]" class="form-control form-control-sm product" v-model="item.product_name_code" required />
+                                                <input type="text" name="product_name[]" ref="product" class="form-control form-control-sm product" v-model="item.product_name_code" required />
                                             </td>
                                             <td><input type="date" class="form-control form-control-sm expiry_date" name="expiry_date[]" autocomplete="off" v-model="item.expiry_date" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" placeholder="{{__('page.expiry_date')}}" /></td>
                                             <td><input type="number" class="form-control form-control-sm cost" name="cost[]" v-model="item.cost" placeholder="{{__('page.product_cost')}}" /></td>
@@ -224,5 +230,5 @@
 
     });
 </script>
-<script src="{{ asset('js/purchase_edit_order_items.js') }}"></script>
+<script src="{{ asset('js/purchase_edit.js') }}"></script>
 @endsection

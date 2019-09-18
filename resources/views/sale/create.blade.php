@@ -68,7 +68,7 @@
                         </div>
                     </div>
                     <div class="row mb-4">                        
-                        <div class="col-md-3">
+                        <div class="col-md-6 col-lg-4">
                             <div class="form-group mb-2">
                                 <label class="form-control-label">{{__('page.store')}}</label>
                                 <select class="form-control select2" name="store" data-placeholder="{{__('page.select_store')}}" required>
@@ -84,7 +84,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="col-md-6 col-lg-3">
+                        <div class="col-md-6 col-lg-4">
                             <div class="form-group mb-2">
                                 <label class="form-control-label">{{__('page.customer')}}</label>
                                 <select class="form-control select2-show-search" name="customer" data-placeholder="{{__('page.select_customer')}}" required>
@@ -100,20 +100,10 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="col-md-6 col-lg-3">
+                        <div class="col-md-6 col-lg-4">
                             <div class="form-group mb-2">
                                 <label class="form-control-label">{{__('page.attachment')}}:</label>
                                 <input type="file" name="attachment" id="file2" class="file-input-styled">
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-3">
-                            <div class="form-group mb-2">
-                                <label class="form-control-label">{{__('page.status')}}:</label>
-                                <select class="form-control select2" name="status" data-placeholder="{{__('page.status')}}">
-                                    <option label="{{__('page.status')}}"></option>
-                                    <option value="0">{{__('page.pending')}}</option>
-                                    <option value="1">{{__('page.received')}}</option>
-                                </select>
                             </div>
                         </div>
                     </div>
@@ -139,7 +129,7 @@
                                         <tr v-for="(item,i) in order_items" :key="i">
                                             <td>
                                                 <input type="hidden" name="product_id[]" class="product_id" :value="item.product_id" />
-                                                <input type="text" name="product_name[]" class="form-control form-control-sm product" />
+                                                <input type="text" name="product_name[]" ref="product" class="form-control form-control-sm product" v-model="item.product_name_code" required />
                                             </td>
                                             <td><input type="number" class="form-control form-control-sm" name="price[]" v-model="item.price" placeholder="{{__('page.product_price')}}" /></td>
                                             <td><input type="number" class="form-control form-control-sm  quantity" name="quantity[]" v-model="item.quantity" placeholder="{{__('page.quantity')}}" /></td>
@@ -155,7 +145,7 @@
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <th colspan="2">Total</th>
+                                            <th colspan="2">{{__('page.total')}}</th>
                                             <th class="total_quantity">@{{total.quantity}}</th>
                                             <th class="total_tax"></th>
                                             <th colspan="2" class="total">@{{total.price | currency}}</th>
@@ -205,5 +195,5 @@
         
     });
 </script>
-<script src="{{ asset('js/sale_order_items.js') }}"></script>
+<script src="{{ asset('js/sale_create.js') }}"></script>
 @endsection

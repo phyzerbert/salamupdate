@@ -84,7 +84,7 @@
                 </div>
                 <div class="row mg-t-20">
                     <div class="col-md-12 table-responsive">
-                        <h5>Orders Item</h5>
+                        <h5>{{__('page.order_items')}}</h5>
                         <table class="table table-bordered table-colored table-info">
                             <thead>
                                 <tr>

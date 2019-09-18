@@ -24,14 +24,26 @@ var app = new Vue({
             //     });
         },
         add_item() {
-            this.order_items.push({
-                product_id: "",
-                price: 0,
-                tax_name: "",
-                tax_rate: 0,
-                quantity: 0,
-                sub_total: 0,
-            })
+            axios.get('/get_first_product')
+                .then(response => {
+                    let tax_name = (response.data.tax) ? response.data.tax.name : ''
+                    let tax_rate = (response.data.tax) ? response.data.tax.rate : 0
+                    this.order_items.push({
+                        product_id: response.data.id,
+                        product_name_code: response.data.name + "(" + response.data.code + ")",
+                        price: response.data.price,
+                        tax_name: tax_name,
+                        tax_rate: tax_rate,
+                        quantity: 1,
+                        sub_total: 0,
+                    })
+                    Vue.nextTick(function() {
+                        app.$refs['product'][app.$refs['product'].length - 1].select()
+                    });
+                })
+                .catch(error => {
+                    console.log(error);
+                });  
         },
         calc_subtotal() {
             data = this.order_items
@@ -59,7 +71,7 @@ var app = new Vue({
 
     mounted:function() {
         this.init();
-        // this.add_item();
+        this.add_item();
         $("#app").css('opacity', 1);
     },
     updated: function() {
@@ -75,9 +87,9 @@ var app = new Vue({
                                     label: item.name + "(" + item.code + ")",
                                     value: item.name + "(" + item.code + ")",
                                     id: item.id,
-                                    price: item.price,
-                                    tax_name: item.tax.name,
-                                    tax_rate: item.tax.rate,
+                                    price: item.price ? item.price : 0,
+                                    tax_name: item.tax ? item.tax.name : '',
+                                    tax_rate: item.tax ? item.tax.rate : 0,
                                 }
                             })
                         );
@@ -91,11 +103,13 @@ var app = new Vue({
             select: function( event, ui ) {
                 let index = $(".product").index($(this));
                 app.order_items[index].product_id = ui.item.id
+                app.order_items[index].product_name_code = ui.item.label
                 app.order_items[index].price = ui.item.price
                 app.order_items[index].tax_name = ui.item.tax_name
                 app.order_items[index].tax_rate = ui.item.tax_rate
-                app.order_items[index].quantity = 1
+                app.order_items[index].quantity = 0
                 app.order_items[index].sub_total = ui.item.price + (ui.item.price*ui.item.tax_rate)/100
+                console.log(app.order_items)
             }
         });
     }

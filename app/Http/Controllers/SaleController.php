@@ -85,7 +85,6 @@ class SaleController extends Controller
             'store'=>'required',
             'customer'=>'required',
             'user'=>'required',
-            'status'=>'required',
         ]);
 
         $data = $request->all();
@@ -99,7 +98,7 @@ class SaleController extends Controller
         $store = Store::find($data['store']);
         $item->company_id = $store->company_id;
         $item->customer_id = $data['customer'];
-        $item->status = $data['status'];
+        // $item->status = $data['status'];
 
         if($request->has("attachment")){
             $picture = request()->file('attachment');
@@ -132,7 +131,7 @@ class SaleController extends Controller
 
         }
 
-        return back()->with('success', 'Created Successfully');
+        return back()->with('success', __('page.created_successfully'));
     }
 
     public function edit(Request $request, $id){    
@@ -177,7 +176,7 @@ class SaleController extends Controller
         $store = Store::find($data['store']);
         $item->company_id = $store->company_id;
         $item->customer_id = $data['customer'];
-        $item->status = $data['status'];
+        // $item->status = $data['status'];
         $item->note = $data['note'];
 
         if($request->has("attachment")){
@@ -204,7 +203,7 @@ class SaleController extends Controller
         }
 
         $item->save();
-        return back()->with('success', 'Updated Successfully');
+        return back()->with('success', __('page.updated_successfully'));
     }
 
     public function delete($id){
