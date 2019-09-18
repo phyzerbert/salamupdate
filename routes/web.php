@@ -84,6 +84,7 @@ Route::post('/purchase/update', 'PurchaseController@update')->name('purchase.upd
 Route::get('/purchase/detail/{id}', 'PurchaseController@detail')->name('purchase.detail');
 Route::get('/purchase/report/{id}', 'PurchaseController@report')->name('purchase.report');
 Route::get('/purchase/email/{id}', 'PurchaseController@email')->name('purchase.email');
+Route::any('/purchase/export', 'PurchaseController@export')->name('purchase.export');
 Route::get('/purchase/approve/{id}', 'PurchaseController@approve')->name('purchase.approve');
 Route::get('/purchase/delete/{id}', 'PurchaseController@delete')->name('purchase.delete');
 

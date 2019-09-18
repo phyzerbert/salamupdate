@@ -298,4 +298,6 @@ return [
     'report' => 'Report',
     'purchase_report' => 'Purchase Report',
     'sale_report' => 'Sale Report',
+    'keyword' => 'Keyword',
+    'export' => 'Export',
 ];

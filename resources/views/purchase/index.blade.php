@@ -23,15 +23,16 @@
                 $role = Auth::user()->role->slug;
             @endphp
             <div class="card card-body card-fill">
-                <div class="">
+                <div class="clearfix">
                     @include('elements.pagesize')                    
                     @include('purchase.filter')
                     @if($role == 'user')
-                        <a href="{{route('purchase.create')}}" class="btn btn-success btn-sm float-right ml-3 mg-b-5" id="btn-add"><i class="fa fa-plus mg-r-2"></i> {{__('page.add_new')}}</a>
+                        <a href="{{route('purchase.create')}}" class="btn btn-success btn-sm float-right ml-3" id="btn-add"><i class="fa fa-plus mg-r-2"></i> {{__('page.add_new')}}</a>
                     @endif
-                    @include('elements.keyword')
+                    <button class="btn btn-sm btn-info float-right ml-2" id="btn-export"><i class="fa fa-file-excel-o mr-2"></i>{{__('page.export')}}</button>
+                    <input type="text" class="form-control form-control-sm col-md-2 float-right" id="input_keyword" value="{{$keyword}}" placeholder="{{__('page.keyword')}}" />
                 </div>
-                <div class="table-responsive mg-t-2">
+                <div class="table-responsive mt-2">
                     <table class="table table-bordered table-hover">
                         <thead class="">
                             <tr>
@@ -226,8 +227,12 @@
             $("#pagesize_form").submit();
         });
 
-        $("#keyword_filter").change(function(){
-            $("#keyword_filter_form").submit();
+        $("#input_keyword").keyup(function(e){
+            if(e.keyCode != 13){
+                $("#search_keyword").val($(this).val());
+            }else{
+                $("#searchForm").submit();
+            }                
         });
 
         $('#search_supplier').wrap('<div class="position-relative" style="width: 200px;"></div>')
@@ -258,7 +263,12 @@
                 $("#search_sort_date").val('asc');
             }
             $("#searchForm").submit();
-        })
+        });
+
+        $("#btn-export").click(function(){
+            $("#searchForm").attr('action', "{{route('purchase.export')}}");
+            $("#searchForm").submit();
+        });
     });
 </script>
 @endsection

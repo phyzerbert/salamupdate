@@ -15,9 +15,10 @@ use App\Models\StoreProduct;
 
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ReportMail;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\PurchaseExport;
 
-use Auth;   
-use Excel;
+use Auth;
 use PDF;
 
 class PurchaseController extends Controller
@@ -395,5 +396,67 @@ class PurchaseController extends Controller
         $item = Purchase::find($id);
         $item->update(['status' => 1]);
         return back()->with("success", __('page.approved_successfully'));
+    }
+
+    public function export(Request $request) {
+        $user = Auth::user();
+        $mod = new Purchase();
+        if($user->hasRole('user') || $user->hasRole('secretary')){
+            $mod = $user->company->purchases();
+            $stores = $user->company->stores;
+        }
+        
+        if(!$user->hasRole('secretary')){
+            $mod = $mod->where('status', 1);
+        }
+        $sort_by_date = 'desc';
+        if ($request->get('company_id') != ""){
+            $company_id = $request->get('company_id');
+            $mod = $mod->where('company_id', $company_id);
+        }
+        if ($request->get('reference_no') != ""){
+            $reference_no = $request->get('reference_no');
+            $mod = $mod->where('reference_no', 'LIKE', "%$reference_no%");
+        }
+        if ($request->get('supplier_id') != ""){
+            $supplier_id = $request->get('supplier_id');
+            $mod = $mod->where('supplier_id', $supplier_id);
+        }
+        if ($request->get('store_id') != ""){
+            $store_id = $request->get('store_id');
+            $mod = $mod->where('store_id', $store_id);
+        }
+        if ($request->get('period') != ""){   
+            $period = $request->get('period');
+            $from = substr($period, 0, 10);
+            $to = substr($period, 14, 10);
+            $mod = $mod->whereBetween('timestamp', [$from, $to]);
+        }
+        if ($request->get('expiry_period') != ""){   
+            $expiry_period = $request->get('expiry_period');
+            $from = substr($expiry_period, 0, 10);
+            $to = substr($expiry_period, 14, 10);
+            $mod = $mod->whereBetween('expiry_date', [$from, $to]);
+        }
+        if ($request->get('keyword') != ""){
+            $keyword = $request->keyword;
+            $company_array = Company::where('name', 'LIKE', "%$keyword%")->pluck('id');
+            $supplier_array = Supplier::where('company', 'LIKE', "%$keyword%")->pluck('id');
+            $store_array = Store::where('name', 'LIKE', "%$keyword%")->pluck('id');
+
+            $mod = $mod->where(function($query) use($keyword, $company_array, $store_array, $supplier_array){
+                return $query->where('reference_no', 'LIKE', "%$keyword%")
+                        ->orWhereIn('company_id', $company_array)
+                        ->orWhereIn('store_id', $store_array)
+                        ->orWhereIn('supplier_id', $supplier_array)
+                        ->orWhere('timestamp', 'LIKE', "%$keyword%")
+                        ->orWhere('grand_total', 'LIKE', "%$keyword%");
+            });
+        }
+        if($request->sort_by_date != ''){
+            $sort_by_date = $request->sort_by_date;
+        }
+        $data = $mod->orderBy('timestamp', $sort_by_date)->get();
+        return Excel::download(new PurchaseExport($data), 'purchase_report.xlsx');
     }
 }
