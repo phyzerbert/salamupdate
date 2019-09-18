@@ -55,9 +55,20 @@
                                     <td class="phone_number">{{$item->phone_number}}</td>
                                     <td class="city">{{$item->city}}</td>
                                     <td class="address">{{$item->address}}</td>
-                                    <td class="py-2">
-                                        <a href="#" class="btn btn-sm btn-primary btn-icon mr-1 btn-edit" data-id="{{$item->id}}"><div><i class="fa fa-edit"></i></div></a>
-                                        <a href="{{route('supplier.delete', $item->id)}}" class="btn btn-sm btn-danger btn-icon" data-id="{{$item->id}}" onclick="return window.confirm('{{__('page.are_you_sure')}}')"><div><i class="fa fa-trash-o"></i></div></a>
+                                    <td class="py-2 text-center">
+                                        
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-info dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                {{__('page.action')}}
+                                            </button>
+                                            <ul class="dropdown-menu dropdown-menu-right">
+                                                <li><a href="{{route('supplier.report', $item->id)}}" class="dropdown-item">{{__('page.report')}}</a></li>
+                                                <li><a href="{{route('supplier.email', $item->id)}}" class="dropdown-item">{{__('page.email')}}</a></li>
+                                                <li><a href="{{route('supplier.export', $item->id)}}" class="dropdown-item">{{__('page.export')}}</a></li>
+                                                <li><a href="{{route('supplier.edit', $item->id)}}" class="dropdown-item">{{__('page.edit')}}</a></li>
+                                                <li><a href="{{route('supplier.delete', $item->id)}}" class="dropdown-item" onclick="return window.confirm('{{__('page.are_you_sure')}}')">{{__('page.delete')}}</a></li>
+                                            </ul>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach
