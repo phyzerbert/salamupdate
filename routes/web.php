@@ -120,6 +120,8 @@ Route::any('/payment/index/{type}/{id}', 'PaymentController@index')->name('payme
 Route::post('/payment/create', 'PaymentController@create')->name('payment.create');
 Route::post('/payment/edit', 'PaymentController@edit')->name('payment.edit');
 Route::get('/payment/delete/{id}', 'PaymentController@delete')->name('payment.delete');
+Route::get('/payment/approve/{id}', 'PaymentController@approve')->name('payment.approve');
+Route::any('/payment/pending_payments', 'PaymentController@pending_payments')->name('payment.pending_payments');
 
 Route::get('get_products', 'VueController@get_products');
 Route::post('get_orders', 'VueController@get_orders');

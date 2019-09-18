@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Payment;
 use App\Models\Purchase;
 use App\Models\Sale;
+use App\Models\Company;
+
+use Auth;
 
 class PaymentController extends Controller
 {
@@ -34,6 +37,8 @@ class PaymentController extends Controller
             'type'=>'required|string',
             'paymentable_id'=>'required',
         ]);
+
+        $user = Auth::user();
         
         $item = new Payment();
         $item->timestamp = $request->get('date').":00";
@@ -46,6 +51,11 @@ class PaymentController extends Controller
         }else if($request->get('type') == 'sale'){
             $item->paymentable_type = Sale::class;
         }
+        if(Auth::user()->hasRole('user')){
+            $item->status = 1;
+        }else{
+            $item->status = 0;
+        }
         if($request->has("attachment")){
             $picture = request()->file('attachment');
             $imageName = "payment_".time().'.'.$picture->getClientOriginalExtension();
@@ -53,7 +63,7 @@ class PaymentController extends Controller
             $item->attachment = 'images/uploaded/payment_images/'.$imageName;
         }
         $item->save();
-        return back()->with('success', 'Added Successfully');
+        return back()->with('success', __('added_successfully'));
     }
 
     public function edit(Request $request){
@@ -81,5 +91,49 @@ class PaymentController extends Controller
         $item = Payment::find($id);
         $item->delete();
         return back()->with("success", __('page.deleted_successfully'));
+    }
+
+    public function approve($id){
+        $item = Payment::find($id);
+        $item->update(['status' => 1]);
+        return back()->with("success", __('page.approved_successfully'));
+    }
+
+    public function pending_payments(Request $request){
+        config(['site.page' => 'pending_payments']);
+        $companies = Company::all();
+        $user = Auth::user();
+        $mod = new Payment();
+        $mod = $mod->where('status', 0);
+
+        $company_id = $reference_no = $period = '';
+        if($user->hasRole('user')){
+            $company_id = $user->company_id;            
+        }
+        if($request->get('company_id') != ''){
+            $company_id = $request->get('company_id');
+        }
+        if($company_id != ''){
+            $company = Company::find($company_id);
+            $company_purchases = $company->purchases()->pluck('id');
+            $company_sales = $company->sales()->pluck('id');
+            $mod = $mod->where(function($query) use($company_purchases, $company_sales){
+                $query->whereIn('paymentable_id', $company_purchases)->where('paymentable_type', Purchase::class)
+                    ->orWhereIn('paymentable_id', $company_sales)->where('paymentable_type', Sale::class);
+            });
+        }
+        if ($request->get('reference_no') != ""){
+            $reference_no = $request->get('reference_no');
+            $mod = $mod->where('reference_no', 'LIKE', "%$reference_no%");
+        }
+        if ($request->get('period') != ""){   
+            $period = $request->get('period');
+            $from = substr($period, 0, 10);
+            $to = substr($period, 14, 10);
+            $mod = $mod->whereBetween('timestamp', [$from, $to]);
+        }
+        $pagesize = session('pagesize');
+        $data = $mod->orderBy('created_at', 'desc')->paginate($pagesize);
+        return view('payment.pending', compact('data', 'companies', 'company_id', 'reference_no', 'period'));
     }
 }

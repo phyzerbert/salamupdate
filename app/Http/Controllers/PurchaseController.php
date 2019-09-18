@@ -38,12 +38,10 @@ class PurchaseController extends Controller
         if($user->hasRole('user') || $user->hasRole('secretary')){
             $mod = $user->company->purchases();
             $stores = $user->company->stores;
-        }
-        
+        }        
         if(!$user->hasRole('secretary')){
             $mod = $mod->where('status', 1);
-        }
-        
+        }        
         $company_id = $reference_no = $supplier_id = $store_id = $period = $expiry_period = $keyword = '';
         $sort_by_date = 'desc';
         if ($request->get('company_id') != ""){
@@ -141,8 +139,12 @@ class PurchaseController extends Controller
             $item->expiry_date = date('Y-m-d', strtotime("+".$data['credit_days']."days", strtotime($item->timestamp)));
         }        
         $item->credit_days = $data['credit_days'];
-        // $item->status = $data['status'];
         $item->note = $data['note'];
+        if(Auth::user()->hasRole('user')){
+            $item->status = 1;
+        }else{
+            $item->status = 0;
+        }
 
         if($request->has("attachment")){
             $picture = request()->file('attachment');
@@ -235,7 +237,6 @@ class PurchaseController extends Controller
             $item->credit_days = $data['credit_days'];
             $item->expiry_date = date('Y-m-d', strtotime("+".$data['credit_days']."days", strtotime($item->timestamp)));
         }
-        $item->status = $data['status'];
         $item->note = $data['note'];
 
         if($request->has("attachment")){
@@ -295,7 +296,7 @@ class PurchaseController extends Controller
         $pdf = PDF::loadView('purchase.report', compact('purchase'));
         return view('purchase.report', compact('purchase'));
     }
-    
+
     public function email($id){
         $purchase = Purchase::find($id);
         $pdf = PDF::loadView('purchase.report', compact('purchase'));

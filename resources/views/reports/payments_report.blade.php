@@ -79,7 +79,7 @@
                                         @endif                                        
                                     </td> --}}
                                     <td class="purchase" data-id="{{$item->paymentable_id}}">
-                                        {{$item->paymentable->reference_no}}
+                                        @if($item->paymentable){{$item->paymentable->reference_no}}@endif
                                     </td>
                                     <td class="supplier">
                                         @isset($item->paymentable->supplier){{$item->paymentable->supplier->company}}@endisset

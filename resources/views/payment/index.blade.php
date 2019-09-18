@@ -32,12 +32,14 @@
                                 <th>{{__('page.reference_no')}}</th>
                                 <th>{{__('page.amount')}}</th> 
                                 <th>{{__('page.note')}}</th>
-                                <th>{{__('page.action')}}</th>
+                                @if(in_array($role, ['admin', 'user']))
+                                    <th>{{__('page.action')}}</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>                                
                             @foreach ($data as $item)
-                                <tr>
+                                <tr class="@if($item->status == 0) text-danger @endif">
                                     <td>{{ $loop->index + 1 }}</td>
                                     <td class="date">{{date('Y-m-d H:i', strtotime($item->timestamp))}}</td>
                                     <td class="reference_no">{{$item->reference_no}}</td>
@@ -48,14 +50,17 @@
                                             <a href="{{asset($item->attachment)}}" download><i class="fa fa-paperclip"></i></a>
                                         @endif
                                     </td>
-                                    <td class="py-1">
-                                        <a href="#" class="btn btn-primary btn-icon wave-effect mg-r-5 btn-edit" data-id="{{$item->id}}"><i class="fa fa-edit"></i></a>
-                                        <a href="{{route('payment.delete', $item->id)}}" class="btn btn-danger btn-icon wave-effect" data-id="{{$item->id}}" onclick="return window.confirm('{{__('page.are_you_sure')}}')"><i class="fa fa-trash-o"></i></a>
-                                    </td>
+                                    @if(in_array($role, ['admin', 'user']))
+                                        <td class="py-1">
+                                            <a href="{{route('payment.approve', $item->id)}}" class="btn btn-info btn-icon wave-effect mr-2" onclick="return window.confirm('{{__('page.are_you_sure')}}')" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="{{__('page.approve')}}"><i class="fa fa-check-circle-o"></i></a>
+                                            <a href="#" class="btn btn-primary btn-icon wave-effect mr-2 btn-edit" data-id="{{$item->id}}" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="{{__('page.edit')}}"><i class="fa fa-edit"></i></a>
+                                            <a href="{{route('payment.delete', $item->id)}}" class="btn btn-danger btn-icon wave-effect" data-id="{{$item->id}}" onclick="return window.confirm('{{__('page.are_you_sure')}}')" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="{{__('page.delete')}}"><i class="fa fa-trash-o"></i></a>
+                                        </td>
+                                    @endif
                                 </tr>
                             @endforeach
                         </tbody>
-                    </table> 
+                    </table>
                         
                     <div class="row">
                         <div class="col-md-12 mt-3 text-right">

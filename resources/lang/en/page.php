@@ -300,4 +300,6 @@ return [
     'sale_report' => 'Sale Report',
     'keyword' => 'Keyword',
     'export' => 'Export',
+    'pending_payments' => 'Pending Payments',
+    'added_successfully' => 'Added Successfully',
 ];

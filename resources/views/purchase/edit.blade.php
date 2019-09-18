@@ -30,7 +30,7 @@
                     <input type="hidden" name="id" value="{{$purchase->id}}">  
                     <input type="hidden" name="" data-id="{{$purchase->id}}" data-type="purchase" id="data">  
                     <div class="row mb-4">
-                        <div class="col-lg-4">
+                        <div class="col-lg-4 col-md-6">
                             <div class="form-group">
                                 <label class="form-control-label">{{__('page.purchase_date')}}: <span class="tx-danger">*</span></label>
                                 <input class="form-control" type="text" name="date" id="purchase_date" value="{{date('Y-m-d H:i', strtotime($purchase->timestamp))}}" placeholder="Purchase Date" autocomplete="off" required>
@@ -41,7 +41,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-4 col-md-6">
                             <div class="form-group">
                                 <label class="form-control-label">{{__('page.reference_no')}}:</label>
                                 <input class="form-control" type="text" name="reference_number" value="{{$purchase->reference_no}}" placeholder="{{__('page.reference_no')}}">
@@ -52,7 +52,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-4 col-md-6">
                             <div class="form-group">
                                 <label class="form-control-label">{{__('page.store')}}:</label>
                                 <select class="form-control select2" name="store" data-placeholder="{{__('page.select_store')}}">
@@ -70,7 +70,7 @@
                         </div>
                     </div>
                     <div class="row mb-4">
-                        <div class="col-lg-3">
+                        <div class="col-lg-3 col-md-6">
                             <div class="form-group">
                                 <label class="form-control-label">{{__('page.supplier')}}:</label>
                                 <select class="form-control select2-show-search" name="supplier" data-placeholder="{{__('page.supplier')}}">
@@ -86,23 +86,13 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="col-lg-3">
+                        <div class="col-lg-3 col-md-6">
                             <div class="form-group">
                                 <label class="form-control-label">{{__('page.attachment')}}:</label>
                                 <input type="file" name="attachment" id="file2" class="file-input-styled">
                             </div>
                         </div>
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <label class="form-control-label">{{__('page.status')}}:</label>
-                                <select class="form-control select2" name="status" data-placeholder="Status">
-                                    <option label="{{__('page.status')}}"></option>
-                                    <option value="0" @if($purchase->status == 0) selected @endif>{{__('page.pending')}}</option>
-                                    <option value="1" @if($purchase->status == 1) selected @endif>{{__('page.received')}}</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
+                        <div class="col-lg-3 col-md-6">
                             <div class="form-group">
                                 <label class="form-control-label">{{__('page.credit_days')}}:</label>
                                 <input type="number" class="form-control" name="credit_days" min="0" value="{{$purchase->credit_days}}">
