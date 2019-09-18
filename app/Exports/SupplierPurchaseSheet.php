@@ -2,11 +2,11 @@
 
 namespace App\Exports;
 
-use App\Models\Purchase;
 use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\WithTitle;
 
-class PurchaseExport implements FromArray, WithHeadings
+class SupplierPurchaseSheet implements FromArray, WithHeadings, WithTitle
 {
     protected $data;
 
@@ -32,7 +32,7 @@ class PurchaseExport implements FromArray, WithHeadings
             $purchases[$i]['no'] = $i+1;
             $purchases[$i]['date'] = date('Y-m-d H:i', strtotime($item->timestamp));
             $purchases[$i]['reference_no'] = $item->reference_no;
-            $purchases[$i]['supplier'] = isset($item->supplier->company) ? $item->supplier->company : '';
+            $purchases[$i]['company'] = isset($item->company->name) ? $item->company->name : '';
             $purchases[$i]['status'] = $item->status == 1 ? __('page.approved') : __('page.pending');
             $purchases[$i]['grand_total'] = number_format($grand_total);
             $purchases[$i]['paid'] = number_format($paid);
@@ -57,12 +57,17 @@ class PurchaseExport implements FromArray, WithHeadings
             'No',
             __('page.date'),
             __('page.reference_no'),
-            __('page.supplier'),
+            __('page.company'),
             __('page.status'),
             __('page.grand_total'),
             __('page.paid'),
             __('page.balance'),
             __('page.payment_status'),
         ];
+    }
+
+    public function title(): string
+    {
+        return __('page.purchase');
     }
 }

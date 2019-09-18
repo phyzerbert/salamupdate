@@ -13,7 +13,7 @@
                     <ol class="breadcrumb pull-right">
                         <li><a href="{{route('home')}}">{{__('page.home')}}</a></li>
                         <li><a href="{{route('report.overview_chart')}}">{{__('page.reports')}}</a></li>
-                        <li><a href="{{route('report.customers_report')}}">{{__('page.suppliers_report')}}</a></li>
+                        <li><a href="{{route('report.suppliers_report')}}">{{__('page.suppliers_report')}}</a></li>
                         <li class="active">{{__('page.supplier_purchases')}}</li>
                     </ol>
                 </div>

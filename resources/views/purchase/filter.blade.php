@@ -27,6 +27,6 @@
         @endforeach
     </select>
     <input type="text" class="form-control form-control-sm mx-sm-2 mb-2" name="period" id="period" autocomplete="off" value="{{$period}}" placeholder="{{__('page.purchase_date')}}">
-    <button type="submit" class="btn btn-sm btn-primary mb-2"><i class="fa fa-search"></i>&nbsp;&nbsp;{{__('page.search')}}</button>
+    <button type="submit" class="btn btn-sm btn-primary mb-2" id="btn-submit"><i class="fa fa-search"></i>&nbsp;&nbsp;{{__('page.search')}}</button>
     <button type="button" class="btn btn-sm btn-danger mb-2 ml-1" id="btn-reset"><i class="fa fa-eraser"></i>&nbsp;&nbsp;{{__('page.reset')}}</button>
 </form>

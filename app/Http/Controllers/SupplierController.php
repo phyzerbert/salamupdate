@@ -4,6 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Supplier;
+use App\Models\Purchase;
+use App\Models\Payment;
+
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ReportMail;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\SupplierExport;
+
+use Auth;
+use PDF;
 
 class SupplierController extends Controller
 {
@@ -90,5 +100,33 @@ class SupplierController extends Controller
         $item = Supplier::find($id);
         $item->delete();
         return back()->with("success", __('page.deleted_successfully'));
+    }
+
+    
+    public function report($id){
+        $supplier = Supplier::find($id);
+        $pdf = PDF::loadView('reports.suppliers_report.pdf', compact('supplier'));        
+        return $pdf->download('supplier_report_'.$supplier->company.'.pdf');        
+        // return view('reports.suppliers_report.pdf', compact('supplier'));
+    }
+    
+    public function email($id){
+        $supplier = Supplier::find($id);
+        $pdf = PDF::loadView('reports.suppliers_report.pdf', compact('supplier'));   
+        if(filter_var($supplier->email, FILTER_VALIDATE_EMAIL)){
+            $to_email = $supplier->email;
+            Mail::to($to_email)->send(new ReportMail($pdf, 'Supplier Report'));
+            return back()->with('success', 'Email is sent successfully');
+        }else{
+            return back()->withErrors('email', 'Supplier email address is invalid.');
+        }
+    }
+
+    public function export($id) {        
+        $supplier = Supplier::find($id);
+        $purchases = $supplier->purchases;
+        $purchase_array = $supplier->purchases->pluck('id');
+        $payments = Payment::whereIn('paymentable_id', $purchase_array)->where('paymentable_type', 'App\Models\Purchase')->get();
+        return Excel::download(new SupplierExport($purchases, $payments), 'supplier_report.xlsx');
     }
 }

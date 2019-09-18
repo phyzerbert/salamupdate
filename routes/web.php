@@ -38,6 +38,9 @@ Route::get('/customer/delete/{id}', 'CustomerController@delete')->name('customer
 Route::any('/supplier/index', 'SupplierController@index')->name('supplier.index');
 Route::post('/supplier/create', 'SupplierController@create')->name('supplier.create');
 Route::post('/supplier/purchase_create', 'SupplierController@purchase_create')->name('supplier.purchase_create');
+Route::get('/supplier/report/{id}', 'SupplierController@report')->name('supplier.report');
+Route::get('/supplier/email/{id}', 'SupplierController@email')->name('supplier.email');
+Route::get('/supplier/export/{id}', 'SupplierController@export')->name('supplier.export');
 Route::post('/supplier/edit', 'SupplierController@edit')->name('supplier.edit');
 Route::get('/supplier/delete/{id}', 'SupplierController@delete')->name('supplier.delete');
 

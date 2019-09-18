@@ -269,6 +269,11 @@
             $("#searchForm").attr('action', "{{route('purchase.export')}}");
             $("#searchForm").submit();
         });
+
+        $("#btn-submit").click(function(){
+            $("#searchForm").attr('action', "");
+            $("#searchForm").submit();
+        });
     });
 </script>
 @endsection

@@ -74,20 +74,30 @@
                                     <td style="width:120px !important;">{{number_format($total_amount)}}</td>                                        
                                     <td>{{number_format($paid)}}</td>
                                     <td>{{number_format($total_amount - $paid)}}</td>                                      
-                                    <td>
-                                        <a href="{{route('report.suppliers_report.purchases', $item->id)}}" class="badge badge-primary">{{__('page.view_reports')}}</a>
+                                    <td class="text-center py-2">                                        
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-info dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                {{__('page.action')}}
+                                            </button>
+                                            <ul class="dropdown-menu dropdown-menu-right">
+                                                <li><a href="{{route('report.suppliers_report.purchases', $item->id)}}" class="dropdown-item">{{__('page.view_reports')}}</a></li>
+                                                <li><a href="{{route('supplier.report', $item->id)}}" class="dropdown-item">{{__('page.report')}}</a></li>
+                                                <li><a href="{{route('supplier.export', $item->id)}}" class="dropdown-item">{{__('page.export')}}</a></li>
+                                                <li><a href="{{route('supplier.email', $item->id)}}" class="dropdown-item">{{__('page.email')}}</a></li>
+                                            </ul>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colspan="5">{{__('page.total')}}</td>
-                                <td>{{number_format($footer_total_purchases)}}</td>
-                                <td>{{number_format($footer_total_amount)}}</td>
-                                <td>{{number_format($footer_paid)}}</td>
-                                <td>{{number_format($footer_total_amount - $footer_paid)}}</td>
-                                <td></td>
+                                <th colspan="5">{{__('page.total')}}</th>
+                                <th>{{number_format($footer_total_purchases)}}</th>
+                                <th>{{number_format($footer_total_amount)}}</th>
+                                <th>{{number_format($footer_paid)}}</th>
+                                <th>{{number_format($footer_total_amount - $footer_paid)}}</th>
+                                <th></th>
                             </tr>
                         </tfoot>
                     </table>
