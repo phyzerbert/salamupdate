@@ -12,7 +12,13 @@ use App\Models\Payment;
 use App\Models\Company;
 use App\Models\Store;
 use App\Models\StoreProduct;
+
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ReportMail;
+
 use Auth;   
+use Excel;
+use PDF;
 
 class PurchaseController extends Controller
 {
@@ -203,13 +209,6 @@ class PurchaseController extends Controller
         return view('purchase.edit', compact('purchase', 'suppliers', 'stores', 'products'));
     }
 
-    public function detail(Request $request, $id){    
-        config(['site.page' => 'purchase']);    
-        $purchase = Purchase::find($id);
-
-        return view('purchase.detail', compact('purchase'));
-    }
-
     public function update(Request $request){
         $request->validate([
             'date'=>'required|string',
@@ -276,6 +275,36 @@ class PurchaseController extends Controller
         }
         
         return back()->with('success', __('page.updated_successfully'));
+    }
+
+    public function detail(Request $request, $id){    
+        config(['site.page' => 'purchase']);    
+        $purchase = Purchase::find($id);
+        return view('purchase.detail', compact('purchase'));
+    }
+
+    public function report($id){
+        $purchase = Purchase::find($id);
+        $pdf = PDF::loadView('purchase.report', compact('purchase'));        
+        return $pdf->download('purchase_report_'.$purchase->reference_no.'.pdf');
+    }
+
+    public function report_view($id){
+        $purchase = Purchase::find($id);
+        $pdf = PDF::loadView('purchase.report', compact('purchase'));
+        return view('purchase.report', compact('purchase'));
+    }
+    
+    public function email($id){
+        $purchase = Purchase::find($id);
+        $pdf = PDF::loadView('purchase.report', compact('purchase'));
+        if(filter_var($purchase->supplier->email, FILTER_VALIDATE_EMAIL)){
+            $to_email = $purchase->supplier->email;
+            Mail::to($to_email)->send(new ReportMail($pdf, 'Supplier Purchase Report'));
+            return back()->with('success', 'Email is sent successfully');
+        }else{
+            return back()->withErrors('email', 'Supplier email address is invalid.');
+        }
     }
 
     public function delete($id){

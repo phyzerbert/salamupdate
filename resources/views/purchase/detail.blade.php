@@ -89,12 +89,12 @@
                     </div>
                 </div>
                 <div class="row mg-t-20">
-                    <div class="col-md-12 table-responsive">
-                        <h5>Orders Item</h5>
+                    <div class="col-12 table-responsive">
+                        <h5>{{__('page.order_items')}}</h5>
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th class="wd-40">#</th>
+                                    <th width="50">#</th>
                                     <th>{{__('page.product_code')}}</th>
                                     <th>{{__('page.product_name')}}</th>
                                     <th>{{__('page.product_cost')}}</th>
@@ -111,17 +111,17 @@
                                     $paid = $purchase->payments()->sum('amount');
                                 @endphp
                                 @foreach ($purchase->orders as $item)
-                                @php
-                                    $tax = ($item->product->tax) ? $item->product->tax->rate : 0;
-                                    $quantity = $item->quantity;
-                                    $cost = $item->cost;
-                                    $tax_rate = $cost * $tax / 100;
-                                    $subtotal = $item->subtotal;
+                                    @php
+                                        $tax = ($item->product->tax) ? $item->product->tax->rate : 0;
+                                        $quantity = $item->quantity;
+                                        $cost = $item->cost;
+                                        $tax_rate = $cost * $tax / 100;
+                                        $subtotal = $item->subtotal;
 
-                                    $total_quantity += $quantity;
-                                    $total_tax_rate += $tax_rate;
-                                    $total_amount += $subtotal;
-                                @endphp
+                                        $total_quantity += $quantity;
+                                        $total_tax_rate += $tax_rate;
+                                        $total_amount += $subtotal;
+                                    @endphp
                                     <tr>
                                         <td>{{$loop->index+1}}</td>
                                         <td>@isset($item->product->code){{$item->product->code}}@endisset</td>
@@ -132,14 +132,14 @@
                                         <td>{{number_format($item->subtotal)}}</td>
                                     </tr>
                                 @endforeach
-                                <tr>
-                                    <td colspan="4" class="tx-bold" style="text-align:right">{{__('page.total')}} (COP)</td>
-                                    <td>{{$total_quantity}}</td>
-                                    <td>{{$total_tax_rate}}</td>
-                                    <td>{{number_format($total_amount)}}</td>
-                                </tr>
                             </tbody>
                             <tfoot class="tx-bold tx-black">
+                                <tr>
+                                    <th colspan="4" class="tx-bold" style="text-align:right">{{__('page.total')}} (COP)</th>
+                                    <th>{{$total_quantity}}</th>
+                                    <th>{{$total_tax_rate}}</th>
+                                    <th>{{number_format($total_amount)}}</th>
+                                </tr>
                                 <tr>
                                     <th colspan="6" style="text-align:right">{{__('page.discount')}} (COP)</th>
                                     <th>
@@ -183,16 +183,50 @@
                         </table>
                     </div>
                 </div>
-                <div class="row mg-t-20">
+                <div class="row">
                     <div class="col-md-12">
                         <h5>{{__('page.note')}}</h5>
                         <p class="mx-2">{{$purchase->note}}</p>
                     </div>
                 </div>
+                <h5>{{__('page.payment_list')}}</h5>
+                <div class="row">
+                    <div class="col-12 table-resposnive">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th style="width:40px;">#</th>
+                                    <th>{{__('page.date')}}</th>
+                                    <th>{{__('page.reference_no')}}</th>
+                                    <th>{{__('page.amount')}}</th> 
+                                    <th>{{__('page.note')}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>                                
+                                @foreach ($purchase->payments as $item)
+                                    <tr>
+                                        <td>{{ $loop->index + 1 }}</td>
+                                        <td class="date">{{date('Y-m-d H:i', strtotime($item->timestamp))}}</td>
+                                        <td class="reference_no">{{$item->reference_no}}</td>
+                                        <td class="amount" data-value="{{$item->amount}}">{{number_format($item->amount)}}</td>
+                                        <td class="" data-path="{{$item->attachment}}">
+                                            <span class="tx-info note">{{$item->note}}</span>&nbsp;
+                                            @if($item->attachment != "")
+                                                <a href="{{asset($item->attachment)}}" download><i class="fa fa-paperclip"></i></a>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table> 
+                    </div>
+                </div>
                 <div class="row mt-3">
-                    <div class="col-sm-12 col-md-3 card card-body card bg-success bd-0 d-block" style="float:right !important;">                            
-                        <h6 class="card-title text-white tx-medium mg-b-5">{{__('page.created_by')}} @isset($purchase->user->name){{$purchase->user->name}}@endisset</h6>
-                        <h6 class="card-title text-white tx-medium mg-y-5">{{__('page.created_at')}} {{$purchase->created_at}}</h6>
+                    <div class="col-sm-12 col-md-3">
+                        <div class="card card-body card-fill bg-success ">
+                            <h6 class="card-title text-white mb-2">{{__('page.created_by')}} @isset($purchase->user->name){{$purchase->user->name}}@endisset</h6>
+                            <h6 class="card-title text-white">{{__('page.created_at')}} {{$purchase->created_at}}</h6>
+                        </div>
                     </div>
                     <div class="col-sm-12 col-md-9 text-right">
                         <a href="{{route('purchase.index')}}" class="btn btn-secondary"><i class="fa fa-credit-card"></i> {{__('page.purchases_list')}}</a>

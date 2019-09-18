@@ -125,6 +125,7 @@ return [
     'product_name_code' => 'Product Name(Code)',
     'expiry_date' => 'Expiry Date',
     'product_cost' => 'Product Cost',
+    'cost' => 'Cost',
     'product_price' => 'Product Price',
     'product_detail' => 'Product Detail',
     'product_tax' => 'Product Tax',
@@ -294,4 +295,7 @@ return [
     'approve' => 'Approve',
     'approved' => 'Approved',
     'approved_successfully' => 'Approved Successfully',
+    'report' => 'Report',
+    'purchase_report' => 'Purchase Report',
+    'sale_report' => 'Sale Report',
 ];

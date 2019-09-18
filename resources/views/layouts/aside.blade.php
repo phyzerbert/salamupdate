@@ -47,9 +47,9 @@
                     <li class="has_sub">
                         <a href="#" class="waves-effect @if($page == in_array($page, $sale_items)) active subdrop @endif"><i class="fa fa-sign-out"></i><span> {{__('page.sales')}} </span><span class="pull-right"><i class="md md-add"></i></span></a>
                         <ul class="list-unstyled">
-                            <li class="@if($page == 'sale_list') active @endif"><a href="{{route('sale.index')}}" class="@if($page == 'purchase_list') active @endif">{{__('page.sales_list')}}</a></li>
+                            <li class="@if($page == 'sale_list') active @endif"><a href="{{route('sale.index')}}" class="@if($page == 'sale_list') active @endif">{{__('page.sales_list')}}</a></li>
                             @if($user->hasRole('user') || $user->hasRole('secretary'))
-                                <li class="@if($page == 'sale_create') active @endif"><a href="{{route('sale.create')}}" class="@if($page == 'purchase_create') active @endif">{{__('page.add_sale')}}</a></li>
+                                <li class="@if($page == 'sale_create') active @endif"><a href="{{route('sale.create')}}" class="@if($page == 'sale_create') active @endif">{{__('page.add_sale')}}</a></li>
                             @endif
                         </ul>
                     </li>

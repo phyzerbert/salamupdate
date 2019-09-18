@@ -1,3 +1,6 @@
+select option {
+    font-size: 16px;
+}
 #ajax-loading{
     display: none;
     position: absolute;

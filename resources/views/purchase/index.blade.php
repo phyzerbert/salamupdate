@@ -52,7 +52,7 @@
                                 <th>{{__('page.paid')}}</th>
                                 <th>{{__('page.balance')}}</th>
                                 <th>{{__('page.payment_status')}}</th>
-                                <th width="150">{{__('page.action')}}</th>
+                                <th width="120">{{__('page.action')}}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -96,6 +96,8 @@
                                                     <li><a href="#" data-id="{{$item->id}}" data-status={{$item->status}} class="dropdown-item btn-add-payment">{{__('page.add_payment')}}</a></li>
                                                 @endif
                                                 @if(in_array($role, ['admin', 'user']))
+                                                    <li><a href="{{route('purchase.report', $item->id)}}" class="dropdown-item">{{__('page.report')}}</a></li>
+                                                    <li><a href="{{route('purchase.email', $item->id)}}" class="dropdown-item">{{__('page.email')}}</a></li>
                                                     <li><a href="{{route('purchase.edit', $item->id)}}" class="dropdown-item">{{__('page.edit')}}</a></li>
                                                     <li><a href="{{route('purchase.delete', $item->id)}}" class="dropdown-item" onclick="return window.confirm('Are you sure?')">{{__('page.delete')}}</a></li>
                                                 @endif

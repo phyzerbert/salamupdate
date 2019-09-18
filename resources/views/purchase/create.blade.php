@@ -6,6 +6,12 @@
     <link href="{{asset('master/plugins/jquery-ui/timepicker/jquery-ui-timepicker-addon.min.css')}}" rel="stylesheet">
     <script src="{{asset('master/plugins/vuejs/vue.js')}}"></script>
     <script src="{{asset('master/plugins/vuejs/axios.js')}}"></script>
+    <style>
+        .table>tbody>tr>td {
+            padding-top: .5rem;
+            padding-bottom: .5rem;
+        }
+    </style>
 @endsection
 @section('content')
     <div class="content">

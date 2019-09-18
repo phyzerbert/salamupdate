@@ -82,6 +82,8 @@ Route::post('/purchase/save', 'PurchaseController@save')->name('purchase.save');
 Route::get('/purchase/edit/{id}', 'PurchaseController@edit')->name('purchase.edit');
 Route::post('/purchase/update', 'PurchaseController@update')->name('purchase.update');
 Route::get('/purchase/detail/{id}', 'PurchaseController@detail')->name('purchase.detail');
+Route::get('/purchase/report/{id}', 'PurchaseController@report')->name('purchase.report');
+Route::get('/purchase/email/{id}', 'PurchaseController@email')->name('purchase.email');
 Route::get('/purchase/approve/{id}', 'PurchaseController@approve')->name('purchase.approve');
 Route::get('/purchase/delete/{id}', 'PurchaseController@delete')->name('purchase.delete');
 

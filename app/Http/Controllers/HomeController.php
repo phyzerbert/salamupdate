@@ -38,9 +38,6 @@ class HomeController extends Controller
         if($user->hasRole('buyer')){
             return redirect(route('pre_order.create'));
         }
-        if($user->hasRole('secretary')){
-            return redirect(route('purchase.create'));
-        }
         $companies = Company::all();
         if ($user->role->slug == 'user') {
             $top_company = $user->company->id;
