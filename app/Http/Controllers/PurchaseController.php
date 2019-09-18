@@ -32,7 +32,11 @@ class PurchaseController extends Controller
             $mod = $user->company->purchases();
             $stores = $user->company->stores;
         }
-        $mod = $mod->where('status', 1);
+        
+        if(!$user->hasRole('secretary')){
+            $mod = $mod->where('status', 1);
+        }
+        
         $company_id = $reference_no = $supplier_id = $store_id = $period = $expiry_period = $keyword = '';
         $sort_by_date = 'desc';
         if ($request->get('company_id') != ""){
