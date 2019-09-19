@@ -149,7 +149,7 @@ class PurchaseController extends Controller
         $company_name = Company::find($item->company_id)->name;
         if($request->has("attachment")){
             $picture = request()->file('attachment');
-            $date_time = date('Y_m_d_H_i_s');
+            $date_time = date('Y-m-d-H-i-s');
             $imageName = $company_name."_".$data['reference_number']."_".$date_time.'.'.$picture->getClientOriginalExtension();
             $picture->move(public_path('images/uploaded/purchase_images/'), $imageName);
             $item->attachment = 'images/uploaded/purchase_images/'.$imageName;
@@ -243,7 +243,7 @@ class PurchaseController extends Controller
         $company_name = Company::find($item->company_id)->name;
         if($request->has("attachment")){
             $picture = request()->file('attachment');
-            $date_time = date('Y_m_d_H_i_s');
+            $date_time = date('Y-m-d-H-i-s');
             $imageName = $company_name."_".$data['reference_number']."_".$date_time.'.'.$picture->getClientOriginalExtension();
             $picture->move(public_path('images/uploaded/purchase_images/'), $imageName);
             $item->attachment = 'images/uploaded/purchase_images/'.$imageName;
