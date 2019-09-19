@@ -6,9 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Sale extends Model
 {
-    protected $fillable = [
-        'timestamp', 'reference_no', 'store_id', 'supplier_id', 'attachment', 'note', 'status',
-    ];
+    protected $guarded = [];
 
     public function user(){
         return $this->belongsTo('App\User');

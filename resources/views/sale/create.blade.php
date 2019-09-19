@@ -156,7 +156,7 @@
                                             <th class="total_tax"></th>
                                             <th colspan="2" class="total">
                                                 @{{total.price | currency}}
-                                                <input type="hidden" name="grand_total" :value="grand_total | currency">
+                                                <input type="hidden" name="grand_total" :value="grand_total">
                                             </th>
                                         </tr>
                                     </tfoot>
