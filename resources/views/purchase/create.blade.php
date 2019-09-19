@@ -126,7 +126,7 @@
                             </div>
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="product_table">
-                                    <thead>
+                                    <thead class="table-success">
                                         <tr>
                                             <th>{{__('page.product_name_code')}}</th>
                                             <th>{{__('page.expiry_date')}}</th>

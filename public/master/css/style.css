@@ -1600,7 +1600,6 @@ body.fixed-left .side-menu.left {
   font-size: 14px;
   -moz-box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.1);
   -webkit-box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.1);
-  border-radius: 2px;
   box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.1);
   letter-spacing: 0.2px;
 }
