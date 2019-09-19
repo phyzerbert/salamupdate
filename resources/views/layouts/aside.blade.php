@@ -40,20 +40,20 @@
                             @endif
                         </ul>
                     </li>
-                    {{-- Sale --}}
-                    @php
-                        $sale_items = ['sale', 'sale_list', 'sale_create'];
-                    @endphp
-                    <li class="has_sub">
-                        <a href="#" class="waves-effect @if($page == in_array($page, $sale_items)) active subdrop @endif"><i class="fa fa-sign-out"></i><span> {{__('page.sales')}} </span><span class="pull-right"><i class="md md-add"></i></span></a>
-                        <ul class="list-unstyled">
-                            <li class="@if($page == 'sale_list') active @endif"><a href="{{route('sale.index')}}" class="@if($page == 'sale_list') active @endif">{{__('page.sales_list')}}</a></li>
-                            @if($user->hasRole('user') || $user->hasRole('secretary'))
-                                <li class="@if($page == 'sale_create') active @endif"><a href="{{route('sale.create')}}" class="@if($page == 'sale_create') active @endif">{{__('page.add_sale')}}</a></li>
-                            @endif
-                        </ul>
-                    </li>
                     @if($role != 'secretary')
+                        {{-- Sale --}}
+                        @php
+                            $sale_items = ['sale', 'sale_list', 'sale_create'];
+                        @endphp
+                        <li class="has_sub">
+                            <a href="#" class="waves-effect @if($page == in_array($page, $sale_items)) active subdrop @endif"><i class="fa fa-sign-out"></i><span> {{__('page.sales')}} </span><span class="pull-right"><i class="md md-add"></i></span></a>
+                            <ul class="list-unstyled">
+                                <li class="@if($page == 'sale_list') active @endif"><a href="{{route('sale.index')}}" class="@if($page == 'sale_list') active @endif">{{__('page.sales_list')}}</a></li>
+                                @if($user->hasRole('user') || $user->hasRole('secretary'))
+                                    <li class="@if($page == 'sale_create') active @endif"><a href="{{route('sale.create')}}" class="@if($page == 'sale_create') active @endif">{{__('page.add_sale')}}</a></li>
+                                @endif
+                            </ul>
+                        </li>
                         <li class="@if($page == 'pending_purchases') active @endif">
                             <a href="{{route('purchase.pending_purchases')}}" class="waves-effect @if($page == 'pending_purchases') active @endif"><i class="fa fa-filter"></i><span> {{__('page.pending_purchases')}} </span></a>
                         </li>
