@@ -192,8 +192,8 @@ var app = new Vue({
                                     value: item.name + "(" + item.code + ")",
                                     id: item.id,
                                     cost: item.cost,
-                                    tax_name: item.tax.name,
-                                    tax_rate: item.tax.rate,
+                                    tax_name: item.tax ? item.tax.name : '',
+                                    tax_rate: item.tax ? item.tax.rate : 0,
                                 }
                             })
                         );

@@ -229,8 +229,12 @@ class PreOrderController extends Controller
 
     public function delete($id){
         $item = PreOrder::find($id);
-        $item->items()->delete();
-        
+        $purchases = $item->purchases;
+        foreach ($purchases as $purchase) {
+            $purchase->items()->delete();
+            $purchase->delete();
+        }
+        $item->items()->delete();        
         $item->delete();
         return back()->with("success", __('page.deleted_successfully'));
     }

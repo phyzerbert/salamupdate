@@ -194,7 +194,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <p class="text-right">Purchase: @{{total.cost | currency}} - Discount: @{{discount | currency}} - Shipping: @{{shipping | currency}} - Returns: @{{returns | currency}} = Grand Total: @{{grand_total | currency}}</p>
+                            <p class="text-right">{{__('page.purchase')}}: @{{total.cost | currency}} - {{__('page.discount')}}: @{{discount | currency}} - {{__('page.shipping')}}: @{{shipping | currency}} - {{__('page.returns')}}: @{{returns | currency}} = {{__('page.grand_total')}}: @{{grand_total | currency}}</p>
                         </div>
                     </div>
 

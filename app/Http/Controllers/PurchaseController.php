@@ -260,21 +260,50 @@ class PurchaseController extends Controller
         
         $item->save();
 
+        $purchase_orders = $item->orders->pluck('id')->toArray();
+        $diff_orders = array_diff($purchase_orders, $data['order_id']);
+        foreach ($diff_orders as $key => $value) {
+            Order::find($value)->delete();
+        }
+
         if(isset($data['order_id']) && count($data['order_id']) > 0){
-            for ($i=0; $i < count($data['order_id']); $i++) { 
-                $order = Order::find($data['order_id'][$i]);
-                $order_original_quantity = $order->quantity;
-                $order->update([
-                    'product_id' => $data['product_id'][$i],
-                    'cost' => $data['cost'][$i],
-                    'quantity' => $data['quantity'][$i],
-                    'expiry_date' => $data['expiry_date'][$i],
-                    'subtotal' => $data['subtotal'][$i],
-                ]);
-                if($order_original_quantity != $data['quantity'][$i]){
-                    $store_product = StoreProduct::where('store_id', $data['store'])->where('product_id', $data['product_id'][$i])->first();                
-                    $store_product->increment('quantity', $data['quantity'][$i]);
-                    $store_product->decrement('quantity', $order_original_quantity);
+            for ($i=0; $i < count($data['order_id']); $i++) {
+                if($data['order_id'][$i] == ''){
+                    Order::create([
+                        'product_id' => $data['product_id'][$i],
+                        'cost' => $data['cost'][$i],
+                        'quantity' => $data['quantity'][$i],
+                        'expiry_date' => $data['expiry_date'][$i],
+                        'subtotal' => $data['subtotal'][$i],
+                        'orderable_id' => $item->id,
+                        'orderable_type' => Purchase::class,
+                    ]);
+                    
+                    $store_product = StoreProduct::where('store_id', $data['store'])->where('product_id', $data['product_id'][$i])->first();
+                    if(isset($store_product)){
+                        $store_product->increment('quantity', $data['quantity'][$i]);
+                    }else{
+                        $store_product = StoreProduct::create([
+                            'store_id' => $data['store'],
+                            'product_id' => $data['product_id'][$i],
+                            'quantity' => $data['quantity'][$i],
+                        ]);
+                    }
+                }else{
+                    $order = Order::find($data['order_id'][$i]);
+                    $order_original_quantity = $order->quantity;
+                    $order->update([
+                        'product_id' => $data['product_id'][$i],
+                        'cost' => $data['cost'][$i],
+                        'quantity' => $data['quantity'][$i],
+                        'expiry_date' => $data['expiry_date'][$i],
+                        'subtotal' => $data['subtotal'][$i],
+                    ]);
+                    if($order_original_quantity != $data['quantity'][$i]){
+                        $store_product = StoreProduct::where('store_id', $data['store'])->where('product_id', $data['product_id'][$i])->first();                
+                        $store_product->increment('quantity', $data['quantity'][$i]);
+                        $store_product->decrement('quantity', $order_original_quantity);
+                    }
                 }
             }
         }
