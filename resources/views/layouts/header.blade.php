@@ -45,13 +45,13 @@
                             <img src="@if (Auth::user()->picture != ''){{asset(Auth::user()->picture)}} @else {{asset('images/avatar128.png')}} @endif" class="wd-32 rounded-circle" alt="">
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="{{route('profile')}}" class="dropdown-item"><i class="md md-face-unlock mr-2"></i> {{__('page.my_profile')}}</a></li>
+                            <li><a href="{{route('profile')}}" class="dropdown-item"><i class="fa fa-user mr-2"></i> {{__('page.my_profile')}}</a></li>
                             <li>
                                 <a href="#"
                                     class="dropdown-item"
                                     onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();" 
-                                ><i class="md md-settings-power mr-2"></i> {{__('page.sign_out')}}</a>
+                                ><i class="fa fa-sign-out mr-2"></i> {{__('page.sign_out')}}</a>
                             </li>                        
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                 @csrf
