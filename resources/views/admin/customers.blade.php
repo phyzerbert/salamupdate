@@ -29,7 +29,7 @@
                     </form>
                     <button type="button" class="btn btn-success btn-sm float-right mg-b-5" id="btn-add"><i class="icon ion-person-add mg-r-2"></i> {{__('page.add_new')}}</button>                    
                 </div>
-                <div class="table-responsive mg-t-2">
+                <div class="table-responsive mt-2 pb-5">
                     <table class="table table-bordered table-hover">
                         <thead class="thead-colored thead-primary">
                             <tr class="bg-blue">
