@@ -190,7 +190,6 @@
 <script src="{{asset('master/plugins/styling/uniform.min.js')}}"></script>
 <script>
     $(document).ready(function () {
-
         $("#sale_date").datetimepicker({
             dateFormat: 'yy-mm-dd',
         });
@@ -200,8 +199,7 @@
         
         $('.file-input-styled').uniform({
             fileButtonClass: 'action btn bg-primary text-white'
-        });
-        
+        });        
     });
 </script>
 <script src="{{ asset('js/sale_create.js') }}"></script>
