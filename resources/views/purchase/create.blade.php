@@ -198,13 +198,11 @@
                         </div>
                     </div>
 
-
-
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group mb-2">
                                 <label class="form-control-label">{{__('page.note')}}:</label>
-                                <textarea class="form-control" name="note" rows="5" placeholder="{{__('page.note')}}"></textarea>
+                                <textarea class="form-control" name="note" rows="3" placeholder="{{__('page.note')}}"></textarea>
                             </div>
                         </div>
                     </div>

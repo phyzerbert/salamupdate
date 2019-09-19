@@ -45,7 +45,7 @@ input[type=file][data-fouc] {
     padding: .4375rem .875rem;
     -ms-flex: 1;
     flex: 1;
-    border: 1px solid #ddd;
+    border: 1px solid #ced4da;
     border-right: 0;
     background-color: #fff;
     text-align: left;
