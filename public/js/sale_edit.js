@@ -13,7 +13,8 @@ var app = new Vue({
         params: {
             type: 'sale',
             id: $('#sale_id').val()
-        }
+        },
+        grand_total: 0
     },
 
 
@@ -73,6 +74,9 @@ var app = new Vue({
             this.total.quantity = total_quantity
             this.total.price = total_price
         },
+        calc_grand_total() {
+            this.grand_total = this.total.price
+        },
         remove(i) {
             this.order_items.splice(i, 1)
         }
@@ -120,11 +124,11 @@ var app = new Vue({
     },
     updated: function() {
         this.calc_subtotal()
+        this.calc_grand_total()
         $(".product").autocomplete({
             source : function( request, response ) {
                 axios.post('/get_autocomplete_products', { keyword : request.term })
                     .then(resp => {
-                        // response(resp.data);
                         response(
                             $.map(resp.data, function(item) {
                                 return {

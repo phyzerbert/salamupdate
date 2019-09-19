@@ -7,7 +7,7 @@ use Maatwebsite\Excel\Concerns\WithTitle;
 use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class SupplierPaymentSheet implements FromArray, WithHeadings, WithTitle
+class PaymentSheet implements FromArray, WithHeadings, WithTitle
 {
     private $payments;
     private $type;

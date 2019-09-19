@@ -63,7 +63,7 @@ class PaymentController extends Controller
             $item->attachment = 'images/uploaded/payment_images/'.$imageName;
         }
         $item->save();
-        return back()->with('success', __('added_successfully'));
+        return back()->with('success', __('page.added_successfully'));
     }
 
     public function edit(Request $request){
@@ -83,7 +83,7 @@ class PaymentController extends Controller
             $item->attachment = 'images/uploaded/payment_images/'.$imageName;
         }
         $item->save();
-        return back()->with('success', 'Updated Successfully');
+        return back()->with('success', __('page.updated_successfully'));
     }
 
 

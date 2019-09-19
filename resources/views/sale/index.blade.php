@@ -23,14 +23,16 @@
                 $role = Auth::user()->role->slug;
             @endphp
             <div class="card card-body card-fill">
-                <div class="">
+                <div class=" clearfix">
                     @include('elements.pagesize') 
                     @include('sale.filter')
                     @if($role == 'user')
-                        <a href="{{route('sale.create')}}" class="btn btn-success btn-sm float-right mg-b-5" id="btn-add"><i class="fa fa-plus mg-r-2"></i> {{__('page.add_new')}}</a>
+                        <a href="{{route('sale.create')}}" class="btn btn-success btn-sm float-right mb-2" id="btn-add"><i class="fa fa-plus mg-r-2"></i> {{__('page.add_new')}}</a>
                     @endif
+                    <button class="btn btn-sm btn-info float-right mr-2" id="btn-export"><i class="fa fa-file-excel-o mr-2"></i>{{__('page.export')}}</button>
+                    {{-- <input type="text" class="form-control form-control-sm col-md-2 float-right" id="input_keyword" value="{{$keyword}}" placeholder="{{__('page.keyword')}}" /> --}}
                 </div>
-                <div class="table-responsive mg-t-2">
+                <div class="table-responsive mt-2 pb-5">
                     <table class="table table-bordered table-hover">
                         <thead>
                             <tr>
@@ -39,7 +41,7 @@
                                 <th>{{__('page.reference_no')}}</th>
                                 <th>{{__('page.user')}}</th>
                                 <th>{{__('page.customer')}}</th>
-                                <th>{{__('page.sale_status')}}</th>
+                                {{-- <th>{{__('page.sale_status')}}</th> --}}
                                 <th>{{__('page.grand_total')}}</th>
                                 <th>{{__('page.paid')}}</th>
                                 <th>{{__('page.balance')}}</th>
@@ -64,16 +66,16 @@
                                     <td class="reference_no">{{$item->reference_no}}</td>
                                     <td class="user">{{$item->biller->name}}</td>
                                     <td class="customer" data-id="{{$item->customer_id}}">{{$item->customer->name}}</td>
-                                    <td class="status">
+                                    {{-- <td class="status">
                                         @if ($item->status == 1)
                                             <span class="badge badge-success">{{__('page.received')}}</span>
                                         @elseif($item->status == 0)
                                             <span class="badge badge-primary">{{__('page.pending')}}</span>
                                         @endif
-                                    </td>
+                                    </td> --}}
                                     <td class="grand_total"> {{number_format($grand_total)}} </td>
                                     <td class="paid"> {{ number_format($paid) }} </td>
-                                    <td> {{number_format($grand_total - $paid)}} </td>
+                                    <td class="balance" data-value="{{$grand_total - $paid}}"> {{number_format($grand_total - $paid)}} </td>
                                     <td>
                                         @if ($paid == 0)
                                             <span class="badge badge-danger">{{__('page.pending')}}</span>
@@ -92,6 +94,8 @@
                                                 <li><a href="{{route('sale.detail', $item->id)}}" class="dropdown-item">{{__('page.details')}}</a></li>
                                                 <li><a href="{{route('payment.index', ['sale', $item->id])}}" class="dropdown-item">{{__('page.payment_list')}}</a></li>
                                                 <li><a href="#" data-id="{{$item->id}}" class="dropdown-item btn-add-payment">{{__('page.add_payment')}}</a></li>
+                                                <li><a href="{{route('sale.report', $item->id)}}" class="dropdown-item">{{__('page.report')}}</a></li>
+                                                <li><a href="{{route('sale.email', $item->id)}}" class="dropdown-item">{{__('page.email')}}</a></li>
                                                 <li><a href="{{route('sale.edit', $item->id)}}" class="dropdown-item">{{__('page.edit')}}</a></li>
                                                 <li><a href="{{route('sale.delete', $item->id)}}" class="dropdown-item" onclick="return window.confirm('Are you sure?')">{{__('page.delete')}}</a></li>
                                             </ul>
@@ -102,7 +106,7 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <th colspan="6">{{__('page.total')}}</th>
+                                <th colspan="5">{{__('page.total')}}</th>
                                 <th>{{number_format($footer_grand_total)}}</th>
                                 <th>{{number_format($footer_paid)}}</th>
                                 <th>{{number_format($footer_grand_total - $footer_paid)}}</th>
@@ -152,14 +156,11 @@
                         </div>                                                
                         <div class="form-group">
                             <label class="control-label">{{__('page.amount')}}</label>
-                            <input class="form-control amount" type="text" name="amount" placeholder="{{__('page.amount')}}">
+                            <input class="form-control amount" type="number" name="amount" placeholder="{{__('page.amount')}}">
                         </div>                                               
                         <div class="form-group">
                             <label class="control-label">{{__('page.attachment')}}</label>
-                            <label class="custom-file wd-100p">
-                                <input type="file" name="attachment" id="file2" class="custom-file-input">
-                                <span class="custom-file-control custom-file-control-primary"></span>
-                            </label>
+                            <input type="file" name="attachment" id="file2" class="file-input-styled">
                         </div>
                         <div class="form-group">
                             <label class="control-label">{{__('page.note')}}</label>
@@ -181,16 +182,28 @@
 <script src="{{asset('master/plugins/jquery-ui/jquery-ui.js')}}"></script>
 <script src="{{asset('master/plugins/jquery-ui/timepicker/jquery-ui-timepicker-addon.min.js')}}"></script>
 <script src="{{asset('master/plugins/daterangepicker/jquery.daterangepicker.min.js')}}"></script>
+<script src="{{asset('master/plugins/styling/uniform.min.js')}}"></script>
 <script>
     $(document).ready(function () {
         $("#payment_form input.date").datetimepicker({
             dateFormat: 'yy-mm-dd',
         });
+
+        $('.file-input-styled').uniform({
+            fileButtonClass: 'action btn bg-primary text-white'
+        });
         
         $(".btn-add-payment").click(function(){
             // $("#payment_form input.form-control").val('');
+            // let status = $(this).data('status');
+            // if(status != 1){
+            //     return alert("{{__('page.can_not_add_payment')}}");
+            // }
             let id = $(this).data('id');
+            let balance = $(this).parents('tr').find('.balance').data('value');
+            console.log(balance)
             $("#payment_form .paymentable_id").val(id);
+            $("#payment_form .amount").val(balance);
             $("#paymentModal").modal();
         });
 
@@ -208,6 +221,16 @@
             $("#search_supplier").val('');
             $("#search_reference_no").val('');
             $("#period").val('');
+        });
+
+        $("#btn-export").click(function(){
+            $("#searchForm").attr('action', "{{route('sale.export')}}");
+            $("#searchForm").submit();
+        });
+
+        $("#btn-search").click(function(){
+            $("#searchForm").attr('action', "");
+            $("#searchForm").submit();
         });
     });
 </script>

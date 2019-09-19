@@ -7,13 +7,13 @@ use App\Models\Supplier;
 use App\Models\Purchase;
 use App\Models\Payment;
 
-use Illuminate\Support\Facades\Mail;
 use App\Mail\ReportMail;
-use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\SupplierExport;
 
 use Auth;
 use PDF;
+use Mail;
+use Excel;
 
 class SupplierController extends Controller
 {

@@ -25,6 +25,11 @@ class CreateSalesTable extends Migration
             $table->string('attachment')->nullable();
             $table->text('note')->nullable();
             $table->integer('status')->nullable();
+            $table->integer('discount')->default(0);
+            $table->string('discount_string')->nullable();
+            $table->integer('shipping')->default(0);
+            $table->string('shipping_string')->nullable();
+            $table->integer('grand_total')->default(0);
             $table->timestamps();
         });
     }

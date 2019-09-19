@@ -4,6 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Customer;
+use App\Models\Payment;
+
+use App\Mail\ReportMail;
+use App\Exports\CustomerExport;
+
+use Auth;
+use PDF;
+use Mail;
+use Excel;
 
 class CustomerController extends Controller
 {
@@ -70,5 +79,32 @@ class CustomerController extends Controller
         $item = Customer::find($id);
         $item->delete();
         return back()->with("success", __('page.deleted_successfully'));
+    }
+        
+    public function report($id){
+        $customer = Customer::find($id);
+        $pdf = PDF::loadView('reports.customers_report.pdf', compact('customer'));        
+        return $pdf->download('customer_report_'.$customer->company.'.pdf');        
+        // return view('reports.customers_report.pdf', compact('customer'));
+    }
+    
+    public function email($id){
+        $customer = Customer::find($id);
+        $pdf = PDF::loadView('reports.customers_report.pdf', compact('customer'));   
+        if(filter_var($customer->email, FILTER_VALIDATE_EMAIL)){
+            $to_email = $customer->email;
+            Mail::to($to_email)->send(new ReportMail($pdf, 'Customer Report'));
+            return back()->with('success', 'Email is sent successfully');
+        }else{
+            return back()->withErrors('email', 'Customer email address is invalid.');
+        }
+    }
+
+    public function export($id) {        
+        $customer = Customer::find($id);
+        $sales = $customer->sales;
+        $sale_array = $customer->sales->pluck('id');
+        $payments = Payment::whereIn('paymentable_id', $sale_array)->where('paymentable_type', 'App\Models\Sale')->get();
+        return Excel::download(new CustomerExport($sales, $payments), 'customer_report.xlsx');
     }
 }

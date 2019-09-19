@@ -6,6 +6,12 @@
     <link href="{{asset('master/plugins/jquery-ui/timepicker/jquery-ui-timepicker-addon.min.css')}}" rel="stylesheet">
     <script src="{{asset('master/plugins/vuejs/vue.js')}}"></script>
     <script src="{{asset('master/plugins/vuejs/axios.js')}}"></script>
+    <style>
+        .table>tbody>tr>td {
+            padding-top: .5rem;
+            padding-bottom: .5rem;
+        }
+    </style>
 @endsection
 @section('content')
     <div class="content">
@@ -24,7 +30,7 @@
             @php
                 $role = Auth::user()->role->slug;
             @endphp
-            <div class="card card-body card-fill" id="app">
+            <div class="card card-body card-fill p-md-5" id="app">
                 <form class="form-layout form-layout-1" action="{{route('sale.save')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="row mb-4">
@@ -148,7 +154,10 @@
                                             <th colspan="2">{{__('page.total')}}</th>
                                             <th class="total_quantity">@{{total.quantity}}</th>
                                             <th class="total_tax"></th>
-                                            <th colspan="2" class="total">@{{total.price | currency}}</th>
+                                            <th colspan="2" class="total">
+                                                @{{total.price | currency}}
+                                                <input type="hidden" name="grand_total" :value="grand_total | currency">
+                                            </th>
                                         </tr>
                                     </tfoot>
                                 </table>

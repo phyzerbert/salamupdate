@@ -13,13 +13,13 @@ use App\Models\Company;
 use App\Models\Store;
 use App\Models\StoreProduct;
 
-use Illuminate\Support\Facades\Mail;
 use App\Mail\ReportMail;
-use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\PurchaseExport;
 
 use Auth;
+use Excel;
 use PDF;
+use Mail;
 
 class PurchaseController extends Controller
 {

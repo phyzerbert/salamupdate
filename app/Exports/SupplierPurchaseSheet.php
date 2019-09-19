@@ -68,6 +68,6 @@ class SupplierPurchaseSheet implements FromArray, WithHeadings, WithTitle
 
     public function title(): string
     {
-        return __('page.purchase');
+        return __('page.purchases');
     }
 }

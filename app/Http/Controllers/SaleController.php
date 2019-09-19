@@ -14,7 +14,13 @@ use App\Models\Store;
 use App\User;
 use App\Models\StoreProduct;
 
-use Auth;   
+use App\Mail\ReportMail;
+use App\Exports\SaleExport;
+
+use Auth;
+use Excel;
+use PDF;
+use Mail;
 
 class SaleController extends Controller
 {
@@ -88,7 +94,6 @@ class SaleController extends Controller
         ]);
 
         $data = $request->all();
-        // dd($data);
         $item = new Sale();
         $item->user_id = Auth::user()->id;
         $item->biller_id = $data['user'];
@@ -99,6 +104,8 @@ class SaleController extends Controller
         $item->company_id = $store->company_id;
         $item->customer_id = $data['customer'];
         // $item->status = $data['status'];
+
+        $item->grand_total = $data['grand_total'];
 
         if($request->has("attachment")){
             $picture = request()->file('attachment');
@@ -163,7 +170,6 @@ class SaleController extends Controller
             'store'=>'required',
             'customer'=>'required',
             'user'=>'required',
-            'status'=>'required',
         ]);
         $data = $request->all();
         // dd($data);
@@ -178,6 +184,8 @@ class SaleController extends Controller
         $item->customer_id = $data['customer'];
         // $item->status = $data['status'];
         $item->note = $data['note'];
+
+        $item->grand_total = $data['grand_total'];
 
         if($request->has("attachment")){
             $picture = request()->file('attachment');
@@ -212,5 +220,84 @@ class SaleController extends Controller
         $item->payments()->delete();
         $item->delete();
         return back()->with("success", __('page.deleted_successfully'));
+    }
+
+    public function report($id){
+        $sale = Sale::find($id);
+        $pdf = PDF::loadView('sale.report', compact('sale'));        
+        return $pdf->download('sale_report_'.$sale->reference_no.'.pdf');
+    }
+
+    public function report_view($id){
+        $sale = Sale::find($id);
+        $pdf = PDF::loadView('sale.report', compact('sale'));
+        return view('sale.report', compact('sale'));
+    }
+
+    public function email($id){
+        $sale = Sale::find($id);
+        $pdf = PDF::loadView('sale.report', compact('sale'));
+        if(filter_var($sale->customer->email, FILTER_VALIDATE_EMAIL)){
+            $to_email = $sale->customer->email;
+            Mail::to($to_email)->send(new ReportMail($pdf, 'Customer Sale Report'));
+            return back()->with('success', 'Email is sent successfully');
+        }else{
+            return back()->withErrors('email', 'customer email address is invalid.');
+        }
+    }
+
+    public function export(Request $request) {
+        $user = Auth::user();
+        $mod = new Sale();
+        if($user->hasRole('user') || $user->hasRole('secretary')){
+            $mod = $user->company->sales();
+        }
+        
+        // if(!$user->hasRole('secretary')){
+        //     $mod = $mod->where('status', 1);
+        // }
+        $sort_by_date = 'desc';
+        if ($request->get('company_id') != ""){
+            $company_id = $request->get('company_id');
+            $mod = $mod->where('company_id', $company_id);
+        }
+        if ($request->get('reference_no') != ""){
+            $reference_no = $request->get('reference_no');
+            $mod = $mod->where('reference_no', 'LIKE', "%$reference_no%");
+        }
+        if ($request->get('customer_id') != ""){
+            $customer_id = $request->get('customer_id');
+            $mod = $mod->where('customer_id', $customer_id);
+        }
+        if ($request->get('store_id') != ""){
+            $store_id = $request->get('store_id');
+            $mod = $mod->where('store_id', $store_id);
+        }
+        if ($request->get('period') != ""){   
+            $period = $request->get('period');
+            $from = substr($period, 0, 10);
+            $to = substr($period, 14, 10);
+            $mod = $mod->whereBetween('timestamp', [$from, $to]);
+        }
+        // if ($request->get('keyword') != ""){
+        //     $keyword = $request->keyword;
+        //     $company_array = Company::where('name', 'LIKE', "%$keyword%")->pluck('id');
+        //     $customer_array = Customer::where('company', 'LIKE', "%$keyword%")->pluck('id');
+        //     $store_array = Store::where('name', 'LIKE', "%$keyword%")->pluck('id');
+
+        //     $mod = $mod->where(function($query) use($keyword, $company_array, $store_array, $customer_array){
+        //         return $query->where('reference_no', 'LIKE', "%$keyword%")
+        //                 ->orWhereIn('company_id', $company_array)
+        //                 ->orWhereIn('store_id', $store_array)
+        //                 ->orWhereIn('customer_id', $customer_array)
+        //                 ->orWhere('timestamp', 'LIKE', "%$keyword%")
+        //                 ->orWhere('grand_total', 'LIKE', "%$keyword%");
+        //     });
+        // }
+        if($request->sort_by_date != ''){
+            $sort_by_date = $request->sort_by_date;
+        }
+        $data = $mod->orderBy('timestamp', $sort_by_date)->get();
+        return Excel::download(new SaleExport($data), 'sale_report.xlsx');
     }
 }

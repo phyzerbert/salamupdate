@@ -55,8 +55,7 @@
                                     <td class="phone_number">{{$item->phone_number}}</td>
                                     <td class="city">{{$item->city}}</td>
                                     <td class="address">{{$item->address}}</td>
-                                    <td class="py-2 text-center">
-                                        
+                                    <td class="py-2 text-center">                                        
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-sm btn-info dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 {{__('page.action')}}

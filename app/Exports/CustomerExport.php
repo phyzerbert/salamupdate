@@ -5,16 +5,16 @@ namespace App\Exports;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 
-class SupplierExport implements WithMultipleSheets
+class CustomerExport implements WithMultipleSheets
 {
     use Exportable;
     
-    protected $purchases;
+    protected $sales;
     protected $payments;
 
-    public function __construct($purchases, $payments)
+    public function __construct($sales, $payments)
     {
-        $this->purchases = $purchases;
+        $this->sales = $sales;
         $this->payments = $payments;
     }
 
@@ -22,8 +22,8 @@ class SupplierExport implements WithMultipleSheets
     {
         $sheets = [];
 
-        $sheets[] = new SupplierPurchaseSheet($this->purchases);
-        $sheets[] = new PaymentSheet($this->payments, 'purchase');
+        $sheets[] = new CustomerSaleSheet($this->sales);
+        $sheets[] = new PaymentSheet($this->payments, 'sale');
 
         return $sheets;
     }

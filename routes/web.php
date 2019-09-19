@@ -32,6 +32,10 @@ Route::get('/user/delete/{id}', 'UserController@delete')->name('user.delete');
 
 Route::any('/customer/index', 'CustomerController@index')->name('customer.index');
 Route::post('/customer/create', 'CustomerController@create')->name('customer.create');
+Route::post('/customer/ajax_create', 'CustomerController@ajax_create')->name('customer.ajax_create');
+Route::get('/customer/report/{id}', 'CustomerController@report')->name('customer.report');
+Route::get('/customer/email/{id}', 'CustomerController@email')->name('customer.email');
+Route::get('/customer/export/{id}', 'CustomerController@export')->name('customer.export');
 Route::post('/customer/edit', 'CustomerController@edit')->name('customer.edit');
 Route::get('/customer/delete/{id}', 'CustomerController@delete')->name('customer.delete');
 
@@ -113,6 +117,10 @@ Route::post('/sale/save', 'SaleController@save')->name('sale.save');
 Route::get('/sale/edit/{id}', 'SaleController@edit')->name('sale.edit');
 Route::post('/sale/update', 'SaleController@update')->name('sale.update');
 Route::get('/sale/detail/{id}', 'SaleController@detail')->name('sale.detail');
+Route::get('/sale/report/{id}', 'SaleController@report')->name('sale.report');
+Route::get('/sale/email/{id}', 'SaleController@email')->name('sale.email');
+Route::any('/sale/export', 'SaleController@export')->name('sale.export');
+Route::get('/sale/approve/{id}', 'SaleController@approve')->name('sale.approve');
 Route::get('/sale/delete/{id}', 'SaleController@delete')->name('sale.delete');
 
 

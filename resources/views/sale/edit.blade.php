@@ -128,7 +128,7 @@
                                             <th>{{__('page.quantity')}}</th>
                                             <th>{{__('page.product_tax')}}</th>
                                             <th>{{__('page.subtotal')}}</th>
-                                            <th class="wd-30"></th>
+                                            <th width="30"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -159,7 +159,10 @@
                                             <th colspan="2">{{__('page.total')}}</th>
                                             <th class="total_quantity">@{{total.quantity}}</th>
                                             <th class="total_tax"></th>
-                                            <th colspan="2" class="total">@{{total.price | currency}}</th>
+                                            <th colspan="2" class="total">
+                                                @{{total.price | currency}}
+                                                <input type="hidden" name="grand_total" :value="grand_total">
+                                            </th>
                                         </tr>
                                     </tfoot>
                                 </table>
