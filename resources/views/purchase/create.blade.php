@@ -148,7 +148,7 @@
                                             <td><input type="number" class="form-control form-control-sm quantity" name="quantity[]" v-model="item.quantity" required placeholder="{{__('page.quantity')}}" /></td>
                                             <td class="tax">@{{item.tax_name}}</td>
                                             <td class="subtotal">
-                                                @{{item.sub_total}}
+                                                @{{item.sub_total | currency}}
                                                 <input type="hidden" name="subtotal[]" :value="item.sub_total" />
                                             </td>
                                             <td>
@@ -161,7 +161,7 @@
                                             <th colspan="3">{{__('page.total')}}</th>
                                             <th class="total_quantity">@{{total.quantity}}</th>
                                             <th class="total_tax"></th>
-                                            <th colspan="2" class="total">@{{total.cost}}</th>
+                                            <th colspan="2" class="total">@{{total.cost | currency}}</th>
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -194,7 +194,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <p class="text-right">Purchase: @{{formatPrice(total.cost)}} - Discount: @{{formatPrice(discount)}} - Shipping: @{{formatPrice(shipping)}} - Returns: @{{formatPrice(returns)}} = Grand Total: @{{formatPrice(grand_total)}}</p>
+                            <p class="text-right">Purchase: @{{total.cost | currency}} - Discount: @{{discount | currency}} - Shipping: @{{shipping | currency}} - Returns: @{{returns | currency}} = Grand Total: @{{grand_total | currency}}</p>
                         </div>
                     </div>
 

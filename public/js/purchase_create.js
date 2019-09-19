@@ -100,6 +100,12 @@ var app = new Vue({
             return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }
     },
+    filters: {
+        currency: function (value) {
+            let val = value;
+            return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+    },
 
     mounted:function() {
         this.init();
