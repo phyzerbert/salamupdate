@@ -264,6 +264,7 @@ class PreOrderController extends Controller
         $purchase->timestamp = $order->timestamp;
         $purchase->grand_total = $data['grand_total'];
         $purchase->note = $order->note;
+        $purchase->status = 1;
         $purchase->save();
 
         foreach($data["item"] as $id => $value){
