@@ -402,7 +402,7 @@ class ReportController extends Controller
         $mod = new Payment();
         $mod = $mod->where('paymentable_type', Sale::class);
         $reference_no = $period = $company_id = $customer_id = '';
-        if($user->hasRole('user')){
+        if($user->hasRole('user') || $user->hasRole('secretary')){
             $company_id = $user->company_id;            
         }
         if($request->get('company_id') != ''){
@@ -445,7 +445,7 @@ class ReportController extends Controller
         $companies = Company::all();
         $mod = new Customer();
         $customer_company = $name = $phone_number = $company_id = '';
-        if($user->hasRole('user')){
+        if($user->hasRole('user') || $user->hasRole('secretary')){
             $company_id = $user->company_id;            
         }else{
             if ($request->get('company_id') != ""){
@@ -479,9 +479,10 @@ class ReportController extends Controller
 
         $mod = $customer->sales();
         $company_id = $reference_no = $store_id = $period = '';
-        if($user->hasRole('user')){
+        if($user->hasRole('user') || $user->hasRole('secretary')){
             $company_id = $user->company_id;
             $stores = $user->company->stores;
+            $mod = $mod->where('company_id', $company_id);
         }
         if ($request->get('company_id') != ""){
             $company_id = $request->get('company_id');            
@@ -516,13 +517,15 @@ class ReportController extends Controller
         
         $mod = new Payment();
         $sales_array = $customer->sales()->pluck('id')->toArray();
-        $mod = $mod->where('paymentable_type', Sale::class)->whereIn('paymentable_id', $sales_array);
+        
         $reference_no = $period = $company_id = '';
 
-        if($user->hasRole('user')){
+        if($user->hasRole('user') || $user->hasRole('secretary')){
             $company_id = $user->company_id;
             $stores = $user->company->stores;
+            $sales_array = $customer->sales()->where('company_id', $company_id)->pluck('id')->toArray();
         }
+        $mod = $mod->where('paymentable_type', Sale::class)->whereIn('paymentable_id', $sales_array);
         if ($request->get('company_id') != ""){
             $company_id = $request->get('company_id');            
         }
@@ -553,7 +556,7 @@ class ReportController extends Controller
         $companies = Company::all();
         $mod = new Supplier();
         $supplier_company = $name = $phone_number = $company_id = '';
-        if($user->hasRole('user')){
+        if($user->hasRole('user') || $user->hasRole('secretary')){
             $company_id = $user->company_id;            
         }else{
             if ($request->get('company_id') != ""){
@@ -643,13 +646,15 @@ class ReportController extends Controller
         $companies = Company::all();
         $mod = new Payment();
         $purchases_array = $supplier->purchases()->where('status', 1)->pluck('id')->toArray();
-        $mod = $mod->where('paymentable_type', Purchase::class)->whereIn('paymentable_id', $purchases_array);
+        
         $reference_no = $period = $company_id = '';
 
         if($user->hasRole('user')){
             $company_id = $user->company_id;
             $stores = $user->company->stores;
+            $purchases_array = $supplier->purchases()->where('company_id', $company_id)->where('status', 1)->pluck('id')->toArray();
         }
+        $mod = $mod->where('paymentable_type', Purchase::class)->whereIn('paymentable_id', $purchases_array);
         if ($request->get('company_id') != ""){
             $company_id = $request->get('company_id');            
         }
@@ -815,7 +820,7 @@ class ReportController extends Controller
         $companies = Company::all();
         $mod = new Purchase();      
         
-        if($user->hasRole('user')){
+        if($user->hasRole('user') || $user->hasRole('secretary')){
             $company = $user->company;
             $stores = $company->stores;
             $mod = $company->purchases();
