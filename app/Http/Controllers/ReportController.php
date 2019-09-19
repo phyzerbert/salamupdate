@@ -271,7 +271,7 @@ class ReportController extends Controller
         $companies = Company::all();
 
         $mod = new Sale();
-        if($user->hasRole('user')){
+        if($user->hasRole('user') || $user->hasRole('secretary')){
             $company = $user->company;
             $stores = $company->stores;
             $mod = $company->sales();
@@ -313,13 +313,13 @@ class ReportController extends Controller
         $companies = Company::all();
 
         $mod = new Purchase();
-        if($user->hasRole('user')){
+        if($user->hasRole('user') || $user->hasRole('secretary')){
             $company = $user->company;
             $stores = $company->stores;
             $mod = $company->purchases();
         }
         $mod = $mod->where('status', 1);
-        $company_id = $reference_no = $supplier_id = $store_id = $period = '';
+        $company_id = $reference_no = $supplier_id = $store_id = $period = $keyword = '';
         $sort_by_date = 'desc';
         if ($request->get('company_id') != ""){
             $company_id = $request->get('company_id');
@@ -345,7 +345,7 @@ class ReportController extends Controller
         }
         $pagesize = session('pagesize');
         $data = $mod->orderBy('created_at', 'desc')->paginate($pagesize);
-        return view('reports.purchases_report', compact('data', 'companies', 'stores', 'suppliers', 'company_id', 'store_id', 'supplier_id', 'reference_no', 'period', 'sort_by_date'));
+        return view('reports.purchases_report', compact('data', 'companies', 'stores', 'suppliers', 'company_id', 'store_id', 'supplier_id', 'reference_no', 'period', 'sort_by_date', 'keyword'));
     }
 
     public function payments_report(Request $request){
@@ -356,7 +356,7 @@ class ReportController extends Controller
         $mod = new Payment();
         $mod = $mod->where('paymentable_type', Purchase::class);
         $reference_no = $period = $company_id = $supplier_id = '';
-        if($user->hasRole('user')){
+        if($user->hasRole('user') || $user->hasRole('secretary')){
             $company_id = $user->company_id;            
         }
         if($request->get('company_id') != ''){
@@ -606,9 +606,10 @@ class ReportController extends Controller
         $mod = $supplier->purchases();
         $mod = $mod->where('status', 1);
         $company_id = $reference_no = $store_id = $period = '';
-        if($user->hasRole('user')){
+        if($user->hasRole('user') || $user->hasRole('secretary')){
             $company_id = $user->company_id;
             $stores = $user->company->stores;
+            $mod = $mod->where('company_id', $company_id);
         }
         if ($request->get('company_id') != ""){
             $company_id = $request->get('company_id');            
