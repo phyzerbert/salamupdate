@@ -21,15 +21,16 @@
             </div>
         </div>        
         @php
-            $role = Auth::user()->role->slug;
+            $user = Auth::user();
+            $role = $user->role->slug;
         @endphp
         <div class="card">
             <div class="card-body">
                 <form class="form-layout form-layout-1" action="{{route('pre_order.save')}}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    <div class="row mg-b-25">
+                    <div class="row mb-4">
                         <div class="col-md-6">
-                            <div class="form-group mg-b-10-force">
+                            <div class="form-group mb-2">
                                 <label class="form-control-label">{{__('page.date')}}: <span class="tx-danger">*</span></label>
                                 <input class="form-control" type="text" name="date" id="pre_order_date" value="{{date('Y-m-d H:i')}}"placeholder="{{__('page.date')}}" autocomplete="off" required>
                                 @error('date')
@@ -40,7 +41,7 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="form-group mg-b-10-force">
+                            <div class="form-group mb-2">
                                 <label class="form-control-label">{{__('page.reference_number')}}:</label>
                                 <input class="form-control" type="text" name="reference_number" value="{{ old('reference_number') }}" required placeholder="{{__('page.reference_number')}}">
                                 @error('reference_number')
@@ -51,9 +52,20 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row mg-b-25">
-                        <div class="col-md-6">
-                            <div class="form-group mg-b-10-force">
+                    <div class="row mb-4">
+                        @if(!$user->company)
+                            <div class="col-md-6 col-lg-4">
+                                <label for="company_id" class="form-control-label">{{__('page.company')}}</label>
+                                <select name="company_id" class="form-control" id="company_id" required>
+                                    <option value="" hidden>{{__('page.select_company')}}</option>
+                                    @foreach ($companies as $item)
+                                        <option value="{{$item->id}}">{{$item->name}}</option>
+                                    @endforeach                                
+                                </select>
+                            </div>
+                        @endif
+                        <div class="col-md-6 @if(!$user->company) col-lg-4 @endif">
+                            <div class="form-group mb-2">
                                 <label class="form-control-label">{{__('page.supplier')}}:</label>
                                 <div class="input-group">                                  
                                     <select class="form-control select2-show-search" name="supplier" id="search_supplier" required data-placeholder="{{__('page.select_supplier')}}">
@@ -73,20 +85,14 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group mg-b-10-force">
+                        <div class="col-md-6 @if(!$user->company) col-lg-4 @endif">
+                            <div class="form-group mb-2">
                                 <label class="form-control-label">{{__('page.attachment')}}:</label>
                                 <input type="file" name="attachment" id="file2" class="file-input-styled" accept="image/*">
                             </div>
                         </div>
-                        {{-- <div class="col-md-6 col-lg-3">
-                            <div class="form-group mg-b-10-force">
-                                <label class="form-control-label">{{__('page.credit_days')}}:</label>
-                                <input type="number" class="form-control" name="credit_days" min=0 value="{{old('credit_days')}}" required placeholder="{{__('page.credit_days')}}" />
-                            </div>
-                        </div> --}}
                     </div> 
-                    <div class="row mg-b-25">
+                    <div class="row mb-4">
                         <div class="col-md-12">
                             <div>
                                 <h4 class="mt-3" style="float:left">{{__('page.order_items')}}</h4>
@@ -146,7 +152,7 @@
 
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="form-group mg-b-10-force">
+                            <div class="form-group mb-2">
                                 <label class="form-control-label">{{__('page.note')}}:</label>
                                 <textarea class="form-control" name="note" rows="5" placeholder="{{__('page.note')}}"></textarea>
                             </div>

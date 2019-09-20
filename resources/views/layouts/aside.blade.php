@@ -74,7 +74,7 @@
                     <a href="#" class="waves-effect @if($page == in_array($page, $pre_order_items)) active subdrop @endif"><i class="fa fa-paper-plane-o"></i><span> {{__('page.purchase_orders')}} </span><span class="pull-right"><i class="md md-add"></i></span></a>
                     <ul class="list-unstyled">
                         <li class="@if($page == 'pre_order_list') active @endif"><a href="{{route('pre_order.index')}}" class="@if($page == 'pre_order_list') active @endif">{{__('page.purchase_orders')}}</a></li>
-                        @if($role == 'user')
+                        @if($role == 'user' || $role == 'buyer')
                             <li class="@if($page == 'pre_order_create') active @endif"><a href="{{route('pre_order.create')}}" class="@if($page == 'pre_order_create') active @endif">{{__('page.add_purchase_order')}}</a></li>
                         @endif
                     </ul>
@@ -157,6 +157,10 @@
                         </ul>
                     </li>
                 @endif
+
+                <li class="@if($page == 'concurrent_payments') active @endif">
+                    <a href="{{route('concurrent_payments')}}" class="waves-effect @if($page == 'concurrent_payments') active @endif"><i class="fa fa-cube"></i><span> {{__('page.concurrent_payments')}} </span></a>
+                </li>
 
                 {{-- <li class="@if($page == 'chat') active @endif">
                     <a href="{{route('chat')}}" class="waves-effect @if($page == 'chat') active @endif"><i class="fa fa-wechat"></i><span> {{__('page.chatting')}} </span></a>

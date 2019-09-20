@@ -306,4 +306,7 @@ return [
     'pending_payments' => 'Pending Payments',
     'added_successfully' => 'Added Successfully',
     'supplier_cant_delete' => 'This Supplier can not be delete.',
+    'concurrent_payments' => 'Concurrent Payments',
+    'view_purchases' => 'View Purchases',
+    'add_payments' => 'Add Payments',
 ];

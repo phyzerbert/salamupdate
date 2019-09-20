@@ -556,7 +556,7 @@ class ReportController extends Controller
         $companies = Company::all();
         $mod = new Supplier();
         $supplier_company = $name = $phone_number = $company_id = '';
-        if($user->hasRole('user') || $user->hasRole('secretary')){
+        if($user->company){
             $company_id = $user->company_id;            
         }else{
             if ($request->get('company_id') != ""){

@@ -32,6 +32,9 @@ class PreOrderController extends Controller
         $companies = Company::all();
 
         $mod = new PreOrder();
+        if($user->company){
+            $mod = $user->company->pre_orders();
+        }
         $company_id = $reference_no = $supplier_id = $period = $expiry_period = $keyword = '';
         $sort_by_date = 'desc';
         if ($request->get('company_id') != ""){
@@ -85,7 +88,8 @@ class PreOrderController extends Controller
         $user = Auth::user();  
         $suppliers = Supplier::all();
         $products = Product::all();
-        return view('pre_order.create', compact('suppliers', 'products'));
+        $companies = Company::all();
+        return view('pre_order.create', compact('suppliers', 'products', 'companies'));
     }
 
     public function save(Request $request){
@@ -100,12 +104,11 @@ class PreOrderController extends Controller
             return back()->withErrors(['product' => __('page.select_product')]);
         }
 
-        // dd($data);
         $item = new PreOrder();
         $item->user_id = Auth::user()->id;  
         $item->timestamp = $data['date'].":00";
         $item->reference_no = $data['reference_number'];
-        $item->company_id = Auth::user()->company_id;
+        $item->company_id = isset($data['company_id']) ? $data['company_id'] : Auth::user()->company_id;
         $item->supplier_id = $data['supplier'];
         $item->note = $data['note'];
 
@@ -242,6 +245,9 @@ class PreOrderController extends Controller
         config(['site.page' => 'purchase_order']);    
         $order = PreOrder::find($id);
         $stores = Store::all();
+        if($order->company){
+            $stores = $order->company->stores;
+        }
 
         return view('pre_order.receive', compact('order', 'stores'));
     }
@@ -262,7 +268,7 @@ class PreOrderController extends Controller
         $purchase->user_id = $order->user_id;
         $purchase->store_id = $data['store'];
         $store = Store::find($data['store']);
-        $purchase->company_id = $store->company_id;
+        $purchase->company_id = $order->company ? $order->company_id : $store->company_id;
         $purchase->supplier_id = $order->supplier_id;
         $purchase->reference_no = $data['reference_number'];
         $purchase->timestamp = $order->timestamp;
@@ -323,6 +329,9 @@ class PreOrderController extends Controller
         //     $mod = $user->company->purchases();
         //     $stores = $user->company->stores;
         // }
+        if($user->company){
+            $mod = $user->company->purchases();
+        }
         $mod = $mod->whereNotNull('order_id');
         $order_id = $company_id = $reference_no = $supplier_id = $store_id = $period = $keyword = '';
         $sort_by_date = 'desc';

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Supplier;
 use App\Models\Purchase;
 use App\Models\Payment;
+use App\Models\Company;
 
 use App\Mail\ReportMail;
 use App\Exports\SupplierExport;
@@ -132,5 +133,53 @@ class SupplierController extends Controller
         $purchase_array = $supplier->purchases->pluck('id');
         $payments = Payment::whereIn('paymentable_id', $purchase_array)->where('paymentable_type', 'App\Models\Purchase')->get();
         return Excel::download(new SupplierExport($purchases, $payments), 'supplier_report.xlsx');
+    }
+
+    public function concurrent_payments(Request $request){
+        config(['site.page' => 'concurrent_payments']);
+        $user = Auth::user();
+        $companies = Company::all();
+        $mod = new Supplier();
+        $supplier_company = $name = $phone_number = $company_id = '';
+        if($user->company){
+            $company_id = $user->company_id;            
+        }else{
+            if ($request->get('company_id') != ""){
+                $company_id = $request->get('company_id');
+            }
+        }  
+        $data = $mod->orderBy('created_at', 'desc')->get();
+        return view('concurrent_payments.index', compact('data', 'companies', 'company_id'));
+    }
+
+    public function supplier_purchases($id){
+        config(['site.page' => 'concurrent_payments']);
+        $user = Auth::user();
+        $supplier = Supplier::find($id);
+        $mod = $supplier->purchases()->where('status', 1);
+        if($user->company){
+            $mod = $mod->where('company_id', $user->company_id);
+        }
+        $data = $mod->orderBy('timestamp', 'desc')->get();
+        return view('concurrent_payments.purchases', compact('data', 'supplier'));
+    }
+
+    public function add_payments($id){
+        $supplier = Supplier::find();
+        $purchases = $supplier->purchases->where('status', 1)->get();
+        foreach ($purchases as $purchase) {
+            $paid = $purchase->payments()->sum('amount');
+            $grand_total = $purchase->grand_total;
+            $balance = $grand_total - $paid;
+            if($balance <= 0) continue;
+            $payment = new Payment();
+            $payment->timestamp = date('Y-m-d H:i:s');
+            $payment->reference_no = "Concurrent Payment";
+            $payment->amount = $balance;
+            $payment->paymentable_id = $purchase->id;
+            $payment->paymentable_type = 'App\Models\Purchase';
+            $payment->save();
+        }
+        return back()->with('success', __('page.added_successfully'));
     }
 }
