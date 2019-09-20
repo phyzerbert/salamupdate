@@ -165,6 +165,7 @@ class SupplierController extends Controller
     }
 
     public function add_payments($id){
+        $user = Auth::user();
         $supplier = Supplier::find($id);
         $purchases = $supplier->purchases()->where('status', 1)->get();
         foreach ($purchases as $purchase) {
@@ -176,6 +177,11 @@ class SupplierController extends Controller
             $payment->timestamp = date('Y-m-d H:i:s');
             $payment->reference_no = "Concurrent Payment";
             $payment->amount = $balance;
+            if($user->hasRole('secretary')){
+                $payment->status = 0;
+            }else{
+                $payment->status = 1;
+            }
             $payment->paymentable_id = $purchase->id;
             $payment->paymentable_type = 'App\Models\Purchase';
             $payment->save();
