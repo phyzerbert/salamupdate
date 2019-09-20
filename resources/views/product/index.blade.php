@@ -1,5 +1,14 @@
 @extends('layouts.master')
-
+<link rel="stylesheet" href="{{asset('master/plugins/imageviewer/css/jquery.verySimpleImageViewer.css')}}">
+<style>
+    #image_preview {
+        max-width: 600px;
+        height: 600px;
+    }
+    .image_viewer_inner_container {
+        width: 100% !important;
+    }
+</style>
 @section('content')
     <div class="content">
         <div class="container-fluid">
@@ -28,6 +37,7 @@
                         <thead class="">
                             <tr class="bg-blue">
                                 <th style="width:30px;">#</th>
+                                <th style="width:50px"></th>
                                 <th>{{__('page.product_code')}}</th>
                                 <th>{{__('page.product_name')}}</th>
                                 <th>{{__('page.category')}}</th>
@@ -46,6 +56,7 @@
                             @endphp
                                 <tr>
                                     <td>{{ (($data->currentPage() - 1 ) * $data->perPage() ) + $loop->iteration }}</td>
+                                    <td class="py-1" width="50"><img class="bordered rounded-circle attachment" height="40" width="40" src="@if($item->image){{asset($item->image)}}@else{{asset('images/no-image.jpg')}}@endif" alt=""></td>
                                     <td class="code">{{$item->code}}</td>
                                     <td class="name">{{$item->name}}</td>
                                     <td class="category">@isset($item->category->name){{$item->category->name}}@endisset</td>
@@ -82,16 +93,38 @@
             </div>
         </div>                
     </div>
-
+    <div class="modal fade" id="attachModal">
+        <div class="modal-dialog" style="margin-top:17vh">
+            <div class="modal-content">
+                <div id="image_preview"></div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('script')
+<script src="{{asset('master/plugins/imageviewer/js/jquery.verySimpleImageViewer.min.js')}}"></script>
 <script>
     $(document).ready(function () {
         $("#btn-reset").click(function(){
             $("#search_code").val('');
             $("#search_name").val('');
             $("#search_category").val('');
+        });
+        $(".attachment").click(function(e){
+            e.preventDefault();
+            let path = $(this).attr('src');
+            $("#image_preview").html('')
+            $("#image_preview").verySimpleImageViewer({
+                imageSource: path,
+                frame: ['100%', '100%'],
+                maxZoom: '900%',
+                zoomFactor: '10%',
+                mouse: true,
+                keyboard: true,
+                toolbar: true,
+            });
+            $("#attachModal").modal();
         });
     });
 </script>

@@ -305,4 +305,5 @@ return [
     'export' => 'Export',
     'pending_payments' => 'Pending Payments',
     'added_successfully' => 'Added Successfully',
+    'supplier_cant_delete' => 'This Supplier can not be delete.',
 ];

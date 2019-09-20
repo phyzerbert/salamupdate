@@ -203,7 +203,6 @@ class PreOrderController extends Controller
                         'product_id' => $data['product_id'][$i],
                         'cost' => $data['cost'][$i],
                         'quantity' => $data['quantity'][$i],
-                        // 'expiry_date' => $data['expiry_date'][$i],
                         'discount' => $data['discount'][$i],
                         'discount_string' => $data['discount_string'][$i],
                         'subtotal' => $data['subtotal'][$i],
@@ -256,6 +255,7 @@ class PreOrderController extends Controller
         if(!isset($data['item']) ||  count($data['item']) == 0 || in_array(null, $data['item'])){
             return back()->withErrors(['product' => __('page.select_product')]);
         }
+        $user = Auth::user();
         $order = PreOrder::find($data['id']);
         $purchase = new Purchase();
         $purchase->order_id = $order->id;
@@ -268,7 +268,20 @@ class PreOrderController extends Controller
         $purchase->timestamp = $order->timestamp;
         $purchase->grand_total = $data['grand_total'];
         $purchase->note = $order->note;
-        $purchase->status = 1;
+
+        if($user->hasRole('secretary')){
+            $purchase->status = 0;
+        }else{
+            $purchase->status = 1;
+        }
+        $company_name = Company::find($purchase->company_id)->name;
+        if($request->has("attachment")){
+            $picture = request()->file('attachment');
+            $date_time = date('Y-m-d-H-i-s');
+            $imageName = $company_name."_".$data['reference_number']."_".$date_time.'.'.$picture->getClientOriginalExtension();
+            $picture->move(public_path('images/uploaded/purchase_images/'), $imageName);
+            $purchase->attachment = 'images/uploaded/purchase_images/'.$imageName;
+        }
         $purchase->save();
 
         foreach($data["item"] as $id => $value){

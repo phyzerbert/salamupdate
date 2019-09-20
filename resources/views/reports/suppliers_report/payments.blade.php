@@ -70,7 +70,7 @@
                                 @php
                                     $total_amount += $item->amount;
                                 @endphp
-                                <tr>
+                                <tr class="@if($item->status == 0) text-danger @endif">
                                     <td>{{ (($data->currentPage() - 1 ) * $data->perPage() ) + $loop->iteration }}</td>
                                     <td class="timestamp">{{date('Y-m-d H:i', strtotime($item->timestamp))}}</td>
                                     <td class="reference_no">{{$item->reference_no}}</td>

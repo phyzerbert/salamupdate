@@ -8,7 +8,7 @@
     <script src="{{asset('master/plugins/vuejs/axios.js')}}"></script>
 @endsection
 @section('content')
-<div class="content">
+<div class="content" id="app">
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
@@ -24,7 +24,7 @@
             $role = Auth::user()->role->slug;
         @endphp
         <div class="card">
-            <div class="card-body" id="app">
+            <div class="card-body">
                 <form class="form-layout form-layout-1" action="{{route('pre_order.save')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="row mg-b-25">

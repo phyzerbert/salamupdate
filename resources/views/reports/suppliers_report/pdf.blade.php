@@ -124,7 +124,7 @@
             @endphp
             @foreach ($data as $item)
                 @php
-                    $paid = $item->payments()->sum('amount');
+                    $paid = $item->payments()->where('status', 1)->sum('amount');
                     $grand_total = $item->grand_total;
                     $footer_grand_total += $grand_total;
                     $footer_paid += $paid;

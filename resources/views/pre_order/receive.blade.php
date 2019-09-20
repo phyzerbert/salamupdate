@@ -27,7 +27,7 @@
                         <h3 class="tx-gray-800 mb-3 float-left"><i class="fa fa-info-circle"></i> {{__('page.receive')}}</h3>
                         <input type="text" class="form-control form-control-sm float-right" style="width:300px;" name="" id="" v-model="keyword" placeholder="Product Name" @keyup="searchProduct">
                     </div>                        
-                    <form action="{{route('pre_order.save_receive')}}" method="post">
+                    <form action="{{route('pre_order.save_receive')}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="id" value="{{$order->id}}" id="order_id" />
                         <table class="table table-bordered table-hover">
@@ -87,9 +87,9 @@
                                 </tr>
                             </tfoot>
                         </table>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group mg-b-10-force">
+                        <div class="row mt-4">
+                            <div class="col-lg-3 col-md-6">
+                                <div class="form-group mb-2">
                                     <label class="form-control-label">{{__('page.store')}}:</label>
                                     <select class="form-control select2" name="store" data-placeholder="{{__('page.select_store')}}">
                                         @foreach ($stores as $item)
@@ -103,8 +103,8 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="form-group mg-b-10-force">
+                            <div class="col-lg-3 col-md-6">
+                                <div class="form-group mb-2">
                                     <label class="form-control-label">{{__('page.reference_number')}}:</label>
                                     <input class="form-control" type="text" name="reference_number" value="{{ old('reference_number') }}" required placeholder="{{__('page.reference_number')}}">
                                     @error('reference_number')
@@ -114,7 +114,13 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-4 mt-4 text-right">
+                            <div class="col-lg-3 col-md-6">
+                                <div class="form-group">
+                                    <label for="purchase_image">{{__('page.attachment')}}</label>
+                                    <input type="file" name="attachment" class="form-control file-input-styled" id="purchase_image" />
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6 mt-4 text-right">
                                 <a href="{{route('pre_order.index')}}" class="btn btn-success"><i class="menu-item-icon icon ion-clipboard tx-16"></i>  {{__('page.purchase_order')}}</a>
                                 <button type="submit" class="btn btn-primary ml-3"><i class="menu-item-icon icon ion-archive tx-16"></i>  {{__('page.receive')}}</button>
                             </div>
@@ -129,9 +135,12 @@
 
 @section('script')
 <script src="{{asset('master/plugins/select2/dist/js/select2.min.js')}}"></script>
+<script src="{{asset('master/plugins/styling/uniform.min.js')}}"></script>
 <script>
     $(document).ready(function () {
-            
+        $('.file-input-styled').uniform({
+            fileButtonClass: 'action btn bg-primary text-white'
+        });
     });
 </script>
 <script src="{{ asset('js/pre_order_receive.js') }}"></script>

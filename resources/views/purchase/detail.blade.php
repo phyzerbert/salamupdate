@@ -209,10 +209,10 @@
                                         <td class="date">{{date('Y-m-d H:i', strtotime($item->timestamp))}}</td>
                                         <td class="reference_no">{{$item->reference_no}}</td>
                                         <td class="amount" data-value="{{$item->amount}}">{{number_format($item->amount)}}</td>
-                                        <td class="" data-path="{{$item->attachment}}">
+                                        <td>
                                             <span class="tx-info note">{{$item->note}}</span>&nbsp;
                                             @if($item->attachment != "")
-                                                <a href="{{asset($item->attachment)}}" download><i class="fa fa-paperclip"></i></a>
+                                                <span data-value="{{asset($item->attachment)}}" class="attachment text-primary"><i class="fa fa-paperclip"></i></span>
                                             @endif
                                         </td>
                                     </tr>
@@ -253,7 +253,7 @@
     $(document).ready(function () {
         $(".attachment").click(function(e){
             e.preventDefault();
-            let path = '{{asset("/")}}' + $(this).data('value');
+            let path = $(this).data('value');
             $("#image_preview").html('')
             $("#image_preview").verySimpleImageViewer({
                 imageSource: path,
@@ -266,7 +266,6 @@
             });
             $("#attachModal").modal();
         });
-
     });
 </script>
 @endsection

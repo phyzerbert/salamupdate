@@ -62,7 +62,7 @@
                             @endphp
                             @foreach ($data as $item)
                                 @php
-                                    $paid = $item->payments()->sum('amount');
+                                    $paid = $item->payments()->where('status', 1)->sum('amount');
                                     $grand_total = $item->grand_total;
                                     if(($expiry_period != '') && ($grand_total == $paid)) continue;
                                     $footer_grand_total += $grand_total;
@@ -75,7 +75,13 @@
                                     <td class="supplier" data-id="{{$item->supplier_id}}">@isset($item->supplier->company){{$item->supplier->company}}@endisset</td>
                                     <td class="grand_total"> {{number_format($grand_total)}} </td>
                                     <td class="paid"> {{ number_format($paid) }} </td>
-                                    <td class="balance" data-value="{{$grand_total - $paid}}"> {{number_format($grand_total - $paid)}} </td>
+                                    <td class="balance" data-value="{{$grand_total - $paid}}">
+                                        @if($grand_total - $paid < 0)
+                                            <span class="text-danger">{{number_format($grand_total - $paid)}}</span>
+                                        @else
+                                            <span>{{number_format($grand_total - $paid)}}</span>
+                                        @endif
+                                    </td>
                                     <td>
                                         @if ($paid == 0)
                                             <span class="badge badge-danger">{{__('page.pending')}}</span>
