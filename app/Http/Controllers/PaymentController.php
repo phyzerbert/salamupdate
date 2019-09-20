@@ -51,10 +51,10 @@ class PaymentController extends Controller
         }else if($request->get('type') == 'sale'){
             $item->paymentable_type = Sale::class;
         }
-        if(Auth::user()->hasRole('user')){
-            $item->status = 1;
-        }else{
+        if($user->hasRole('secretary')){
             $item->status = 0;
+        }else{
+            $item->status = 1;
         }
         if($request->has("attachment")){
             $picture = request()->file('attachment');
