@@ -22,7 +22,8 @@
                 $role = Auth::user()->role->slug;
             @endphp
             <div class="card card-body card-fill">
-                <div class="">
+                <div class="clearfix">
+                    <h3 class="text-primary float-left my-0">{{$supplier->company}}</h3>
                     <a href="{{route('concurrent_payments.add_payments', $supplier->id)}}" class="btn btn-sm btn-success float-right">{{__('page.add_payments')}}</a>
                 </div>
                 <div class="mt-3">
