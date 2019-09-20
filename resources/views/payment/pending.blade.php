@@ -110,7 +110,8 @@
                         <tfoot>
                             <tr>
                                 <th colspan="5">{{__('page.total')}}</th>
-                                <th colspan="2">{{number_format($total_amount)}}</th>
+                                <th>{{number_format($total_amount)}}</th>
+                                <th colspan="2"></th>
                             </tr>
                         </tfoot>
                     </table>                
