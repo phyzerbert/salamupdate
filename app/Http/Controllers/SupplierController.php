@@ -165,12 +165,13 @@ class SupplierController extends Controller
     }
 
     public function add_payments($id){
-        $supplier = Supplier::find();
-        $purchases = $supplier->purchases->where('status', 1)->get();
+        $supplier = Supplier::find($id);
+        $purchases = $supplier->purchases()->where('status', 1)->get();
         foreach ($purchases as $purchase) {
             $paid = $purchase->payments()->sum('amount');
             $grand_total = $purchase->grand_total;
             $balance = $grand_total - $paid;
+            dd($paid);
             if($balance <= 0) continue;
             $payment = new Payment();
             $payment->timestamp = date('Y-m-d H:i:s');

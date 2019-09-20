@@ -50,7 +50,7 @@
                                 @foreach ($data as $item)
                                     @php
                                         $grand_total = $item->grand_total;
-                                        $paid = $item->payments()->where('status', 1)->sum('amount');
+                                        $paid = $item->payments()->sum('amount');
                                         $balance = $grand_total - $paid;
 
                                         $orders = $item->orders;
