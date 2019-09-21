@@ -59,7 +59,10 @@
                         </ul>
                     </li>
                     <li class="">
-                        <a href="#" class="right-bar-toggle waves-effect waves-light"><i class="md md-chat"></i></a>
+                        <a href="#" class="right-bar-toggle waves-effect waves-light">
+                            <i class="md md-chat"></i>
+                            <span class="badge badge-pill badge-xs badge-danger" id="total_unreads"></span>
+                        </a>
                     </li>
                 </ul>
             </div>

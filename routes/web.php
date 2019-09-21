@@ -174,6 +174,8 @@ Route::get('/chat', 'ChatController@index')->name('chat');
 Route::get('/chat/messages/{user}', 'ChatController@fetchMessages')->name('fetchMessages');
 Route::post('/chat/message/{user}', 'ChatController@sendMessage')->name('sendMessage');
 Route::get('/users', 'ChatController@users')->name('users');
+Route::get('/unread_messages', 'ChatController@unread_messages')->name('unread_messages');
+Route::post('/read_messages/{id}', 'ChatController@read_messages')->name('read_messages');
 
 Route::get('/concurrent_payments', 'SupplierController@concurrent_payments')->name('concurrent_payments');
 Route::get('/concurrent_payments/supplier_purchases/{id}', 'SupplierController@supplier_purchases')->name('concurrent_payments.supplier_purchases');

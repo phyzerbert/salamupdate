@@ -28,6 +28,7 @@ class CreateUsersTable extends Migration
             $table->string('picture')->nullable();
             $table->string('last_ip')->nullable();
             $table->string('ip_address')->nullable();
+            $table->integer('unread_messages')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

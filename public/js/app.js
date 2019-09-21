@@ -1961,6 +1961,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1981,7 +1986,11 @@ __webpack_require__.r(__webpack_exports__);
       typing: false,
       sending: false,
       emoStatus: false,
+      uploadProgress: 0,
+      uploading: false,
       users: [],
+      unreads: {},
+      total_unreads: 0,
       token: document.head.querySelector('meta[name="csrf-token"]').content
     };
   },
@@ -2013,6 +2022,11 @@ __webpack_require__.r(__webpack_exports__);
       this.activeFriendData = this.users.filter(function (user) {
         return user.id == _this2.activeFriend;
       });
+      axios.post('/read_messages/' + val).then(function (response) {
+        if (response.data == 'success') {
+          _this2.getUnreadMessages();
+        }
+      });
       this.fetchMessages();
     },
     '$refs.upload': function $refsUpload(val) {
@@ -2024,8 +2038,25 @@ __webpack_require__.r(__webpack_exports__);
       this.$refs.upload.active = true;
 
       if (newFile && oldFile) {
+        if (newFile.active !== oldFile.active) {
+          this.uploading = true;
+        }
+
         if (newFile.progress !== oldFile.progress) {
-          console.log('progress', newFile.progress, newFile);
+          // console.log('progress', newFile.progress)
+          this.uploadProgress = newFile.progress;
+        } // Uploaded error
+
+
+        if (newFile.error !== oldFile.error) {
+          alert('Sorry, upload is failed. Please try again');
+        } // Uploaded successfully
+
+
+        if (newFile.success !== oldFile.success) {
+          Object(timers__WEBPACK_IMPORTED_MODULE_0__["setTimeout"])(function () {
+            this.uploading = false;
+          }, 1000);
         }
       }
     },
@@ -2079,16 +2110,32 @@ __webpack_require__.r(__webpack_exports__);
       axios.get('/users').then(function (response) {
         _this5.users = response.data;
 
+        _this5.getUnreadMessages();
+
         if (_this5.friends.length > 0) {
           _this5.activeFirend = _this5.friends[0].id;
         }
       });
     },
+    getUnreadMessages: function getUnreadMessages() {
+      var _this6 = this;
+
+      axios.get('/unread_messages').then(function (response1) {
+        var unreads = response1.data;
+        var total_unreads = 0;
+
+        for (var i = 0; i < _this6.users.length; i++) {
+          var user_unreads = unreads[_this6.users[i].id];
+          _this6.users[i].unread_messages = user_unreads;
+          total_unreads += user_unreads;
+        }
+
+        _this6.total_unreads = total_unreads;
+        $("#total_unreads").text(total_unreads);
+      });
+    },
     scrollToEnd: function scrollToEnd() {
       document.getElementById('privateMessageBox').scrollTo(0, 99999);
-    },
-    toggleEmo: function toggleEmo() {
-      this.emoStatus = !this.emoStatus;
     },
     onInput: function onInput(e) {
       if (!e) {
@@ -2114,29 +2161,43 @@ __webpack_require__.r(__webpack_exports__);
     $("#app").css('opacity', 1);
   },
   created: function created() {
-    var _this6 = this;
+    var _this7 = this;
 
     this.fetchUsers();
     Echo.join('plchat').here(function (users) {
-      _this6.onlineFriends = users;
+      _this7.onlineFriends = users;
     }).joining(function (user) {
-      _this6.onlineFriends.push(user);
+      _this7.onlineFriends.push(user);
 
       console.log('joining', user.name);
     }).leaving(function (user) {
-      _this6.onlineFriends.splice(_this6.onlineFriends.indexOf(user), 1);
+      _this7.onlineFriends.splice(_this7.onlineFriends.indexOf(user), 1);
 
       console.log('leaving', user.name);
     });
     Echo["private"]('chat.' + this.user.id).listen('MessageSent', function (e) {
-      console.log('Message Sent');
       var audio = new Audio('/Ring.wav');
       audio.play();
-      _this6.activeFriend = e.message.user_id;
 
-      _this6.allMessages.push(e.message);
+      if (!_this7.activeFriend) {
+        _this7.activeFriend = e.message.user_id;
+      }
 
-      Object(timers__WEBPACK_IMPORTED_MODULE_0__["setTimeout"])(_this6.scrollToEnd, 50);
+      if (_this7.activeFriend != e.message.user_id) {
+        for (var i = 0; i < _this7.users.length; i++) {
+          var element = _this7.users[i];
+
+          if (element.id == e.message.user_id) {
+            element.unread_messages++;
+            _this7.total_unreads++;
+            $("#total_unreads").text(_this7.total_unreads);
+          }
+        }
+      } else {
+        _this7.allMessages.push(e.message);
+
+        Object(timers__WEBPACK_IMPORTED_MODULE_0__["setTimeout"])(_this7.scrollToEnd, 50);
+      }
     }); // .listenForWhisper('typing', (e) => {
     //     if(e.user.id==this.activeFriend){
     //         this.typing = true;
@@ -30768,7 +30829,7 @@ var render = function() {
                     ? _c("div", { staticClass: "image-container" }, [
                         message.is_image
                           ? _c("img", {
-                              staticClass: "attachment-image",
+                              staticClass: "attachment-image my-1",
                               attrs: {
                                 width: "180",
                                 src: "/" + message.attachment,
@@ -30877,6 +30938,18 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
+                friend.unread_messages > 0
+                  ? _c(
+                      "span",
+                      {
+                        staticClass:
+                          "badge badge-pill badge-xs badge-danger float-right",
+                        staticStyle: { "margin-top": "10px" }
+                      },
+                      [_vm._v(_vm._s(friend.unread_messages))]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
                 _c("span", { staticClass: "clearfix" })
               ]
             )
@@ -30946,18 +31019,40 @@ var render = function() {
         ),
         _vm._v(" "),
         _c("div", { attrs: { id: "card-footer" } }, [
-          _c("img", {
-            directives: [
-              {
-                name: "show",
-                rawName: "v-show",
-                value: _vm.typing,
-                expression: "typing"
-              }
-            ],
-            ref: "typing_indicator",
-            attrs: { src: "/images/typing_indicator.gif", width: "60", alt: "" }
-          })
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.uploading,
+                  expression: "uploading"
+                }
+              ],
+              staticClass: "progress progress-sm mb-0"
+            },
+            [
+              _c(
+                "div",
+                {
+                  staticClass: "progress-bar progress-bar-success",
+                  style: { width: _vm.uploadProgress + "%" },
+                  attrs: {
+                    role: "progressbar",
+                    "aria-valuenow": _vm.uploadProgress,
+                    "aria-valuemin": "0",
+                    "aria-valuemax": "100"
+                  }
+                },
+                [
+                  _c("span", { staticClass: "sr-only" }, [
+                    _vm._v(_vm._s(_vm.uploadProgress) + "% Complete")
+                  ])
+                ]
+              )
+            ]
+          )
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "card-footer py-2" }, [

@@ -58,4 +58,8 @@ class User extends Authenticatable
     public function messages(){
         return $this->hasMany('App\Models\Message');
     }
+
+    public function received_messages(){
+        return $this->hasMany('App\Models\Message', 'receiver_id');
+    }
 }

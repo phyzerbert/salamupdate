@@ -76,4 +76,22 @@ class ChatController extends Controller
         $data = $mod->get();
         return $data;
     }
+
+    public function unread_messages(){
+        $users = User::all();
+        $unread_messages = array();
+        foreach ($users as $user) {
+            $unread_messages[$user->id] = $user->messages()->where('receiver_id', Auth::user()->id)->where('is_read', 0)->count();
+        }
+        return $unread_messages;
+    }
+
+    public function read_messages($id){
+        $sender = User::find($id);
+        $messages = Auth::user()->received_messages()->where('user_id', $sender->id)->get();
+        foreach ($messages as $message) {
+            $message->update(['is_read' => 1]);
+        }
+        return 'success';
+    }
 }

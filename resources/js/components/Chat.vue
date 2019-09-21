@@ -17,6 +17,7 @@
                             </div>
                             <span class="name">{{friend.name}}</span>
                         </a>
+                        <span class="badge badge-pill badge-xs badge-danger float-right" style="margin-top: 10px" v-if="friend.unread_messages > 0">{{friend.unread_messages}}</span>
                         <span class="clearfix"></span>
                     </li>
                 </ul>  
@@ -40,8 +41,12 @@
                 </div>
             </div>
             <div id="card-footer">
-                <img v-show="typing" ref="typing_indicator" src="/images/typing_indicator.gif" width="60" alt="">
-                <!-- <img ref="typing_indicator" src="/images/typing_indicator.gif" width="60" alt=""> -->
+                <!-- <img v-show="typing" ref="typing_indicator" src="/images/typing_indicator.gif" width="60" alt=""> -->
+                <div class="progress progress-sm mb-0" v-show="uploading">
+                    <div class="progress-bar progress-bar-success" role="progressbar" :aria-valuenow="uploadProgress" aria-valuemin="0" aria-valuemax="100" :style="{width: uploadProgress + '%'}">
+                        <span class="sr-only">{{uploadProgress}}% Complete</span>
+                    </div>
+                </div>
             </div>
             <div class="card-footer py-2">
                 <div class="d-flex">
@@ -85,7 +90,11 @@
                 typing: false,
                 sending: false,
                 emoStatus:false,
+                uploadProgress: 0,
+                uploading: false,
                 users: [],
+                unreads: {},
+                total_unreads: 0,
                 token: document.head.querySelector('meta[name="csrf-token"]').content
             }
         },
@@ -112,6 +121,11 @@
                 this.activeFriendData = this.users.filter((user) => {
                     return user.id == this.activeFriend;
                 })
+                axios.post('/read_messages/' + val).then(response => {
+                    if(response.data == 'success'){
+                        this.getUnreadMessages();
+                    }
+                })
                 this.fetchMessages();
             },
             '$refs.upload'(val){
@@ -122,8 +136,22 @@
             inputFile(newFile, oldFile){
                 this.$refs.upload.active = true
                 if (newFile && oldFile) {
+                    if (newFile.active !== oldFile.active) {
+                        this.uploading = true
+                    }
                     if (newFile.progress !== oldFile.progress) {
-                        console.log('progress', newFile.progress, newFile)
+                        // console.log('progress', newFile.progress)
+                        this.uploadProgress = newFile.progress
+                    }
+
+                    // Uploaded error
+                    if (newFile.error !== oldFile.error) {
+                        alert('Sorry, upload is failed. Please try again');
+                    }
+
+                    // Uploaded successfully
+                    if (newFile.success !== oldFile.success) {
+                        setTimeout(function(){ this.uploading = false;}, 1000);
                     }
                 }
             },
@@ -164,16 +192,27 @@
             fetchUsers() {
                 axios.get('/users').then(response => {
                     this.users = response.data
+                    this.getUnreadMessages();
                     if(this.friends.length > 0){
                         this.activeFirend = this.friends[0].id;
                     }
                 })
             },
+            getUnreadMessages(){
+                axios.get('/unread_messages').then(response1 => {
+                    let unreads = response1.data; 
+                    let total_unreads = 0                       
+                    for (let i = 0; i < this.users.length; i++) {
+                        let user_unreads = unreads[this.users[i].id]
+                        this.users[i].unread_messages = user_unreads;
+                        total_unreads += user_unreads
+                    }
+                    this.total_unreads = total_unreads
+                    $("#total_unreads").text(total_unreads);
+                })
+            },
             scrollToEnd(){
                 document.getElementById('privateMessageBox').scrollTo(0,99999);
-            },
-            toggleEmo(){
-                this.emoStatus= !this.emoStatus;
             },
             onInput(e){
                 if(!e){
@@ -213,12 +252,24 @@
                 
             Echo.private('chat.'+this.user.id)
                 .listen('MessageSent',(e)=>{
-                    console.log('Message Sent')
                     let audio = new Audio('/Ring.wav')
                     audio.play()
-                    this.activeFriend=e.message.user_id;
-                    this.allMessages.push(e.message)
-                    setTimeout(this.scrollToEnd,50);
+                    if(!this.activeFriend){
+                        this.activeFriend=e.message.user_id;
+                    }
+                    if(this.activeFriend != e.message.user_id){                        
+                        for (let i = 0; i < this.users.length; i++) {
+                            const element = this.users[i];
+                            if(element.id == e.message.user_id){
+                                element.unread_messages++;
+                                this.total_unreads++;
+                                $("#total_unreads").text(this.total_unreads);
+                            }
+                        }
+                    }else{
+                        this.allMessages.push(e.message)
+                        setTimeout(this.scrollToEnd,50);
+                    }                    
                 })
                 // .listenForWhisper('typing', (e) => {
                 //     if(e.user.id==this.activeFriend){
