@@ -26,13 +26,13 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                             @switch($locale)
                                 @case('en')
-                                    <img src="{{asset('images/lang/en.png')}}" width="30px">&nbsp;&nbsp;English
+                                    <img src="{{asset('images/lang/en.png')}}" width="30px">&nbsp;&nbsp;<span class="hide-phone"> English</span>
                                     @break
                                 @case('es')
-                                    <img src="{{asset('images/lang/es.png')}}" width="30px">&nbsp;&nbsp;Español
+                                    <img src="{{asset('images/lang/es.png')}}" width="30px">&nbsp;&nbsp;<span class="hide-phone"> Español</span>
                                     @break
                                 @default
-                                    <img src="{{asset('images/lang/es.png')}}" width="30px">&nbsp;&nbsp;Español
+                                    <img src="{{asset('images/lang/es.png')}}" width="30px">&nbsp;&nbsp;<span class="hide-phone"> Español</span>
                             @endswitch
                         </a>
                         <ul class="dropdown-menu dropdown-menu-right">
@@ -58,9 +58,9 @@
                             </form>
                         </ul>
                     </li>
-                    {{-- <li class="d-none d-sm-block">
+                    <li class="">
                         <a href="#" class="right-bar-toggle waves-effect waves-light"><i class="md md-chat"></i></a>
-                    </li> --}}
+                    </li>
                 </ul>
             </div>
         </nav>
