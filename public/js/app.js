@@ -2197,6 +2197,11 @@ __webpack_require__.r(__webpack_exports__);
         _this7.allMessages.push(e.message);
 
         Object(timers__WEBPACK_IMPORTED_MODULE_0__["setTimeout"])(_this7.scrollToEnd, 50);
+        axios.post('/read_messages/' + e.message.user_id).then(function (response) {
+          if (response.data == 'success') {
+            _this7.getUnreadMessages();
+          }
+        });
       }
     }); // .listenForWhisper('typing', (e) => {
     //     if(e.user.id==this.activeFriend){

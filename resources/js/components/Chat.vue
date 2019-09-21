@@ -269,6 +269,11 @@
                     }else{
                         this.allMessages.push(e.message)
                         setTimeout(this.scrollToEnd,50);
+                        axios.post('/read_messages/' + e.message.user_id).then(response => {
+                            if(response.data == 'success'){
+                                this.getUnreadMessages();
+                            }
+                        })
                     }                    
                 })
                 // .listenForWhisper('typing', (e) => {

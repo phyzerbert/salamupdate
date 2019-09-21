@@ -58,11 +58,10 @@ class ChatController extends Controller
             $input['receiver_id']=$user->id;
             $message=auth()->user()->messages()->create($input);
         }
-
-        broadcast(new MessageSent($message->load('user')))->toOthers();
-        
-        return response(['status'=>'Message private sent successfully','message'=>$message]);
-
+        $loaded_message = $message->load('user');
+        // return response(['status'=>'success','message'=>$message]);
+        echo json_encode(['status'=>'success','message'=>$loaded_message]);
+        broadcast(new MessageSent($loaded_message))->toOthers();
     }
 
     public function users()
