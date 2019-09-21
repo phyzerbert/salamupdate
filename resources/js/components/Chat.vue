@@ -53,7 +53,7 @@
                         :headers="{'X-CSRF-TOKEN': token}"
                     ><span class="icon-attach text-primary"><i class="fa fa-paperclip"></i></span></file-upload>
                     <div class="input-group">
-                        <input type="text" class="form-control form-control-sm" id="chat-input" ref="chat-input" v-model="message" placeholder="Enter Message" @keyup.enter="sendMessage" :disabled="sending" />
+                        <input type="text" class="form-control form-control-sm" id="chat-input" ref="chat_input" v-model="message" placeholder="Enter Message" @keyup.enter="sendMessage" />
                         <span class="input-group-append">
                             <button type="button" class="btn btn-sm waves-effect waves-light btn-primary" id="btn-send" @click="sendMessage">Send</button>
                         </span>
@@ -131,11 +131,15 @@
                 if(!this.activeFirend){
                     return alert('Please select user');
                 }
+                if(this.sending) {
+                    return false;
+                }
                 this.sending = true;
                 axios.post('/chat/message/' + this.activeFirend, {message: this.message})
                     .then(response => {
                         this.sending = false;
-                        document.getElementById('chat-input').focus();
+                        this.$refs.chat_input.focus()
+                        // document.getElementById('chat-input').select();
                         this.message = null;
                         this.allMessages.push(response.data.message)
                         setTimeout(this.scrollToEnd, 50);

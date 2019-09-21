@@ -2036,12 +2036,19 @@ __webpack_require__.r(__webpack_exports__);
         return alert('Please select user');
       }
 
+      if (this.sending) {
+        return false;
+      }
+
       this.sending = true;
       axios.post('/chat/message/' + this.activeFirend, {
         message: this.message
       }).then(function (response) {
         _this3.sending = false;
-        document.getElementById('chat-input').focus();
+
+        _this3.$refs.chat_input.focus(); // document.getElementById('chat-input').select();
+
+
         _this3.message = null;
 
         _this3.allMessages.push(response.data.message);
@@ -30991,13 +30998,12 @@ var render = function() {
                       expression: "message"
                     }
                   ],
-                  ref: "chat-input",
+                  ref: "chat_input",
                   staticClass: "form-control form-control-sm",
                   attrs: {
                     type: "text",
                     id: "chat-input",
-                    placeholder: "Enter Message",
-                    disabled: _vm.sending
+                    placeholder: "Enter Message"
                   },
                   domProps: { value: _vm.message },
                   on: {
