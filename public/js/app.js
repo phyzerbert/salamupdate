@@ -2020,6 +2020,15 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
+    inputFile: function inputFile(newFile, oldFile) {
+      this.$refs.upload.active = true;
+
+      if (newFile && oldFile) {
+        if (newFile.progress !== oldFile.progress) {
+          console.log('progress', newFile.progress, newFile);
+        }
+      }
+    },
     onTyping: function onTyping() {
       Echo["private"]('chat.' + this.activeFriend).whisper('typing', {
         user: this.user
@@ -2045,10 +2054,6 @@ __webpack_require__.r(__webpack_exports__);
         message: this.message
       }).then(function (response) {
         _this3.sending = false;
-
-        _this3.$refs.chat_input.focus(); // document.getElementById('chat-input').select();
-
-
         _this3.message = null;
 
         _this3.allMessages.push(response.data.message);
@@ -4125,7 +4130,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.icon-attach i[data-v-bab9ea70] {\n    font-size: 30px;\n    color: #5f60b5;\n}\n", ""]);
+exports.push([module.i, "\n.icon-attach i[data-v-bab9ea70] {\n    font-size: 20px;\n    color: #5f60b5;\n}\n", ""]);
 
 // exports
 
@@ -30968,11 +30973,7 @@ var render = function() {
                     "post-action": "/chat/message/" + _vm.activeFriend,
                     headers: { "X-CSRF-TOKEN": _vm.token }
                   },
-                  on: {
-                    "input-file": function($event) {
-                      _vm.$refs.upload.active = true
-                    }
-                  },
+                  on: { "input-file": _vm.inputFile },
                   model: {
                     value: _vm.files,
                     callback: function($$v) {

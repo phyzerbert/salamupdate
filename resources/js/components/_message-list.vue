@@ -47,7 +47,7 @@
 
 <style scoped>
     .icon-attach i {
-        font-size: 30px;
+        font-size: 20px;
         color: #5f60b5;
     }
 </style>

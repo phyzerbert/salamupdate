@@ -49,7 +49,7 @@
                         :post-action="'/chat/message/'+activeFriend"
                         ref='upload'
                         v-model="files"
-                        @input-file="$refs.upload.active = true"
+                        @input-file="inputFile"
                         :headers="{'X-CSRF-TOKEN': token}"
                     ><span class="icon-attach text-primary"><i class="fa fa-paperclip"></i></span></file-upload>
                     <div class="input-group">
@@ -119,6 +119,14 @@
             }
         },
         methods: {
+            inputFile(newFile, oldFile){
+                this.$refs.upload.active = true
+                if (newFile && oldFile) {
+                    if (newFile.progress !== oldFile.progress) {
+                        console.log('progress', newFile.progress, newFile)
+                    }
+                }
+            },
             onTyping(){
                 Echo.private('chat.'+this.activeFriend).whisper('typing',{
                     user:this.user
@@ -138,8 +146,6 @@
                 axios.post('/chat/message/' + this.activeFirend, {message: this.message})
                     .then(response => {
                         this.sending = false;
-                        this.$refs.chat_input.focus()
-                        // document.getElementById('chat-input').select();
                         this.message = null;
                         this.allMessages.push(response.data.message)
                         setTimeout(this.scrollToEnd, 50);
