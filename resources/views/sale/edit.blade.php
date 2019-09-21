@@ -29,8 +29,8 @@
             @php
                 $role = Auth::user()->role->slug;
             @endphp
-            <div class="card card-body p-md-5">
-                <form class="form-layout form-layout-1" action="{{route('sale.update')}}" method="POST" enctype="multipart/form-data" id="app">
+            <div class="card card-body p-md-5" id="page">
+                <form class="form-layout form-layout-1" action="{{route('sale.update')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="id" value="{{$sale->id}}" id="sale_id">
                     <div class="row">

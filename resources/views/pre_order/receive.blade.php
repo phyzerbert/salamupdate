@@ -21,7 +21,7 @@
             @php
                 $role = Auth::user()->role->slug;
             @endphp
-            <div class="card" id="app">
+            <div class="card" id="page">
                 <div class="card-body table-responsive">
                     <div class="pd-t-20 py-3">
                         <h3 class="tx-gray-800 mb-3 float-left"><i class="fa fa-info-circle"></i> {{__('page.receive')}}</h3>

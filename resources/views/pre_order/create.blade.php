@@ -8,7 +8,7 @@
     <script src="{{asset('master/plugins/vuejs/axios.js')}}"></script>
 @endsection
 @section('content')
-<div class="content" id="app">
+<div class="content" id="page" style="opacity: 0;">
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
@@ -24,146 +24,144 @@
             $user = Auth::user();
             $role = $user->role->slug;
         @endphp
-        <div class="card">
-            <div class="card-body">
-                <form class="form-layout form-layout-1" action="{{route('pre_order.save')}}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <div class="row mb-4">
-                        <div class="col-md-6">
-                            <div class="form-group mb-2">
-                                <label class="form-control-label">{{__('page.date')}}: <span class="tx-danger">*</span></label>
-                                <input class="form-control" type="text" name="date" id="pre_order_date" value="{{date('Y-m-d H:i')}}"placeholder="{{__('page.date')}}" autocomplete="off" required>
-                                @error('date')
-                                    <span class="invalid-feedback d-block" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group mb-2">
-                                <label class="form-control-label">{{__('page.reference_number')}}:</label>
-                                <input class="form-control" type="text" name="reference_number" value="{{ old('reference_number') }}" required placeholder="{{__('page.reference_number')}}">
-                                @error('reference_number')
-                                    <span class="invalid-feedback d-block" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
+        <div class="card card-body">
+            <form class="form-layout form-layout-1" action="{{route('pre_order.save')}}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <div class="form-group mb-2">
+                            <label class="form-control-label">{{__('page.date')}}<span class="tx-danger">*</span></label>
+                            <input class="form-control" type="text" name="date" id="pre_order_date" value="{{date('Y-m-d H:i')}}"placeholder="{{__('page.date')}}" autocomplete="off" required>
+                            @error('date')
+                                <span class="invalid-feedback d-block" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                         </div>
                     </div>
-                    <div class="row mb-4">
-                        @if(!$user->company)
-                            <div class="col-md-6 col-lg-4">
-                                <label for="company_id" class="form-control-label">{{__('page.company')}}</label>
-                                <select name="company_id" class="form-control" id="company_id" required>
-                                    <option value="" hidden>{{__('page.select_company')}}</option>
-                                    @foreach ($companies as $item)
-                                        <option value="{{$item->id}}">{{$item->name}}</option>
-                                    @endforeach                                
+                    <div class="col-md-6">
+                        <div class="form-group mb-2">
+                            <label class="form-control-label">{{__('page.reference_number')}}</label>
+                            <input class="form-control" type="text" name="reference_number" value="{{ old('reference_number') }}" required placeholder="{{__('page.reference_number')}}">
+                            @error('reference_number')
+                                <span class="invalid-feedback d-block" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    @if(!$user->company)
+                        <div class="col-md-6 col-lg-4">
+                            <label for="company_id" class="form-control-label">{{__('page.company')}}</label>
+                            <select name="company_id" class="form-control" id="company_id" required>
+                                <option value="" hidden>{{__('page.select_company')}}</option>
+                                @foreach ($companies as $item)
+                                    <option value="{{$item->id}}">{{$item->name}}</option>
+                                @endforeach                                
+                            </select>
+                        </div>
+                    @endif
+                    <div class="col-md-6 @if(!$user->company) col-lg-4 @endif">
+                        <div class="form-group mb-2">
+                            <label class="form-control-label">{{__('page.supplier')}}</label>
+                            <div class="input-group">                                  
+                                <select class="form-control select2-show-search" name="supplier" id="search_supplier" required data-placeholder="{{__('page.select_supplier')}}">
+                                    <option hidden>{{__('page.select_supplier')}}</option>
+                                    @foreach ($suppliers as $item)
+                                        <option value="{{$item->id}}" @if(old('supplier') == $item->id) selected @endif>{{$item->company}}</option>
+                                    @endforeach
                                 </select>
+                                <span class="input-group-btn">
+                                    <button class="bd bg-primary text-white ml-1" id="btn-add-supplier" style="border-radius:100px !important;font-size:14px;padding:6px 11px;" type="button"><i class="fa fa-plus"></i></button>
+                                </span>  
                             </div>
-                        @endif
-                        <div class="col-md-6 @if(!$user->company) col-lg-4 @endif">
-                            <div class="form-group mb-2">
-                                <label class="form-control-label">{{__('page.supplier')}}:</label>
-                                <div class="input-group">                                  
-                                    <select class="form-control select2-show-search" name="supplier" id="search_supplier" required data-placeholder="{{__('page.select_supplier')}}">
-                                        <option hidden>{{__('page.select_supplier')}}</option>
-                                        @foreach ($suppliers as $item)
-                                            <option value="{{$item->id}}" @if(old('supplier') == $item->id) selected @endif>{{$item->company}}</option>
-                                        @endforeach
-                                    </select>
-                                    <span class="input-group-btn">
-                                        <button class="bd bg-primary text-white ml-1" id="btn-add-supplier" style="border-radius:100px !important;font-size:14px;padding:6px 11px;" type="button"><i class="fa fa-plus"></i></button>
-                                    </span>  
-                                </div>
-                                @error('supplier')
-                                    <span class="invalid-feedback d-block" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="col-md-6 @if(!$user->company) col-lg-4 @endif">
-                            <div class="form-group mb-2">
-                                <label class="form-control-label">{{__('page.attachment')}}:</label>
-                                <input type="file" name="attachment" id="file2" class="file-input-styled" accept="image/*">
-                            </div>
-                        </div>
-                    </div> 
-                    <div class="row mb-4">
-                        <div class="col-md-12">
-                            <div>
-                                <h4 class="mt-3" style="float:left">{{__('page.order_items')}}</h4>
-                                <button type="button" class="btn btn-sm btn-primary btn-icon mb-2 wave-effect add-product" title="{{__('page.right_ctrl_key')}}" style="float:right" @click="add_item()"><i class="fa fa-plus"></i></button>
-                                <button type="button" class="btn btn-sm btn-success wave-effect mb-3 mr-3" id="btn_create_product" title="Shift Key" style="float:right"><i class="fa fa-plus"></i> {{__('page.new_product')}}</button>
-                            </div>
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="product_table">
-                                    <thead class="table-success">
-                                        <tr>
-                                            <th>{{__('page.product_name_code')}}</th>
-                                            <th>{{__('page.product_cost')}}</th>
-                                            <th>{{__('page.discount')}}</th>
-                                            <th>{{__('page.quantity')}}</th>
-                                            <th>{{__('page.subtotal')}}</th>
-                                            <th style="width:30px"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="top-search-form">
-                                        <tr v-for="(item,i) in order_items" :key="i">
-                                            <td>
-                                                <input type="hidden" name="product_id[]" class="product_id" :value="item.product_id" />
-                                                <input type="text" name="product_name[]" ref="product" class="form-control form-control-sm product" v-model="item.product_name_code" required />
-                                            </td>
-                                            {{-- <td><input type="date" class="form-control form-control-sm expiry_date" name="expiry_date[]" autocomplete="off" v-model="item.expiry_date" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" placeholder="{{__('page.expiry_date')}}" /></td> --}}
-                                            <td><input type="number" class="form-control form-control-sm cost" name="cost[]" v-model="item.cost" required placeholder="{{__('page.product_cost')}}" /></td>
-                                            <td>
-                                                <input type="text" class="form-control form-control-sm discount_string" name="discount_string[]" v-model="item.discount_string" required placeholder="{{__('page.discount')}}" />
-                                                <input type="hidden" class="discount" name="discount[]" v-model="item.discount" />
-                                            </td>
-                                            <td><input type="number" class="form-control form-control-sm quantity" name="quantity[]" v-model="item.quantity" required placeholder="{{__('page.quantity')}}" /></td>
-                                            {{-- <td class="tax">@{{item.tax_name}}</td> --}}
-                                            <td class="subtotal">
-                                                @{{formatPrice(item.sub_total)}}
-                                                <input type="hidden" name="subtotal[]" :value="item.sub_total" />
-                                            </td>
-                                            <td>
-                                                <button type="button" class="btn btn-sm btn-warning btn-icon wave-effect remove-product" @click="remove(i)"><i class="fa fa-times"></i></button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <th colspan="2">{{__('page.total')}}</th>
-                                            <th class="total_discount">@{{formatPrice(total.discount)}}</th>
-                                            <th></th>
-                                            <th colspan="2" class="total">
-                                                @{{formatPrice(total.cost)}}
-                                                <input type="hidden" name="grand_total" :value="grand_total">
-                                            </th>
-                                        </tr>
-                                    </tfoot>
-                                </table>
-                            </div>
+                            @error('supplier')
+                                <span class="invalid-feedback d-block" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                         </div>
                     </div>
+                    <div class="col-md-6 @if(!$user->company) col-lg-4 @endif">
+                        <div class="form-group mb-2">
+                            <label class="form-control-label">{{__('page.attachment')}}:</label>
+                            <input type="file" name="attachment" id="file2" class="file-input-styled" accept="image/*">
+                        </div>
+                    </div>
+                </div> 
+                <div class="row mb-4">
+                    <div class="col-md-12">
+                        <div>
+                            <h4 class="mt-3" style="float:left">{{__('page.order_items')}}</h4>
+                            <button type="button" class="btn btn-sm btn-primary btn-icon mb-2 wave-effect add-product" title="{{__('page.right_ctrl_key')}}" style="float:right" @click="add_item()"><i class="fa fa-plus"></i></button>
+                            <button type="button" class="btn btn-sm btn-success wave-effect mb-3 mr-3" id="btn_create_product" title="Shift Key" style="float:right"><i class="fa fa-plus"></i> {{__('page.new_product')}}</button>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="product_table">
+                                <thead class="table-success">
+                                    <tr>
+                                        <th>{{__('page.product_name_code')}}</th>
+                                        <th>{{__('page.product_cost')}}</th>
+                                        <th>{{__('page.discount')}}</th>
+                                        <th>{{__('page.quantity')}}</th>
+                                        <th>{{__('page.subtotal')}}</th>
+                                        <th style="width:30px"></th>
+                                    </tr>
+                                </thead>
+                                <tbody class="top-search-form">
+                                    <tr v-for="(item,i) in order_items" :key="i">
+                                        <td>
+                                            <input type="hidden" name="product_id[]" class="product_id" :value="item.product_id" />
+                                            <input type="text" name="product_name[]" ref="product" class="form-control form-control-sm product" v-model="item.product_name_code" required />
+                                        </td>
+                                        {{-- <td><input type="date" class="form-control form-control-sm expiry_date" name="expiry_date[]" autocomplete="off" v-model="item.expiry_date" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" placeholder="{{__('page.expiry_date')}}" /></td> --}}
+                                        <td><input type="number" class="form-control form-control-sm cost" name="cost[]" v-model="item.cost" required placeholder="{{__('page.product_cost')}}" /></td>
+                                        <td>
+                                            <input type="text" class="form-control form-control-sm discount_string" name="discount_string[]" v-model="item.discount_string" required placeholder="{{__('page.discount')}}" />
+                                            <input type="hidden" class="discount" name="discount[]" v-model="item.discount" />
+                                        </td>
+                                        <td><input type="number" class="form-control form-control-sm quantity" name="quantity[]" v-model="item.quantity" required placeholder="{{__('page.quantity')}}" /></td>
+                                        {{-- <td class="tax">@{{item.tax_name}}</td> --}}
+                                        <td class="subtotal">
+                                            @{{formatPrice(item.sub_total)}}
+                                            <input type="hidden" name="subtotal[]" :value="item.sub_total" />
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-sm btn-warning btn-icon wave-effect remove-product" @click="remove(i)"><i class="fa fa-times"></i></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th colspan="2">{{__('page.total')}}</th>
+                                        <th class="total_discount">@{{formatPrice(total.discount)}}</th>
+                                        <th></th>
+                                        <th colspan="2" class="total">
+                                            @{{formatPrice(total.cost)}}
+                                            <input type="hidden" name="grand_total" :value="grand_total">
+                                        </th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
 
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group mb-2">
-                                <label class="form-control-label">{{__('page.note')}}:</label>
-                                <textarea class="form-control" name="note" rows="5" placeholder="{{__('page.note')}}"></textarea>
-                            </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group mb-2">
+                            <label class="form-control-label">{{__('page.note')}}:</label>
+                            <textarea class="form-control" name="note" rows="5" placeholder="{{__('page.note')}}"></textarea>
                         </div>
                     </div>
-                    <div class="form-layout-footer text-right">
-                        <button type="submit" class="btn btn-primary mr-3"><i class="fa fa-check mr-2"></i>{{__('page.save')}}</button>
-                        <a href="{{route('pre_order.index')}}" class="btn btn-warning"><i class="fa fa-times mr-2"></i>{{__('page.cancel')}}</a>
-                    </div>
-                </form>
-            </div>
+                </div>
+                <div class="form-layout-footer text-right">
+                    <button type="submit" class="btn btn-primary mr-3"><i class="fa fa-check mr-2"></i>{{__('page.save')}}</button>
+                    <a href="{{route('pre_order.index')}}" class="btn btn-warning"><i class="fa fa-times mr-2"></i>{{__('page.cancel')}}</a>
+                </div>
+            </form>
         </div>
         <div class="modal fade" id="addProductModal">
             <div class="modal-dialog">

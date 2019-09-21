@@ -1,6 +1,6 @@
 
 var app = new Vue({
-    el: '#app',
+    el: '#page',
 
     data: {
         order_items: [],
@@ -173,7 +173,7 @@ var app = new Vue({
                 console.log(error);
             });
         
-        $("#app").css('opacity', 1);
+        $("#page").css('opacity', 1);
             
     },
     updated: function() {

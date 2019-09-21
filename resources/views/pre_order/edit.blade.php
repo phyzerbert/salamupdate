@@ -23,7 +23,7 @@
             @php
                 $role = Auth::user()->role->slug;
             @endphp
-            <div class="card card-body" id="app" style="opacity:0">
+            <div class="card card-body" id="page" style="opacity:0">
                 <form class="form-layout form-layout-1" action="{{route('pre_order.update')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="id" id="order_id" value="{{$order->id}}">
