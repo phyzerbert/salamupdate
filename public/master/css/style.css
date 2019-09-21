@@ -2799,7 +2799,7 @@ button.swal2-confirm {
 
 .conversation-list .ctext-wrap:after {
   right: 100%;
-  top: 20%;
+  top: 25%;
   border: solid transparent;
   content: " ";
   height: 0;
@@ -2844,7 +2844,7 @@ button.swal2-confirm {
   border-color: rgba(238, 238, 242, 0) !important;
   border-left-color: #e8e9ec !important;
   left: 100% !important;
-  top: 20% !important;
+  top: 25% !important;
 }
 
 .chat-send {

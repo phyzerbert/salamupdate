@@ -29,7 +29,7 @@
                     <div class="avatar">
                         <img src="/images/avatar.png" width="42" class="rounded-circle" alt="">
                         <i class="fa fa-circle icon-online"></i>
-                        <span class="name ml-2 mt-3 text-white">{{this.activeFriendData[0].name}}</span>
+                        <span class="name ml-2 text-white">{{this.activeFriendData[0].name}}</span>
                     </div>
                 </a>
                 <div class="card-widgets float-right mt-2">
@@ -235,8 +235,13 @@
         height: 70vh;
         position: fixed;
         bottom: -18px;
-        right: 250px;
         z-index: 10;
+        right: 10px;
+        transition-duration: 0.3s;
+    }
+    
+    .right-bar-enabled #msgArea {
+        right: 250px;
     }
 
     #user_sidebar {
@@ -268,6 +273,8 @@
         font-size: 18px;
         color: #444444;
         font-weight: 500;
+        position: absolute;
+        top: 9px;
     }
     #chatbox-footer {
         height: 15px;
