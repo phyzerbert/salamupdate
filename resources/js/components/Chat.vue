@@ -24,15 +24,11 @@
         </div>
 
         <div class="card" id="msgArea" v-show="this.activeFriend">
-            <div class="card-header bg-info py-2" style="min-height: 58px">
-                <a href="#" class="card-title float-left" v-if="this.activeFriend">
-                    <div class="avatar">
-                        <img src="/images/avatar.png" width="42" class="rounded-circle" alt="">
-                        <i class="fa fa-circle icon-online"></i>
-                        <span class="name ml-2 text-white">{{this.activeFriendData[0].name}}</span>
-                    </div>
-                </a>
-                <div class="card-widgets float-right mt-2">
+            <div class="card-header bg-info py-2">
+                <h4 class="card-title my-1 float-left" v-if="this.activeFriend">
+                    <span class="name ml-2 text-white">{{this.activeFriendData[0].name}}</span>
+                </h4>
+                <div class="card-widgets my-1 float-right">
                     <a href="#" id="box-hide" @click="removeActive"><i class="ion-close-round text-white"></i></a>
                 </div>
                 <span class="clearfix"></span>
@@ -47,7 +43,7 @@
                 <img v-show="typing" ref="typing_indicator" src="/images/typing_indicator.gif" width="60" alt="">
                 <!-- <img ref="typing_indicator" src="/images/typing_indicator.gif" width="60" alt=""> -->
             </div>
-            <div class="card-footer">
+            <div class="card-footer py-2">
                 <div class="d-flex">
                     <file-upload
                         :post-action="'/chat/message/'+activeFriend"
@@ -231,8 +227,8 @@
     }
 
     #msgArea {
-        width: 500px;
-        height: 70vh;
+        width: 380px;
+        height: 58vh;
         position: fixed;
         bottom: -18px;
         z-index: 10;
@@ -244,13 +240,10 @@
         right: 250px;
     }
 
-    #user_sidebar {
-        height: 73.6vh;
-        z-index: 1;
-    }
     @media(max-width: 768px) {
         #msgArea {
             width: 95%;
+            height: 80vh;
         }
     }
     
@@ -260,21 +253,10 @@
         margin-right: 10px;
         cursor: pointer;
     }
-    .card-header .avatar {
-        position: relative;
-    }
-    .card-header .icon-online {
-        color: #a0d269;
-        position: absolute;
-        bottom: 0;
-        left: 31px;
-    }
     .card-header .name {
         font-size: 18px;
         color: #444444;
         font-weight: 500;
-        position: absolute;
-        top: 9px;
     }
     #chatbox-footer {
         height: 15px;

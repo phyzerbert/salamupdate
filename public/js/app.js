@@ -1961,10 +1961,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -4137,7 +4133,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n#privateMessageBox[data-v-151b8bba] {        \n    overflow: auto;\n    position: relative;\n}\n#msgArea[data-v-151b8bba] {\n    width: 500px;\n    height: 70vh;\n    position: fixed;\n    bottom: -18px;\n    z-index: 10;\n    right: 10px;\n    transition-duration: 0.3s;\n}\n.right-bar-enabled #msgArea[data-v-151b8bba] {\n    right: 250px;\n}\n#user_sidebar[data-v-151b8bba] {\n    height: 73.6vh;\n    z-index: 1;\n}\n@media(max-width: 768px) {\n#msgArea[data-v-151b8bba] {\n        width: 95%;\n}\n}\n.icon-attach[data-v-151b8bba] {\n    font-size: 25px;\n    margin-right: 10px;\n    cursor: pointer;\n}\n.card-header .avatar[data-v-151b8bba] {\n    position: relative;\n}\n.card-header .icon-online[data-v-151b8bba] {\n    color: #a0d269;\n    position: absolute;\n    bottom: 0;\n    left: 31px;\n}\n.card-header .name[data-v-151b8bba] {\n    font-size: 18px;\n    color: #444444;\n    font-weight: 500;\n    position: absolute;\n    top: 9px;\n}\n#chatbox-footer[data-v-151b8bba] {\n    height: 15px;\n    position: absolute;\n    bottom: 75px;\n    padding-left: 60px;\n}\n", ""]);
+exports.push([module.i, "\n#privateMessageBox[data-v-151b8bba] {        \n    overflow: auto;\n    position: relative;\n}\n#msgArea[data-v-151b8bba] {\n    width: 380px;\n    height: 58vh;\n    position: fixed;\n    bottom: -18px;\n    z-index: 10;\n    right: 10px;\n    transition-duration: 0.3s;\n}\n.right-bar-enabled #msgArea[data-v-151b8bba] {\n    right: 250px;\n}\n@media(max-width: 768px) {\n#msgArea[data-v-151b8bba] {\n        width: 95%;\n        height: 80vh;\n}\n}\n.icon-attach[data-v-151b8bba] {\n    font-size: 25px;\n    margin-right: 10px;\n    cursor: pointer;\n}\n.card-header .name[data-v-151b8bba] {\n    font-size: 18px;\n    color: #444444;\n    font-weight: 500;\n}\n#chatbox-footer[data-v-151b8bba] {\n    height: 15px;\n    position: absolute;\n    bottom: 75px;\n    padding-left: 60px;\n}\n", ""]);
 
 // exports
 
@@ -30889,55 +30885,28 @@ var render = function() {
         attrs: { id: "msgArea" }
       },
       [
-        _c(
-          "div",
-          {
-            staticClass: "card-header bg-info py-2",
-            staticStyle: { "min-height": "58px" }
-          },
-          [
-            this.activeFriend
-              ? _c(
-                  "a",
-                  {
-                    staticClass: "card-title float-left",
-                    attrs: { href: "#" }
-                  },
-                  [
-                    _c("div", { staticClass: "avatar" }, [
-                      _c("img", {
-                        staticClass: "rounded-circle",
-                        attrs: {
-                          src: "/images/avatar.png",
-                          width: "42",
-                          alt: ""
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("i", { staticClass: "fa fa-circle icon-online" }),
-                      _vm._v(" "),
-                      _c("span", { staticClass: "name ml-2 text-white" }, [
-                        _vm._v(_vm._s(this.activeFriendData[0].name))
-                      ])
-                    ])
-                  ]
-                )
-              : _vm._e(),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-widgets float-right mt-2" }, [
-              _c(
-                "a",
-                {
-                  attrs: { href: "#", id: "box-hide" },
-                  on: { click: _vm.removeActive }
-                },
-                [_c("i", { staticClass: "ion-close-round text-white" })]
-              )
-            ]),
-            _vm._v(" "),
-            _c("span", { staticClass: "clearfix" })
-          ]
-        ),
+        _c("div", { staticClass: "card-header bg-info py-2" }, [
+          this.activeFriend
+            ? _c("h4", { staticClass: "card-title my-1 float-left" }, [
+                _c("span", { staticClass: "name ml-2 text-white" }, [
+                  _vm._v(_vm._s(this.activeFriendData[0].name))
+                ])
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-widgets my-1 float-right" }, [
+            _c(
+              "a",
+              {
+                attrs: { href: "#", id: "box-hide" },
+                on: { click: _vm.removeActive }
+              },
+              [_c("i", { staticClass: "ion-close-round text-white" })]
+            )
+          ]),
+          _vm._v(" "),
+          _c("span", { staticClass: "clearfix" })
+        ]),
         _vm._v(" "),
         _c(
           "div",
@@ -30975,7 +30944,7 @@ var render = function() {
           })
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "card-footer" }, [
+        _c("div", { staticClass: "card-footer py-2" }, [
           _c(
             "div",
             { staticClass: "d-flex" },
