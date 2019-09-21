@@ -26,7 +26,7 @@
                     </ol>
                 </div>
             </div>
-            <div class="" id="app">
+            <div class="" id="chatbox">
                 <chat-component :user="{{auth()->user()}}"></chat-component>
             </div>
         </div>                

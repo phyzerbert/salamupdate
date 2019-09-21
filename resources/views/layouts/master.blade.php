@@ -20,6 +20,7 @@
         <link href="{{asset('master/css/custom.css')}}" rel="stylesheet" type="text/css" />
 
         <script src="{{asset('master/js/modernizr.min.js')}}"></script>
+        {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
 
         @yield('style')
 
@@ -27,26 +28,27 @@
 
 
     <body class="fixed-left">
-        <div id="ajax-loading" class="text-center">
-            <img class="mx-auto" src="{{asset('images/loader.gif')}}" width="70" alt="" style="margin:45vh auto;">
-        </div>
-        <div id="wrapper">
-        
-            @include('layouts.header')
+        <div id="app">
+            <div id="ajax-loading" class="text-center">
+                <img class="mx-auto" src="{{asset('images/loader.gif')}}" width="70" alt="" style="margin:45vh auto;">
+            </div>
+            <div id="wrapper">
+            
+                @include('layouts.header')
 
-            @include('layouts.aside')
-                     
-            <div class="content-page">
-                
-                @yield('content')
+                @include('layouts.aside')
+                        
+                <div class="content-page">
+                    
+                    @yield('content')
 
-                <footer class="footer">
-                    2019 © {{config('app.name')}}
-                </footer>
+                    <footer class="footer">
+                        2019 © {{config('app.name')}}
+                    </footer>
 
+                </div>
             </div>
         </div>
-    
         <script>
             var resizefunc = [];
         </script>
