@@ -177,3 +177,11 @@ table.dataTable thead .sorting_desc {
     display: flex;
     align-items: stretch;
 }
+
+#image_preview {
+    max-width: 600px;
+    height: 600px;
+}
+.image_viewer_inner_container {
+    width: 100% !important;
+}

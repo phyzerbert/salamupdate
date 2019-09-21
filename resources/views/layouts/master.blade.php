@@ -17,10 +17,12 @@
         <link href="{{asset('master/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{asset('master/css/icons.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{asset('master/css/style.css')}}" rel="stylesheet" type="text/css" />
+
+        <link rel="stylesheet" href="{{asset('master/plugins/imageviewer/css/jquery.verySimpleImageViewer.css')}}">
+
         <link href="{{asset('master/css/custom.css')}}" rel="stylesheet" type="text/css" />
 
-        <script src="{{asset('master/js/modernizr.min.js')}}"></script>
-        
+        <script src="{{asset('master/js/modernizr.min.js')}}"></script>        
 
         @yield('style')
 
@@ -50,6 +52,13 @@
             <div id="app">
                 <chat :user="{{auth()->user()}}"></chat>                
             </div>
+            <div class="modal fade" id="attachModal">
+                <div class="modal-dialog" style="margin-top:17vh">
+                    <div class="modal-content">
+                        <div id="image_preview"></div>
+                    </div>
+                </div>
+            </div>
         </div>
         <script>
             var resizefunc = [];
@@ -72,6 +81,9 @@
         <script src="{{asset('master/plugins/moment/moment.min.js')}}"></script>
 
         <script src="{{asset('master/js/jquery.app.js')}}"></script>
+
+        <script src="{{asset('master/plugins/imageviewer/js/jquery.verySimpleImageViewer.min.js')}}"></script>
+
         <script src="{{ asset('js/app.js') }}"></script>
         @yield('script')
 

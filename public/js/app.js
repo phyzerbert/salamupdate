@@ -1979,6 +1979,7 @@ __webpack_require__.r(__webpack_exports__);
       allMessages: [],
       typingClock: null,
       typing: false,
+      sending: false,
       emoStatus: false,
       users: [],
       token: document.head.querySelector('meta[name="csrf-token"]').content
@@ -2035,9 +2036,12 @@ __webpack_require__.r(__webpack_exports__);
         return alert('Please select user');
       }
 
+      this.sending = true;
       axios.post('/chat/message/' + this.activeFirend, {
         message: this.message
       }).then(function (response) {
+        _this3.sending = false;
+        document.getElementById('chat-input').focus();
         _this3.message = null;
 
         _this3.allMessages.push(response.data.message);
@@ -4133,7 +4137,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n#privateMessageBox[data-v-151b8bba] {        \n    overflow: auto;\n    position: relative;\n}\n#msgArea[data-v-151b8bba] {\n    width: 380px;\n    height: 58vh;\n    position: fixed;\n    bottom: -18px;\n    z-index: 10;\n    right: 10px;\n    transition-duration: 0.3s;\n}\n.right-bar-enabled #msgArea[data-v-151b8bba] {\n    right: 250px;\n}\n@media(max-width: 768px) {\n#msgArea[data-v-151b8bba] {\n        width: 95%;\n        height: 80vh;\n}\n}\n.icon-attach[data-v-151b8bba] {\n    font-size: 25px;\n    margin-right: 10px;\n    cursor: pointer;\n}\n.card-header .name[data-v-151b8bba] {\n    font-size: 18px;\n    color: #444444;\n    font-weight: 500;\n}\n#chatbox-footer[data-v-151b8bba] {\n    height: 15px;\n    position: absolute;\n    bottom: 75px;\n    padding-left: 60px;\n}\n", ""]);
+exports.push([module.i, "\n#privateMessageBox[data-v-151b8bba] {        \n    overflow: auto;\n    position: relative;\n}\n#msgArea[data-v-151b8bba] {\n    width: 380px;\n    height: 58vh;\n    position: fixed;\n    bottom: -18px;\n    z-index: 10;\n    right: 10px;\n    transition-duration: 0.3s;\n}\n.right-bar-enabled #msgArea[data-v-151b8bba] {\n    right: 250px;\n}\n@media(max-width: 768px) {\n#msgArea[data-v-151b8bba] {\n        width: 95%;\n        height: 80vh;\n}\n}\n#chat-input[data-v-151b8bba]:focus {\n    box-shadow: none;\n}\n#btn-send[data-v-151b8bba] {\n    height: 31px;\n}\n.icon-attach[data-v-151b8bba] {\n    font-size: 20px;\n    margin-right: 10px;\n    cursor: pointer;\n}\n.card-header .name[data-v-151b8bba] {\n    font-size: 16px;\n    color: #444444;\n    font-weight: 500;\n}\n#chatbox-footer[data-v-151b8bba] {\n    height: 15px;\n    position: absolute;\n    bottom: 75px;\n    padding-left: 60px;\n}\n", ""]);
 
 // exports
 
@@ -30887,8 +30891,8 @@ var render = function() {
       [
         _c("div", { staticClass: "card-header bg-info py-2" }, [
           this.activeFriend
-            ? _c("h4", { staticClass: "card-title my-1 float-left" }, [
-                _c("span", { staticClass: "name ml-2 text-white" }, [
+            ? _c("h4", { staticClass: "card-title mb-0 mt-1 float-left" }, [
+                _c("span", { staticClass: "name text-white" }, [
                   _vm._v(_vm._s(this.activeFriendData[0].name))
                 ])
               ])
@@ -30987,8 +30991,14 @@ var render = function() {
                       expression: "message"
                     }
                   ],
-                  staticClass: "form-control",
-                  attrs: { type: "text", placeholder: "Enter Message" },
+                  ref: "chat-input",
+                  staticClass: "form-control form-control-sm",
+                  attrs: {
+                    type: "text",
+                    id: "chat-input",
+                    placeholder: "Enter Message",
+                    disabled: _vm.sending
+                  },
                   domProps: { value: _vm.message },
                   on: {
                     keyup: function($event) {
@@ -31013,8 +31023,9 @@ var render = function() {
                   _c(
                     "button",
                     {
-                      staticClass: "btn waves-effect waves-light btn-primary",
-                      attrs: { type: "button" },
+                      staticClass:
+                        "btn btn-sm waves-effect waves-light btn-primary",
+                      attrs: { type: "button", id: "btn-send" },
                       on: { click: _vm.sendMessage }
                     },
                     [_vm._v("Send")]

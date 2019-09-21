@@ -25,8 +25,8 @@
 
         <div class="card" id="msgArea" v-show="this.activeFriend">
             <div class="card-header bg-info py-2">
-                <h4 class="card-title my-1 float-left" v-if="this.activeFriend">
-                    <span class="name ml-2 text-white">{{this.activeFriendData[0].name}}</span>
+                <h4 class="card-title mb-0 mt-1 float-left" v-if="this.activeFriend">
+                    <span class="name text-white">{{this.activeFriendData[0].name}}</span>
                 </h4>
                 <div class="card-widgets my-1 float-right">
                     <a href="#" id="box-hide" @click="removeActive"><i class="ion-close-round text-white"></i></a>
@@ -53,9 +53,9 @@
                         :headers="{'X-CSRF-TOKEN': token}"
                     ><span class="icon-attach text-primary"><i class="fa fa-paperclip"></i></span></file-upload>
                     <div class="input-group">
-                        <input type="text" class="form-control" v-model="message" placeholder="Enter Message" @keyup.enter="sendMessage" />
+                        <input type="text" class="form-control form-control-sm" id="chat-input" ref="chat-input" v-model="message" placeholder="Enter Message" @keyup.enter="sendMessage" :disabled="sending" />
                         <span class="input-group-append">
-                            <button type="button" class="btn waves-effect waves-light btn-primary" @click="sendMessage">Send</button>
+                            <button type="button" class="btn btn-sm waves-effect waves-light btn-primary" id="btn-send" @click="sendMessage">Send</button>
                         </span>
                     </div>
                 </div>
@@ -83,6 +83,7 @@
                 allMessages: [],
                 typingClock: null,
                 typing: false,
+                sending: false,
                 emoStatus:false,
                 users: [],
                 token: document.head.querySelector('meta[name="csrf-token"]').content
@@ -130,8 +131,11 @@
                 if(!this.activeFirend){
                     return alert('Please select user');
                 }
+                this.sending = true;
                 axios.post('/chat/message/' + this.activeFirend, {message: this.message})
                     .then(response => {
+                        this.sending = false;
+                        document.getElementById('chat-input').focus();
                         this.message = null;
                         this.allMessages.push(response.data.message)
                         setTimeout(this.scrollToEnd, 50);
@@ -246,15 +250,23 @@
             height: 80vh;
         }
     }
+
+    #chat-input:focus {
+        box-shadow: none;
+    }
+
+    #btn-send {
+        height: 31px;
+    }
     
 
     .icon-attach {
-        font-size: 25px;
+        font-size: 20px;
         margin-right: 10px;
         cursor: pointer;
     }
     .card-header .name {
-        font-size: 18px;
+        font-size: 16px;
         color: #444444;
         font-weight: 500;
     }

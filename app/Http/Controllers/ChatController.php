@@ -67,6 +67,13 @@ class ChatController extends Controller
 
     public function users()
     {
-        return User::all();
+        $user = Auth::user();
+        $mod = new User();
+        $mod = $mod->where('role_id', '<>', 3);
+        if($user->company){
+            $mod = $mod->where('company_id', $user->company_id)->orWhere('role_id', 1);
+        }
+        $data = $mod->get();
+        return $data;
     }
 }

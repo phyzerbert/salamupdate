@@ -2,16 +2,6 @@
 @section('style')    
     <link href="{{asset('master/plugins/select2/dist/css/select2.css')}}" rel="stylesheet">
     <link href="{{asset('master/plugins/select2/dist/css/select2-bootstrap.css')}}" rel="stylesheet">
-    <link rel="stylesheet" href="{{asset('master/plugins/imageviewer/css/jquery.verySimpleImageViewer.css')}}">
-    <style>
-        #image_preview {
-            max-width: 600px;
-            height: 600px;
-        }
-        .image_viewer_inner_container {
-            width: 100% !important;
-        }
-    </style>
 @endsection
 @section('content')
     <div class="content">
@@ -237,17 +227,9 @@
         </div>                
     </div>
 
-    <div class="modal fade" id="attachModal">
-        <div class="modal-dialog" style="margin-top:17vh">
-            <div class="modal-content">
-                <div id="image_preview"></div>
-            </div>
-        </div>
-    </div>
 @endsection
 
 @section('script')
-<script src="{{asset('master/plugins/imageviewer/js/jquery.verySimpleImageViewer.min.js')}}"></script>
 <script src="{{asset('master/plugins/select2/dist/js/select2.min.js')}}"></script>
 <script>
     $(document).ready(function () {

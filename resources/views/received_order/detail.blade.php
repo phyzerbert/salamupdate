@@ -1,16 +1,6 @@
 @extends('layouts.master')
 @section('style')    
     <link href="{{asset('master/lib/select2/css/select2.min.css')}}" rel="stylesheet">
-    <link rel="stylesheet" href="{{asset('master/lib/imageviewer/css/jquery.verySimpleImageViewer.css')}}">
-    <style>
-        #image_preview {
-            max-width: 600px;
-            height: 600px;
-        }
-        .image_viewer_inner_container {
-            width: 100% !important;
-        }
-    </style>
 @endsection
 @section('content')
     <div class="br-mainpanel">
@@ -201,18 +191,9 @@
         </div>                
     </div>
 
-    <div class="modal fade" id="attachModal">
-        <div class="modal-dialog" style="margin-top:17vh">
-            <div class="modal-content">
-                <div id="image_preview"></div>
-                {{-- <img src="" id="attachment" width="100%" height="600" alt=""> --}}
-            </div>
-        </div>
-    </div>
 @endsection
 
 @section('script')
-<script src="{{asset('master/lib/imageviewer/js/jquery.verySimpleImageViewer.min.js')}}"></script>
 <script src="{{asset('master/lib/select2/js/select2.min.js')}}"></script>
 <script>
     $(document).ready(function () {

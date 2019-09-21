@@ -1,14 +1,4 @@
 @extends('layouts.master')
-<link rel="stylesheet" href="{{asset('master/plugins/imageviewer/css/jquery.verySimpleImageViewer.css')}}">
-<style>
-    #image_preview {
-        max-width: 600px;
-        height: 600px;
-    }
-    .image_viewer_inner_container {
-        width: 100% !important;
-    }
-</style>
 @section('content')
     <div class="content">
         <div class="container-fluid">
@@ -93,17 +83,9 @@
             </div>
         </div>                
     </div>
-    <div class="modal fade" id="attachModal">
-        <div class="modal-dialog" style="margin-top:17vh">
-            <div class="modal-content">
-                <div id="image_preview"></div>
-            </div>
-        </div>
-    </div>
 @endsection
 
 @section('script')
-<script src="{{asset('master/plugins/imageviewer/js/jquery.verySimpleImageViewer.min.js')}}"></script>
 <script>
     $(document).ready(function () {
         $("#btn-reset").click(function(){

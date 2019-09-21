@@ -161,10 +161,6 @@
                 <li class="@if($page == 'concurrent_payments') active @endif">
                     <a href="{{route('concurrent_payments')}}" class="waves-effect @if($page == 'concurrent_payments') active @endif"><i class="fa fa-cube"></i><span> {{__('page.concurrent_payments')}} </span></a>
                 </li>
-
-                {{-- <li class="@if($page == 'chat') active @endif">
-                    <a href="{{route('chat')}}" class="waves-effect @if($page == 'chat') active @endif"><i class="fa fa-wechat"></i><span> {{__('page.chatting')}} </span></a>
-                </li> --}}
             </ul>
             <div class="clearfix"></div>
         </div>
