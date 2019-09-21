@@ -250,7 +250,7 @@
     }
     @media(max-width: 768px) {
         #msgArea {
-            width: 100%;
+            width: 95%;
         }
     }
     
