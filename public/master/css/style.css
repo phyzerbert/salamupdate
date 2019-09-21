@@ -2779,6 +2779,7 @@ button.swal2-confirm {
   display: inline-block;
   padding: 5px 10px;
   position: relative;
+  max-width: 100%;
 }
 
 .conversation-list .ctext-wrap i {
@@ -2828,6 +2829,7 @@ button.swal2-confirm {
   margin-right: 12px;
   text-align: right;
   width: 70% !important;
+  max-width: 100%;
 }
 
 .conversation-list .odd .ctext-wrap {
