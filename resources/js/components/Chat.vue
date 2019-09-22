@@ -1,7 +1,7 @@
 <template>
     <div id="chatbox">  
         <div class="side-bar right-bar nicescroll">
-            <h4 class="text-center">Users</h4>                    
+            <h4 class="text-center">Usuarios</h4>                    
             <div class="contact-list nicescroll">
                 <ul class="list-group contacts-list">
                     <li class="list-group-item"
@@ -15,7 +15,7 @@
                             <div class="avatar">
                                 <img src="/images/avatar.png" alt="">
                                 <i class="fa fa-circle online" v-if="is_connected(friend.id)"></i>
-                                <i class="fa fa-circle offline" v-if="!is_connected(friend.id)"></i>
+                                <i class="fa fa-circle offline" v-else></i>
                             </div>
                             <span class="name">{{friend.name}}</span>
                         </a>
@@ -26,19 +26,23 @@
             </div>
         </div>
 
-        <div class="card" id="msgArea" v-show="this.activeFriend">
+        <div class="card" id="msgArea" v-show="activeFriend">
             <div class="card-header bg-info py-2">
-                <h4 class="card-title mb-0 mt-1 float-left" v-if="this.activeFriend">
-                    <span class="name text-white">{{this.activeFriendData[0].name}}</span>
+                <h4 class="card-title mb-0 mt-1 float-left" v-if="activeFriend">
+                    <span class="status mr-1">
+                        <i class="fa fa-circle online" v-if="is_connected(activeFriend.id)"></i>
+                        <i class="fa fa-circle offline" v-else></i>
+                    </span>
+                    <span class="name text-white">{{activeFriendData[0].name}}</span>
                 </h4>
-                <div class="card-widgets my-1 float-right">
+                <div class="card-widgets mt-1 float-right">
                     <a href="#" id="box-hide" @click="removeActive"><i class="ion-close-round text-white"></i></a>
                 </div>
                 <span class="clearfix"></span>
             </div>
-            <div class="card-body" id="privateMessageBox" style="height:calc(100% - 126px)">
-                <message-list :user="user" :all-messages="allMessages" v-if="this.activeFriend"></message-list>
-                <div class="text-center" v-if="!this.activeFriend">
+            <div class="card-body nicescroll" id="privateMessageBox" style="height:calc(100% - 126px)">
+                <message-list :user="user" :all-messages="allMessages" v-if="activeFriend"></message-list>
+                <div class="text-center" v-if="!activeFriend">
                     <div><img src="/images/chat.png" width="250" style="margin-top:100px;" alt=""></div>
                 </div>
             </div>
@@ -153,7 +157,7 @@
 
                     // Uploaded successfully
                     if (newFile.success !== oldFile.success) {
-                        setTimeout(function(){ this.uploading = false; alert(123)}, 1000);
+                        setTimeout(function(){ this.uploading = false;}, 1000);
                     }
                 }
             },
@@ -326,6 +330,13 @@
             width: 95%;
             height: 80vh;
         }
+    }
+    #msgArea .status i.online {
+        color: #a0d269;
+    }
+
+    #msgArea .status i.offline {
+        color: #ef5350;
     }
 
     #chat-input:focus {

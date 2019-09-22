@@ -83,11 +83,11 @@
         <script src="{{asset('master/plugins/imageviewer/js/jquery.verySimpleImageViewer.min.js')}}"></script>
         <script src="{{asset('master/plugins/sweetalert2/sweetalert2.min.js')}}"></script>
 
-        <script src="{{asset('master/js/jquery.app.js')}}"></script>
-
-
         <script src="{{ asset('js/app.js') }}"></script>
+        
         @yield('script')
+
+        <script src="{{asset('master/js/jquery.app.js')}}"></script>
 
 	    <script>
             $.ajaxSetup({

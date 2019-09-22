@@ -24,7 +24,6 @@
         props: ['user', 'allMessages'],
         methods: {
             imageView(path) {
-                // console.log(path)
                 $("#image_preview").html('')
                 $("#image_preview").verySimpleImageViewer({
                     imageSource: path,

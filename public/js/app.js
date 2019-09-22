@@ -1863,7 +1863,6 @@ __webpack_require__.r(__webpack_exports__);
   props: ['user', 'allMessages'],
   methods: {
     imageView: function imageView(path) {
-      // console.log(path)
       $("#image_preview").html('');
       $("#image_preview").verySimpleImageViewer({
         imageSource: path,
@@ -1895,6 +1894,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var timers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! timers */ "./node_modules/timers-browserify/main.js");
 /* harmony import */ var timers__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(timers__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _message_list__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./_message-list */ "./resources/js/components/_message-list.vue");
+//
+//
+//
+//
 //
 //
 //
@@ -2058,7 +2061,6 @@ __webpack_require__.r(__webpack_exports__);
         if (newFile.success !== oldFile.success) {
           Object(timers__WEBPACK_IMPORTED_MODULE_0__["setTimeout"])(function () {
             this.uploading = false;
-            alert(123);
           }, 1000);
         }
       }
@@ -4228,7 +4230,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n#privateMessageBox[data-v-151b8bba] {        \n    overflow: auto;\n    position: relative;\n}\n#msgArea[data-v-151b8bba] {\n    width: 380px;\n    height: 58vh;\n    position: fixed;\n    bottom: -18px;\n    z-index: 10;\n    right: 10px;\n    transition-duration: 0.3s;\n}\n.right-bar-enabled #msgArea[data-v-151b8bba] {\n    right: 250px;\n}\n@media(max-width: 768px) {\n#msgArea[data-v-151b8bba] {\n        width: 95%;\n        height: 80vh;\n}\n}\n#chat-input[data-v-151b8bba]:focus {\n    box-shadow: none;\n}\n#btn-send[data-v-151b8bba] {\n    height: 31px;\n}\n.icon-attach[data-v-151b8bba] {\n    font-size: 20px;\n    margin-right: 10px;\n    cursor: pointer;\n}\n.card-header .name[data-v-151b8bba] {\n    font-size: 16px;\n    color: #444444;\n    font-weight: 500;\n}\n#chatbox-footer[data-v-151b8bba] {\n    height: 15px;\n    position: absolute;\n    bottom: 75px;\n    padding-left: 60px;\n}\n", ""]);
+exports.push([module.i, "\n#privateMessageBox[data-v-151b8bba] {        \n    overflow: auto;\n    position: relative;\n}\n#msgArea[data-v-151b8bba] {\n    width: 380px;\n    height: 58vh;\n    position: fixed;\n    bottom: -18px;\n    z-index: 10;\n    right: 10px;\n    transition-duration: 0.3s;\n}\n.right-bar-enabled #msgArea[data-v-151b8bba] {\n    right: 250px;\n}\n@media(max-width: 768px) {\n#msgArea[data-v-151b8bba] {\n        width: 95%;\n        height: 80vh;\n}\n}\n#msgArea .status i.online[data-v-151b8bba] {\n    color: #a0d269;\n}\n#msgArea .status i.offline[data-v-151b8bba] {\n    color: #ef5350;\n}\n#chat-input[data-v-151b8bba]:focus {\n    box-shadow: none;\n}\n#btn-send[data-v-151b8bba] {\n    height: 31px;\n}\n.icon-attach[data-v-151b8bba] {\n    font-size: 20px;\n    margin-right: 10px;\n    cursor: pointer;\n}\n.card-header .name[data-v-151b8bba] {\n    font-size: 16px;\n    color: #444444;\n    font-weight: 500;\n}\n#chatbox-footer[data-v-151b8bba] {\n    height: 15px;\n    position: absolute;\n    bottom: 75px;\n    padding-left: 60px;\n}\n", ""]);
 
 // exports
 
@@ -30927,7 +30929,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { attrs: { id: "chatbox" } }, [
     _c("div", { staticClass: "side-bar right-bar nicescroll" }, [
-      _c("h4", { staticClass: "text-center" }, [_vm._v("Users")]),
+      _c("h4", { staticClass: "text-center" }, [_vm._v("Usuarios")]),
       _vm._v(" "),
       _c("div", { staticClass: "contact-list nicescroll" }, [
         _c(
@@ -30956,11 +30958,7 @@ var render = function() {
                     _vm._v(" "),
                     _vm.is_connected(friend.id)
                       ? _c("i", { staticClass: "fa fa-circle online" })
-                      : _vm._e(),
-                    _vm._v(" "),
-                    !_vm.is_connected(friend.id)
-                      ? _c("i", { staticClass: "fa fa-circle offline" })
-                      : _vm._e()
+                      : _c("i", { staticClass: "fa fa-circle offline" })
                   ]),
                   _vm._v(" "),
                   _c("span", { staticClass: "name" }, [
@@ -30996,8 +30994,8 @@ var render = function() {
           {
             name: "show",
             rawName: "v-show",
-            value: this.activeFriend,
-            expression: "this.activeFriend"
+            value: _vm.activeFriend,
+            expression: "activeFriend"
           }
         ],
         staticClass: "card",
@@ -31005,15 +31003,21 @@ var render = function() {
       },
       [
         _c("div", { staticClass: "card-header bg-info py-2" }, [
-          this.activeFriend
+          _vm.activeFriend
             ? _c("h4", { staticClass: "card-title mb-0 mt-1 float-left" }, [
+                _c("span", { staticClass: "status mr-1" }, [
+                  _vm.is_connected(_vm.activeFriend.id)
+                    ? _c("i", { staticClass: "fa fa-circle online" })
+                    : _c("i", { staticClass: "fa fa-circle offline" })
+                ]),
+                _vm._v(" "),
                 _c("span", { staticClass: "name text-white" }, [
-                  _vm._v(_vm._s(this.activeFriendData[0].name))
+                  _vm._v(_vm._s(_vm.activeFriendData[0].name))
                 ])
               ])
             : _vm._e(),
           _vm._v(" "),
-          _c("div", { staticClass: "card-widgets my-1 float-right" }, [
+          _c("div", { staticClass: "card-widgets mt-1 float-right" }, [
             _c(
               "a",
               {
@@ -31030,18 +31034,18 @@ var render = function() {
         _c(
           "div",
           {
-            staticClass: "card-body",
+            staticClass: "card-body nicescroll",
             staticStyle: { height: "calc(100% - 126px)" },
             attrs: { id: "privateMessageBox" }
           },
           [
-            this.activeFriend
+            _vm.activeFriend
               ? _c("message-list", {
                   attrs: { user: _vm.user, "all-messages": _vm.allMessages }
                 })
               : _vm._e(),
             _vm._v(" "),
-            !this.activeFriend
+            !_vm.activeFriend
               ? _c("div", { staticClass: "text-center" }, [_vm._m(0)])
               : _vm._e()
           ],
