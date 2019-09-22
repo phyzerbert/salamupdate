@@ -335,6 +335,7 @@
         #msgArea {
             width: 95%;
             height: 80vh;
+            height: calc(100vh - 75px);
         }
     }
     #msgArea .status i.online {
