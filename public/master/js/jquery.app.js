@@ -217,7 +217,7 @@ function($) {
     
      //on doc load
     MoltranApp.prototype.onDocReady = function(e) {
-      FastClick.attach(document.body);
+      // FastClick.attach(document.body);
       resizefunc.push("initscrolls");
       resizefunc.push("changeptype");
 
