@@ -1971,6 +1971,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1990,6 +1995,7 @@ __webpack_require__.r(__webpack_exports__);
       typingClock: null,
       typing: false,
       sending: false,
+      msg_loading: false,
       emoStatus: false,
       uploadProgress: 0,
       uploading: false,
@@ -2104,8 +2110,10 @@ __webpack_require__.r(__webpack_exports__);
         return alert('Please select user');
       }
 
+      this.msg_loading = true;
       axios.get('/chat/messages/' + this.activeFirend).then(function (response) {
         _this4.allMessages = response.data;
+        _this4.msg_loading = false;
         Object(timers__WEBPACK_IMPORTED_MODULE_0__["setTimeout"])(_this4.scrollToEnd, 50);
       });
     },
@@ -2180,17 +2188,13 @@ __webpack_require__.r(__webpack_exports__);
     Echo.join('plchat').here(function (users) {
       _this7.onlineFriends = users;
     }).joining(function (user) {
-      _this7.onlineFriends.push(user);
+      _this7.onlineFriends.push(user); // console.log('joining',user.name);
 
-      console.log('joining', user.name);
     }).leaving(function (user) {
-      _this7.onlineFriends.splice(_this7.onlineFriends.indexOf(user), 1);
+      _this7.onlineFriends.splice(_this7.onlineFriends.indexOf(user), 1); // console.log('leaving',user.name);
 
-      console.log('leaving', user.name);
     });
     Echo["private"]('chat.' + this.user.id).listen('MessageSent', function (e) {
-      console.log(_this7.is_connected(1));
-      console.log(_this7.onlineFriends);
       var audio = new Audio('/Ring.wav');
       audio.play();
 
@@ -4230,7 +4234,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n#privateMessageBox[data-v-151b8bba] {        \n    overflow: auto;\n    position: relative;\n}\n#msgArea[data-v-151b8bba] {\n    width: 380px;\n    height: 58vh;\n    position: fixed;\n    bottom: -18px;\n    z-index: 10;\n    right: 10px;\n    transition-duration: 0.3s;\n}\n.right-bar-enabled #msgArea[data-v-151b8bba] {\n    right: 250px;\n}\n@media(max-width: 768px) {\n#msgArea[data-v-151b8bba] {\n        width: 95%;\n        height: 80vh;\n}\n}\n#msgArea .status i.online[data-v-151b8bba] {\n    color: #a0d269;\n}\n#msgArea .status i.offline[data-v-151b8bba] {\n    color: #ef5350;\n}\n#chat-input[data-v-151b8bba]:focus {\n    box-shadow: none;\n}\n#btn-send[data-v-151b8bba] {\n    height: 31px;\n}\n.icon-attach[data-v-151b8bba] {\n    font-size: 20px;\n    margin-right: 10px;\n    cursor: pointer;\n}\n.card-header .name[data-v-151b8bba] {\n    font-size: 16px;\n    color: #444444;\n    font-weight: 500;\n}\n#chatbox-footer[data-v-151b8bba] {\n    height: 15px;\n    position: absolute;\n    bottom: 75px;\n    padding-left: 60px;\n}\n", ""]);
+exports.push([module.i, "\n#privateMessageBox[data-v-151b8bba] {        \n    overflow: auto;\n    position: relative;\n}\n#msgArea[data-v-151b8bba] {\n    width: 380px;\n    height: 58vh;\n    position: fixed;\n    bottom: -18px;\n    z-index: 10;\n    right: 10px;\n    transition-duration: 0.3s;\n}\n.right-bar-enabled #msgArea[data-v-151b8bba] {\n    right: 250px;\n}\n@media(max-width: 768px) {\n#msgArea[data-v-151b8bba] {\n        width: 95%;\n        height: 80vh;\n}\n}\n#msgArea .status i.online[data-v-151b8bba] {\n    color: #a0d269;\n}\n#msgArea .status i.offline[data-v-151b8bba] {\n    color: #ef5350;\n}\n#chat-input[data-v-151b8bba]:focus {\n    box-shadow: none;\n}\n#btn-send[data-v-151b8bba] {\n    height: 31px;\n}\n.icon-attach[data-v-151b8bba] {\n    font-size: 20px;\n    margin-right: 10px;\n    cursor: pointer;\n}\n.card-header .name[data-v-151b8bba] {\n    font-size: 16px;\n    color: #444444;\n    font-weight: 500;\n}\n#chatbox-footer[data-v-151b8bba] {\n    height: 15px;\n    position: absolute;\n    bottom: 75px;\n    padding-left: 60px;\n}\n.msg-loading[data-v-151b8bba] {\n    margin-top: 47%;\n}\n.msg-loading .spinner-border[data-v-151b8bba] {\n    width: 80px;\n    height: 80px;\n}\n", ""]);
 
 // exports
 
@@ -30894,7 +30898,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "chat-avatar" }, [
-      _c("img", { attrs: { src: "/images/avatar.png", alt: "male" } })
+      _c("img", { attrs: { src: "/images/avatar.png", alt: "" } })
     ])
   },
   function() {
@@ -30929,7 +30933,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { attrs: { id: "chatbox" } }, [
     _c("div", { staticClass: "side-bar right-bar nicescroll" }, [
-      _c("h4", { staticClass: "text-center" }, [_vm._v("Usuarios")]),
+      _vm._m(0),
       _vm._v(" "),
       _c("div", { staticClass: "contact-list nicescroll" }, [
         _c(
@@ -31006,7 +31010,7 @@ var render = function() {
           _vm.activeFriend
             ? _c("h4", { staticClass: "card-title mb-0 mt-1 float-left" }, [
                 _c("span", { staticClass: "status mr-1" }, [
-                  _vm.is_connected(_vm.activeFriend.id)
+                  _vm.is_connected(_vm.activeFriend)
                     ? _c("i", { staticClass: "fa fa-circle online" })
                     : _c("i", { staticClass: "fa fa-circle offline" })
                 ]),
@@ -31046,7 +31050,13 @@ var render = function() {
               : _vm._e(),
             _vm._v(" "),
             !_vm.activeFriend
-              ? _c("div", { staticClass: "text-center" }, [_vm._m(0)])
+              ? _c("div", { staticClass: "text-center" }, [_vm._m(1)])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.msg_loading
+              ? _c("div", { staticClass: "msg-loading text-center" }, [
+                  _vm._m(2)
+                ])
               : _vm._e()
           ],
           1
@@ -31181,12 +31191,31 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("h4", { staticClass: "text-center" }, [
+      _c("i", { staticClass: "fa fa-wechat" }),
+      _vm._v(" Usuarios")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("div", [
       _c("img", {
         staticStyle: { "margin-top": "100px" },
         attrs: { src: "/images/chat.png", width: "250", alt: "" }
       })
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "spinner-border text-primary", attrs: { role: "status" } },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+    )
   }
 ]
 render._withStripped = true

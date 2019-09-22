@@ -1,7 +1,7 @@
 <template>
     <div id="chatbox">  
         <div class="side-bar right-bar nicescroll">
-            <h4 class="text-center">Usuarios</h4>                    
+            <h4 class="text-center"><i class="fa fa-wechat"></i> Usuarios</h4>                    
             <div class="contact-list nicescroll">
                 <ul class="list-group contacts-list">
                     <li class="list-group-item"
@@ -30,7 +30,7 @@
             <div class="card-header bg-info py-2">
                 <h4 class="card-title mb-0 mt-1 float-left" v-if="activeFriend">
                     <span class="status mr-1">
-                        <i class="fa fa-circle online" v-if="is_connected(activeFriend.id)"></i>
+                        <i class="fa fa-circle online" v-if="is_connected(activeFriend)"></i>
                         <i class="fa fa-circle offline" v-else></i>
                     </span>
                     <span class="name text-white">{{activeFriendData[0].name}}</span>
@@ -44,6 +44,11 @@
                 <message-list :user="user" :all-messages="allMessages" v-if="activeFriend"></message-list>
                 <div class="text-center" v-if="!activeFriend">
                     <div><img src="/images/chat.png" width="250" style="margin-top:100px;" alt=""></div>
+                </div>
+                <div class="msg-loading text-center" v-if="msg_loading">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
                 </div>
             </div>
             <div id="card-footer">
@@ -95,6 +100,7 @@
                 typingClock: null,
                 typing: false,
                 sending: false,
+                msg_loading: false,
                 emoStatus:false,
                 uploadProgress: 0,
                 uploading: false,
@@ -189,9 +195,11 @@
                 if(!this.activeFirend){
                     return alert('Please select user');
                 }
+                this.msg_loading = true
                 axios.get('/chat/messages/' + this.activeFirend)
                     .then(response => {
                         this.allMessages = response.data;
+                        this.msg_loading = false
                         setTimeout(this.scrollToEnd, 50);
                     })
             },
@@ -256,17 +264,15 @@
                 })
                 .joining((user) => {
                     this.onlineFriends.push(user);
-                    console.log('joining',user.name);
+                    // console.log('joining',user.name);
                 })
                 .leaving((user) => {
                     this.onlineFriends.splice(this.onlineFriends.indexOf(user),1);
-                    console.log('leaving',user.name);
+                    // console.log('leaving',user.name);
                 });
                 
             Echo.private('chat.'+this.user.id)
-                .listen('MessageSent',(e)=>{                    
-                    console.log(this.is_connected(1))
-                    console.log(this.onlineFriends)
+                .listen('MessageSent',(e)=>{
                     let audio = new Audio('/Ring.wav')
                     audio.play()
                     if(!this.activeFriend){
@@ -363,5 +369,12 @@
         position: absolute;
         bottom: 75px;
         padding-left: 60px;
+    }
+    .msg-loading {
+        margin-top: 47%;
+    }
+    .msg-loading .spinner-border {
+        width: 80px;
+        height: 80px;
     }
 </style>

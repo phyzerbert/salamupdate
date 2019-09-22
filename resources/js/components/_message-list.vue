@@ -3,7 +3,7 @@
         <ul class="conversation-list nicescroll">
             <li class="clearfix" :class="[message.user.id==user.id ? 'odd' : '']" v-for="(message, index) in allMessages" :key="index" >
                 <div class="chat-avatar">
-                    <img src="/images/avatar.png" alt="male">
+                    <img src="/images/avatar.png" alt="">
                 </div>
                 <div class="conversation-text">
                     <div class="ctext-wrap" :title="message.created_at">
