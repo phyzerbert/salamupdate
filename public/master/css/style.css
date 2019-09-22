@@ -2695,8 +2695,8 @@ button.swal2-confirm {
 .mini-stat-info span {
   color: #ffffff;
   display: block;
-  font-size: 24px;
-  font-weight: 600;
+  font-size: 22px;
+  font-weight: 500;
 }
 
 .mini-stat-info span.name {

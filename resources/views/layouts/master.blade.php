@@ -49,10 +49,11 @@
                 </footer>
 
             </div>
-
-            <div id="app">
-                <chat :user="{{auth()->user()}}"></chat>                
-            </div>
+            @if(!Auth::user()->hasRole('buyer'))
+                <div id="app">
+                    <chat :user="{{auth()->user()}}"></chat>                
+                </div>
+            @endif
             <div class="modal fade" id="attachModal">
                 <div class="modal-dialog" style="margin-top:17vh">
                     <div class="modal-content">
@@ -82,9 +83,9 @@
         <script src="{{asset('master/plugins/moment/moment.min.js')}}"></script>
         <script src="{{asset('master/plugins/imageviewer/js/jquery.verySimpleImageViewer.min.js')}}"></script>
         <script src="{{asset('master/plugins/sweetalert2/sweetalert2.min.js')}}"></script>
-
-        <script src="{{ asset('js/app.js') }}"></script>
-        
+        @if(!Auth::user()->hasRole('buyer'))
+            <script src="{{ asset('js/app.js') }}"></script>
+        @endif
         @yield('script')
 
         <script src="{{asset('master/js/jquery.app.js')}}"></script>

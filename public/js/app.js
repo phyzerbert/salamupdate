@@ -2066,6 +2066,7 @@ __webpack_require__.r(__webpack_exports__);
 
         if (newFile.success !== oldFile.success) {
           Object(timers__WEBPACK_IMPORTED_MODULE_0__["setTimeout"])(function () {
+            // $(".progress").hide()
             this.uploading = false;
           }, 1000);
         }
@@ -2114,6 +2115,8 @@ __webpack_require__.r(__webpack_exports__);
       axios.get('/chat/messages/' + this.activeFirend).then(function (response) {
         _this4.allMessages = response.data;
         _this4.msg_loading = false;
+        _this4.uploading = false;
+        _this4.uploadProgress = 0;
         Object(timers__WEBPACK_IMPORTED_MODULE_0__["setTimeout"])(_this4.scrollToEnd, 50);
       });
     },

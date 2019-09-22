@@ -163,7 +163,10 @@
 
                     // Uploaded successfully
                     if (newFile.success !== oldFile.success) {
-                        setTimeout(function(){ this.uploading = false;}, 1000);
+                        setTimeout(function(){
+                            // $(".progress").hide()
+                            this.uploading = false;
+                        }, 1000);
                     }
                 }
             },
@@ -200,6 +203,8 @@
                     .then(response => {
                         this.allMessages = response.data;
                         this.msg_loading = false
+                        this.uploading = false
+                        this.uploadProgress = 0;
                         setTimeout(this.scrollToEnd, 50);
                     })
             },
