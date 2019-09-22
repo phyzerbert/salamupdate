@@ -1051,6 +1051,7 @@ input.search-bar:-ms-input-placeholder {
   bottom: 0;
   top: 0;
   width: 240px;
+  transition: width .2s;
   z-index: 2;
 }
 

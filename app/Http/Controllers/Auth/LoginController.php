@@ -49,13 +49,13 @@ class LoginController extends Controller
 
     public function authenticated(Request $request, Authenticatable $user)
     {
-        // $ip_address = $_SERVER['REMOTE_ADDR'];
-        // if($user->hasRole('secretary') && $ip_address != $user->ip_address){
-        //     Auth::logout();
-        //     return redirect(route('login'))->withErrors(['name' => 'This computer does not allowed.']);
-        // }else {
-        //     $user->update(['last_ip' => $ip_address]);
-        // }
+        $ip_address = $_SERVER['REMOTE_ADDR'];
+        if($user->hasRole('secretary') && $ip_address != $user->ip_address){
+            Auth::logout();
+            return redirect(route('login'))->withErrors(['name' => 'This computer does not allowed.']);
+        }else {
+            $user->update(['last_ip' => $ip_address]);
+        }
         
         // Auth::logout();
             
