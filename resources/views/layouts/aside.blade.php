@@ -11,7 +11,11 @@
             </div>
             <div class="user-info">
                 <div class="">
-                    {{$user->first_name}} {{$user->last_name}}
+                    @if($user->first_name || $user->last_name)
+                        {{$user->first_name}} {{$user->last_name}}
+                    @else
+                        {{$user->name}}
+                    @endif
                 </div>                
                 <p class="text-muted m-0">{{$user->role->name}}</p>
             </div>

@@ -333,20 +333,17 @@
                 data: $('#create_form').serialize(),
                 success : function(data) {
                     $("#ajax-loading").hide();
-                    console.log(data);
                     if(data.id != null) {
                         $("#addSupplierModal").modal('hide');
                         $("#search_supplier").append(`
                             <option value="${data.id}">${data.company}</option>
                         `).val(data.id);
-                    }
-                    else if(data.message == 'The given data was invalid.') {
+                    } else if (data.message == 'The given data was invalid.') {
                         alert(data.message);
                     }
                 },
                 error: function(data) {
                     $("#ajax-loading").hide();
-                    console.log(data.responseJSON);
                     if(data.responseJSON.message == 'The given data was invalid.') {
                         let messages = data.responseJSON.errors;
                         if(messages.name) {

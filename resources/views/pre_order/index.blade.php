@@ -22,16 +22,16 @@
             @php
                 $role = Auth::user()->role->slug;
             @endphp
-            <div class="card">
-                <div class="card-body table-responsive mt-2">
-                    <div class="">
-                        @include('elements.pagesize')                    
-                        @include('pre_order.filter')
-                        @if($role == 'user')
-                            <a href="{{route('pre_order.create')}}" class="btn btn-success btn-sm float-right ml-3 mg-b-5" id="btn-add"><i class="fa fa-plus mg-r-2"></i> {{__('page.add_new')}}</a>
-                        @endif
-                        @include('elements.keyword')
-                    </div>
+            <div class="card card-body">
+                <div class="">
+                    @include('elements.pagesize')                    
+                    @include('pre_order.filter')
+                    @if($role == 'user')
+                        <a href="{{route('pre_order.create')}}" class="btn btn-success btn-sm float-right ml-3 mb-2" id="btn-add"><i class="fa fa-plus mg-r-2"></i> {{__('page.add_new')}}</a>
+                    @endif
+                    @include('elements.keyword')
+                </div>
+                <div class="table-responsive mt-2">
                     <table class="table table-bordered table-hover">
                         <thead>
                             <tr class="bg-blue">
