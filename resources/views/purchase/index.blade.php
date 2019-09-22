@@ -27,9 +27,9 @@
                     @include('elements.pagesize')                    
                     @include('purchase.filter')
                     @if($role == 'user')
-                        <a href="{{route('purchase.create')}}" class="btn btn-success btn-sm float-right ml-3" id="btn-add"><i class="fa fa-plus mg-r-2"></i> {{__('page.add_new')}}</a>
+                        <a href="{{route('purchase.create')}}" class="btn btn-success btn-sm float-right ml-3 mb-2" id="btn-add"><i class="fa fa-plus mg-r-2"></i> {{__('page.add_new')}}</a>
                     @endif
-                    <button class="btn btn-sm btn-info float-right ml-2" id="btn-export"><i class="fa fa-file-excel-o mr-2"></i>{{__('page.export')}}</button>
+                    <button class="btn btn-sm btn-info float-right ml-2 mb-2" id="btn-export"><i class="fa fa-file-excel-o mr-2"></i>{{__('page.export')}}</button>
                     <input type="text" class="form-control form-control-sm col-md-2 float-right" id="input_keyword" value="{{$keyword}}" placeholder="{{__('page.keyword')}}" />
                 </div>
                 <div class="table-responsive mt-2">

@@ -25,9 +25,6 @@
                 <div class="">
                     @include('elements.pagesize')                    
                     @include('purchase.filter')
-                    @if($role == 'user')
-                        <a href="{{route('purchase.create')}}" class="btn btn-success btn-sm float-right ml-3 mg-b-5" id="btn-add"><i class="fa fa-plus mg-r-2"></i> {{__('page.add_new')}}</a>
-                    @endif
                     @include('elements.keyword')
                 </div>
                 <div class="table-responsive mt-2">

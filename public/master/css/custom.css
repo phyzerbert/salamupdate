@@ -185,3 +185,10 @@ table.dataTable thead .sorting_desc {
 .image_viewer_inner_container {
     width: 100% !important;
 }
+
+
+@media(max-width : 768px){
+    #keyword_filter_form, #pagesize_form {
+        width: 100%;
+    }
+}
