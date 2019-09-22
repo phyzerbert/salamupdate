@@ -264,11 +264,12 @@
                 data: $('#create_form').serialize(),
                 success : function(data) {
                     if(data == 'success') {
-                        alert('Created successfully.');
-                        window.location.reload();
+                        Swal.fire("{{__('page.created_successfully')}}").then(function() {
+                            window.location.reload();
+                        })
                     }
                     else if(data.message == 'The given data was invalid.') {
-                        alert(data.message);
+                        Swal.fire(data.message)
                     }
                     $("#ajax-loading").hide();
                 },
@@ -337,13 +338,13 @@
                 dataType: 'json',
                 data: $('#edit_form').serialize(),
                 success : function(data) {
-                    console.log(data);
                     if(data == 'success') {
-                        alert('Updated successfully.');
-                        window.location.reload();
+                        Swal.fire("{{__('page.updated_successfully')}}").then(function() {
+                            window.location.reload();
+                        })
                     }
                     else if(data.message == 'The given data was invalid.') {
-                        alert(data.message);
+                        Swal.fire(data.message)
                     }
                     $("#ajax-loading").hide();
                 },

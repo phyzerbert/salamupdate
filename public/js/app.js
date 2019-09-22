@@ -1966,6 +1966,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2056,6 +2058,7 @@ __webpack_require__.r(__webpack_exports__);
         if (newFile.success !== oldFile.success) {
           Object(timers__WEBPACK_IMPORTED_MODULE_0__["setTimeout"])(function () {
             this.uploading = false;
+            alert(123);
           }, 1000);
         }
       }
@@ -2069,7 +2072,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this3 = this;
 
       if (!this.message) {
-        return alert('Please enter message');
+        return false;
       }
 
       if (!this.activeFirend) {
@@ -2155,6 +2158,14 @@ __webpack_require__.r(__webpack_exports__);
     },
     removeActive: function removeActive() {
       this.activeFriend = null;
+    },
+    is_connected: function is_connected(id) {
+      for (var i = 0; i < this.onlineFriends.length; i++) {
+        var element = this.onlineFriends[i];
+        if (element.id == id) return true;
+      }
+
+      return false;
     }
   },
   mounted: function mounted() {
@@ -2176,6 +2187,8 @@ __webpack_require__.r(__webpack_exports__);
       console.log('leaving', user.name);
     });
     Echo["private"]('chat.' + this.user.id).listen('MessageSent', function (e) {
+      console.log(_this7.is_connected(1));
+      console.log(_this7.onlineFriends);
       var audio = new Audio('/Ring.wav');
       audio.play();
 
@@ -30936,7 +30949,19 @@ var render = function() {
               },
               [
                 _c("a", { attrs: { href: "#" } }, [
-                  _vm._m(0, true),
+                  _c("div", { staticClass: "avatar" }, [
+                    _c("img", {
+                      attrs: { src: "/images/avatar.png", alt: "" }
+                    }),
+                    _vm._v(" "),
+                    _vm.is_connected(friend.id)
+                      ? _c("i", { staticClass: "fa fa-circle online" })
+                      : _vm._e(),
+                    _vm._v(" "),
+                    !_vm.is_connected(friend.id)
+                      ? _c("i", { staticClass: "fa fa-circle offline" })
+                      : _vm._e()
+                  ]),
                   _vm._v(" "),
                   _c("span", { staticClass: "name" }, [
                     _vm._v(_vm._s(friend.name))
@@ -31017,7 +31042,7 @@ var render = function() {
               : _vm._e(),
             _vm._v(" "),
             !this.activeFriend
-              ? _c("div", { staticClass: "text-center" }, [_vm._m(1)])
+              ? _c("div", { staticClass: "text-center" }, [_vm._m(0)])
               : _vm._e()
           ],
           1
@@ -31148,14 +31173,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "avatar" }, [
-      _c("img", { attrs: { src: "/images/avatar.png", alt: "" } })
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

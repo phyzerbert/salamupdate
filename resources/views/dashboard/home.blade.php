@@ -1,7 +1,6 @@
 @extends('layouts.master')
 @section('style')
     <link href="{{asset('master/plugins/daterangepicker/daterangepicker.min.css')}}" rel="stylesheet">    
-    <link href="{{asset('master/plugins/sweetalert2/sweetalert2.min.css')}}" rel="stylesheet" type="text/css">
 @endsection
 @section('content')
     @php
@@ -129,9 +128,6 @@
 @section('script')
 <script src="{{asset('master/plugins/echarts/echarts-en.js')}}"></script>
 <script src="{{asset('master/plugins/daterangepicker/jquery.daterangepicker.min.js')}}"></script>
-
-<script src="{{asset('master/plugins/sweetalert2/sweetalert2.min.js')}}"></script>
-
 <script>
     var role = "{{Auth::user()->role->slug}}";
     var legend_array = {!! json_encode([__('page.purchase'), __('page.sale'), __('page.payment')]) !!};

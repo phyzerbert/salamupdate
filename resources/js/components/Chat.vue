@@ -14,6 +14,8 @@
                         <a href="#">
                             <div class="avatar">
                                 <img src="/images/avatar.png" alt="">
+                                <i class="fa fa-circle online" v-if="is_connected(friend.id)"></i>
+                                <i class="fa fa-circle offline" v-if="!is_connected(friend.id)"></i>
                             </div>
                             <span class="name">{{friend.name}}</span>
                         </a>
@@ -151,7 +153,7 @@
 
                     // Uploaded successfully
                     if (newFile.success !== oldFile.success) {
-                        setTimeout(function(){ this.uploading = false;}, 1000);
+                        setTimeout(function(){ this.uploading = false; alert(123)}, 1000);
                     }
                 }
             },
@@ -162,7 +164,7 @@
             },
             sendMessage(){
                 if(!this.message){
-                    return alert('Please enter message');
+                    return false;
                 }
                 if(!this.activeFirend){
                     return alert('Please select user');
@@ -230,6 +232,13 @@
             },
             removeActive() {
                 this.activeFriend = null
+            },
+            is_connected(id) {
+                for (let i = 0; i < this.onlineFriends.length; i++) {
+                    const element = this.onlineFriends[i];
+                    if(element.id == id) return true                                         
+                }
+                return false
             }
         },
         mounted() {
@@ -251,7 +260,9 @@
                 });
                 
             Echo.private('chat.'+this.user.id)
-                .listen('MessageSent',(e)=>{
+                .listen('MessageSent',(e)=>{                    
+                    console.log(this.is_connected(1))
+                    console.log(this.onlineFriends)
                     let audio = new Audio('/Ring.wav')
                     audio.play()
                     if(!this.activeFriend){

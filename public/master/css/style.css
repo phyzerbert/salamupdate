@@ -1400,6 +1400,7 @@ body.fixed-left .side-menu.left {
   float: left;
   margin-right: 5px;
   width: 30px;
+  position: relative;
 }
 
 .contacts-list .avatar img {
@@ -1424,9 +1425,10 @@ body.fixed-left .side-menu.left {
 
 .contacts-list i {
   color: #dddddd;
-  float: right;
-  font-size: 9px;
-  line-height: 30px;
+  font-size: 11px;
+  position: absolute;
+  bottom: 0;
+  left: 23px
 }
 
 /* ==============

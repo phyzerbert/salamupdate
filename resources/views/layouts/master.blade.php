@@ -19,6 +19,7 @@
         <link href="{{asset('master/css/style.css')}}" rel="stylesheet" type="text/css" />
 
         <link rel="stylesheet" href="{{asset('master/plugins/imageviewer/css/jquery.verySimpleImageViewer.css')}}">
+        <link href="{{asset('master/plugins/sweetalert2/sweetalert2.min.css')}}" rel="stylesheet" type="text/css">
 
         <link href="{{asset('master/css/custom.css')}}" rel="stylesheet" type="text/css" />
 
@@ -79,10 +80,11 @@
         <script src="{{asset('master/plugins/notifications/notify-metro.js')}}"></script>
         <script src="{{asset('master/plugins/notifications/notifications.js')}}"></script>
         <script src="{{asset('master/plugins/moment/moment.min.js')}}"></script>
+        <script src="{{asset('master/plugins/imageviewer/js/jquery.verySimpleImageViewer.min.js')}}"></script>
+        <script src="{{asset('master/plugins/sweetalert2/sweetalert2.min.js')}}"></script>
 
         <script src="{{asset('master/js/jquery.app.js')}}"></script>
 
-        <script src="{{asset('master/plugins/imageviewer/js/jquery.verySimpleImageViewer.min.js')}}"></script>
 
         <script src="{{ asset('js/app.js') }}"></script>
         @yield('script')
@@ -114,8 +116,7 @@
                     const element = errors[i];
                     $.Notification.autoHideNotify('error', 'top right', "{{__('page.error')}}", element)
                 } 
-            }       
-
+            }
         </script>
 	</body>
 </html>

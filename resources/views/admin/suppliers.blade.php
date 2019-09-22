@@ -247,11 +247,12 @@
                 success : function(data) {
                     $("#ajax-loading").hide();
                     if(data == 'success') {
-                        alert("{{__('page.created_successfully')}}");
-                        window.location.reload();
+                        Swal.fire("{{__('page.created_successfully')}}").then(function() {
+                            window.location.reload();
+                        })
                     }
                     else if(data.message == 'The given data was invalid.') {
-                        alert(data.message);
+                        Swal.fire(data.message)
                     }
                 },
                 error: function(data) {
@@ -332,11 +333,12 @@
                 success : function(data) {
                     $("#ajax-loading").hide();
                     if(data == 'success') {
-                        alert("{{__('page.updated_successfully')}}");
-                        window.location.reload();
+                        Swal.fire("{{__('page.updated_successfully')}}").then(function() {
+                            window.location.reload();
+                        })
                     }
                     else if(data.message == 'The given data was invalid.') {
-                        alert(data.message);
+                        Swal.fire(data.message)
                     }
                 },
                 error: function(data) {
