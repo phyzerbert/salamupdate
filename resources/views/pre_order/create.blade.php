@@ -5,7 +5,13 @@
     <link href="{{asset('master/plugins/jquery-ui/jquery-ui.css')}}" rel="stylesheet">
     <link href="{{asset('master/plugins/jquery-ui/timepicker/jquery-ui-timepicker-addon.min.css')}}" rel="stylesheet">
     <script src="{{asset('master/plugins/vuejs/vue.js')}}"></script>
-    <script src="{{asset('master/plugins/vuejs/axios.js')}}"></script>
+    <script src="{{asset('master/plugins/vuejs/axios.js')}}"></script>    
+    <style>
+        .table>tbody>tr>td {
+            padding-top: .5rem;
+            padding-bottom: .5rem;
+        }
+    </style>
 @endsection
 @section('content')
 <div class="content" id="page" style="opacity: 0;">
@@ -24,12 +30,12 @@
             $user = Auth::user();
             $role = $user->role->slug;
         @endphp
-        <div class="card card-body">
+        <div class="card card-body p-lg-5">
             <form class="form-layout form-layout-1" action="{{route('pre_order.save')}}" method="POST" enctype="multipart/form-data">
                 @csrf
-                <div class="row mb-4">
-                    <div class="col-md-6">
-                        <div class="form-group mb-2">
+                <div class="row mt-3">
+                    <div class="col-lg-6 mb-2">
+                        <div class="form-group">
                             <label class="form-control-label">{{__('page.date')}}<span class="tx-danger">*</span></label>
                             <input class="form-control" type="text" name="date" id="pre_order_date" value="{{date('Y-m-d H:i')}}"placeholder="{{__('page.date')}}" autocomplete="off" required>
                             @error('date')
@@ -39,8 +45,8 @@
                             @enderror
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="form-group mb-2">
+                    <div class="col-lg-6 mb-2">
+                        <div class="form-group">
                             <label class="form-control-label">{{__('page.reference_number')}}</label>
                             <input class="form-control" type="text" name="reference_number" value="{{ old('reference_number') }}" required placeholder="{{__('page.reference_number')}}">
                             @error('reference_number')
@@ -152,12 +158,12 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group mb-2">
-                            <label class="form-control-label">{{__('page.note')}}:</label>
-                            <textarea class="form-control" name="note" rows="5" placeholder="{{__('page.note')}}"></textarea>
+                            <label class="form-control-label">{{__('page.note')}}</label>
+                            <textarea class="form-control" name="note" rows="3" placeholder="{{__('page.note')}}"></textarea>
                         </div>
                     </div>
                 </div>
-                <div class="form-layout-footer text-right">
+                <div class="form-layout-footer text-right mt-3">
                     <button type="submit" class="btn btn-primary mr-3"><i class="fa fa-check mr-2"></i>{{__('page.save')}}</button>
                     <a href="{{route('pre_order.index')}}" class="btn btn-warning"><i class="fa fa-times mr-2"></i>{{__('page.cancel')}}</a>
                 </div>

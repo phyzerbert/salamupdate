@@ -34,7 +34,7 @@
                 <form class="form-layout form-layout-1" action="{{route('purchase.save')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="row mb-3">
-                        <div class="col-lg-4 col-md-6">
+                        <div class="col-lg-4 col-md-6 mb-3">
                             <div class="form-group mb-2">
                                 <label class="form-control-label">{{__('page.purchase_date')}}: <span class="text-danger">*</span></label>
                                 <input class="form-control" type="text" name="date" id="purchase_date" value="{{date('Y-m-d H:i')}}"placeholder="{{__('page.purchase_date')}}" autocomplete="off" required>
@@ -45,7 +45,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-6">
+                        <div class="col-lg-4 col-md-6 mb-3">
                             <div class="form-group mb-2">
                                 <label class="form-control-label">{{__('page.reference_number')}}:</label>
                                 <input class="form-control" type="text" name="reference_number" value="{{ old('reference_number') }}" required placeholder="{{__('page.reference_number')}}">
@@ -56,7 +56,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-6">
+                        <div class="col-lg-4 col-md-6 mb-3">
                             <div class="form-group mb-2">
                                 <label class="form-control-label">{{__('page.store')}}</label>
                                 <select class="form-control" name="store">
@@ -72,9 +72,7 @@
                                 @enderror
                             </div>
                         </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-lg-4 col-md-6">
+                        <div class="col-lg-4 col-md-6 mb-3">
                             <div class="form-group mb-2">
                                 <label class="form-control-label">{{__('page.supplier')}}:</label>
                                 <div class="input-group">                                  
@@ -95,30 +93,18 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-6">
+                        <div class="col-lg-4 col-md-6 mb-3">
                             <div class="form-group mb-2">
                                 <label class="form-control-label">{{__('page.attachment')}}:</label>
                                 <input type="file" name="attachment" id="file2" class="file-input-styled">
                             </div>
                         </div>
-                        {{-- <div class="col-md-6 col-lg-4">
-                            <div class="form-group mb-2">
-                                <label class="form-control-label">{{__('page.status')}}:</label>
-                                <select class="form-control select2" name="status" data-placeholder="{{__('page.status')}}">
-                                    <option label="{{__('page.status')}}" hidden></option>
-                                    <option value="0">{{__('page.pending')}}</option>
-                                    <option value="1" selected>{{__('page.received')}}</option>
-                                </select>
-                            </div>
-                        </div> --}}
-                        <div class="col-lg-4 col-md-6">
+                        <div class="col-lg-4 col-md-6 mb-3">
                             <div class="form-group mb-2">
                                 <label class="form-control-label">{{__('page.credit_days')}}:</label>
                                 <input type="number" class="form-control" name="credit_days" min=0 value="{{old('credit_days')}}" required placeholder="{{__('page.credit_days')}}" />
                             </div>
                         </div>
-                    </div> 
-                    <div class="row mb-3">
                         <div class="col-md-12">
                             <div>
                                 <h4 class="mg-t-10" style="float:left">{{__('page.order_items')}}</h4>
@@ -166,25 +152,22 @@
                                     </tfoot>
                                 </table>
                             </div>
-
-                        </div>
-                    </div>
-                    <div class="row mb-3">                        
-                        <div class="col-md-6 col-lg-4">
+                        </div>                      
+                        <div class="col-md-4 mb-3">
                             <div class="form-group mb-2">
                                 <label class="form-control-label">{{__('page.discount')}}:</label>
                                 <input type="text" name="discount_string" class="form-control" v-model="discount_string" placeholder="{{__('page.discount')}}">
                                 <input type="hidden" name="discount" :value="discount">
                             </div>
                         </div>
-                        <div class="col-md-6 col-lg-4">
+                        <div class="col-md-4 mb-3">
                             <div class="form-group mb-2">
                                 <label class="form-control-label">{{__('page.shipping')}}:</label>
                                 <input type="text" name="shipping_string" class="form-control" v-model="shipping_string" placeholder="{{__('page.shipping')}}">
                                 <input type="hidden" name="shipping" :value="shipping">
                             </div>
                         </div>
-                        <div class="col-md-6 col-lg-4">
+                        <div class="col-md-4 mb-3">
                             <div class="form-group mb-2">
                                 <label class="form-control-label">{{__('page.returns')}}:</label>
                                 <input type="number" name="returns" class="form-control" min="0" v-model="returns" placeholder="{{__('page.returns')}}">

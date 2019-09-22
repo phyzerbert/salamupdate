@@ -23,7 +23,7 @@
             @php
                 $role = Auth::user()->role->slug;
             @endphp
-            <div class="card card-body" id="page" style="opacity:0">
+            <div class="card card-body p-lg-5" id="page" style="opacity:0">
                 <form class="form-layout form-layout-1" action="{{route('pre_order.update')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="id" id="order_id" value="{{$order->id}}">
@@ -55,8 +55,8 @@
                         <div class="col-lg-6">
                             <div class="form-group mg-b-10-force">
                                 <label class="form-control-label">{{__('page.supplier')}}:</label>
-                                <select class="form-control select2-show-search" name="supplier" data-placeholder="{{__('page.supplier')}}">
-                                    <option label="{{__('page.supplier')}}"></option>
+                                <select class="form-control select2-show-search" name="supplier" id="search_supplier" data-placeholder="{{__('page.supplier')}}">
+                                    <option value="">{{__('page.supplier')}}</option>
                                     @foreach ($suppliers as $item)
                                         <option value="{{$item->id}}" @if($order->supplier_id == $item->id) selected @endif>{{$item->company}}</option>
                                     @endforeach
@@ -76,11 +76,11 @@
                         </div>
                     </div>
 
-                    <div class="row mg-b-25">
+                    <div class="row">
                         <div class="col-md-12">
                             <div>
-                                <h4 class="mg-t-10" style="float:left">{{__('page.order_items')}}</h4>
-                                <button type="button" class="btn btn-sm btn-primary btn-icon mg-b-10 add-product" title="{{__('page.right_ctrl_key')}}" style="float:right" @click="add_item()"><div><i class="fa fa-plus"></i></div></button>
+                                <h4 class="mt-2" style="float:left">{{__('page.order_items')}}</h4>
+                                <button type="button" class="btn btn-sm btn-primary btn-icon add-product" title="{{__('page.right_ctrl_key')}}" style="float:right" @click="add_item()"><div><i class="fa fa-plus"></i></div></button>
                             </div>
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="product_table">
@@ -139,7 +139,7 @@
                         <div class="col-lg-12">
                             <div class="form-group mg-b-10-force">
                                 <label class="form-control-label">{{__('page.note')}}:</label>
-                                <textarea class="form-control" name="note" rows="5" placeholder="{{__('page.note')}}">{{$order->note}}</textarea>
+                                <textarea class="form-control" name="note" rows="3" placeholder="{{__('page.note')}}">{{$order->note}}</textarea>
                             </div>
                         </div>
                     </div>
@@ -171,6 +171,11 @@
         $('.file-input-styled').uniform({
             fileButtonClass: 'action btn bg-primary text-white'
         });
+
+        $('#search_supplier').wrap('<div class="position-relative"></div>')
+                    .select2({
+                        width: 'resolve',
+                    });
 
     });
 </script>
