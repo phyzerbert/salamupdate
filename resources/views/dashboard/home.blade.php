@@ -115,8 +115,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="card card-body">                        
-                        {{-- <canvas id="line_chart" style="height:400px;"></canvas> --}}
+                    <div class="card card-body">
                         <div id="line_chart" style="height:400px;"></div>
                     </div>
                 </div>

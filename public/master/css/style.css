@@ -1185,11 +1185,11 @@ body.fixed-left .side-menu.left {
 }
 
 #sidebar-menu > ul > li > a.active {
-  background: #f3f3f3 !important;
+  background: #d2cece !important;
 }
 
 #sidebar-menu > ul > li > a.active.subdrop {
-  background: #f3f3f3 !important;
+  background: #d2cece !important;
 }
 
 .subdrop {

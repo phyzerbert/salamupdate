@@ -1,7 +1,7 @@
 <div class="topbar">
         <div class="topbar-left">
             <div class="text-center">
-                <a href="{{route('home')}}" class="logo"><i class="md md-terrain"></i> <span>{{config('app.name')}} </span></a>
+                <a href="{{route('home')}}" class="logo"><span>{{config('app.name')}} </span></a>
             </div>
         </div>
         

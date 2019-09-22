@@ -13,12 +13,12 @@
             @endforeach        
         </select>
     @endif
-    <select class="form-control form-control-sm mr-sm-2 mb-2" name="store_id" id="search_store">
+    {{-- <select class="form-control form-control-sm mr-sm-2 mb-2" name="store_id" id="search_store">
         <option value="" hidden>{{__('page.select_store')}}</option>
         @foreach ($stores as $item)
             <option value="{{$item->id}}" @if ($store_id == $item->id) selected @endif>{{$item->name}}</option>
         @endforeach        
-    </select>
+    </select> --}}
     <input type="text" class="form-control form-control-sm mr-sm-2 mb-2" name="reference_no" id="search_reference_no" value="{{$reference_no}}" placeholder="{{__('page.reference_no')}}">
     <select class="form-control form-control-sm mr-sm-2 mb-2 select2-show-search" name="supplier_id" id="search_supplier" data-placeholder="{{__('page.select_supplier')}}">
         <option value="">{{__('page.select_supplier')}}</option>
