@@ -27,7 +27,7 @@
                     <a href="{{route('concurrent_payments.add_payments', $supplier->id)}}" class="btn btn-sm btn-success float-right">{{__('page.add_payments')}}</a>
                 </div>
                 <div class="mt-3">
-                    <div class="table-responsive mg-t-2">
+                    <div class="table-responsive mt-2">
                         <table class="table table-bordered table-hover">
                             <thead>
                                 <tr>

@@ -62,7 +62,7 @@
                         <button type="button" class="btn btn-sm btn-info mb-2 ml-1" id="btn-reset"><i class="fa fa-eraser"></i>&nbsp;&nbsp;{{__('page.reset')}}</button>
                     </form>
                 </div>
-                <div class="table-responsive mg-t-2">
+                <div class="table-responsive mt-2">
                     <table class="table table-bordered table-hover">
                         <thead>
                             <tr>

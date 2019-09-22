@@ -25,7 +25,7 @@
                 $role = Auth::user()->role->slug;
             @endphp
             <div class="card card-body card-fill">
-                <div class="table-responsive mg-t-2">
+                <div class="table-responsive mt-2">
                     <table class="table table-bordered table-hover" id="expiredTable">
                         <thead>
                             <tr>

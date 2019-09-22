@@ -20,7 +20,7 @@
             @endphp
             
             <div class="card card-body">
-                <div class="table-responsive mg-t-2">
+                <div class="table-responsive mt-2">
                     <table class="table table-bordered table-hover" id="supplier_table">
                         <thead>
                             <tr>

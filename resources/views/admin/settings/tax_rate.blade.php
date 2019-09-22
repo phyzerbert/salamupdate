@@ -22,7 +22,7 @@
                         <button type="button" class="btn btn-sm btn-success float-right mb-2" id="btn-add"><i class="icon ion-plus mg-r-2"></i>{{__('page.add_new')}}</button>
                     @endif
                 </div>
-                <div class="table-responsive mg-t-2">
+                <div class="table-responsive mt-2">
                     <table class="table table-bordered table-hover">
                         <thead>
                             <tr>

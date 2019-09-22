@@ -27,7 +27,7 @@
                     @include('elements.pagesize')
                     @include('purchase.filter')
                 </div>
-                <div class="table-responsive mg-t-2">
+                <div class="table-responsive mt-2">
                     <table class="table table-bordered table-hover">
                         <thead>
                             <tr>

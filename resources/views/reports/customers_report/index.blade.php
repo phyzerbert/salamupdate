@@ -37,7 +37,7 @@
                         <button type="button" class="btn btn-sm btn-info mb-2 ml-1" id="btn-reset"><i class="fa fa-eraser"></i>&nbsp;&nbsp;{{__('page.reset')}}</button>
                     </form>
                 </div>
-                <div class="table-responsive mg-t-2">
+                <div class="table-responsive mt-2">
                     <table class="table table-bordered table-hover">
                         <thead>
                             <tr>
@@ -50,7 +50,7 @@
                                 <th>{{__('page.total_amount')}}</th>
                                 <th>{{__('page.paid')}}</th>
                                 <th>{{__('page.balance')}}</th>
-                                <th>{{__('page.action')}}</th>
+                                <th style="width:120px">{{__('page.action')}}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -109,12 +109,12 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colspan="5">{{__('page.total')}}</td>
-                                <td>{{number_format($footer_total_sales)}}</td>
-                                <td>{{number_format($footer_total_amount)}}</td>
-                                <td>{{number_format($footer_paid)}}</td>
-                                <td>{{number_format($footer_total_amount - $footer_paid)}}</td>
-                                <td></td>
+                                <th colspan="5">{{__('page.total')}}</th>
+                                <th>{{number_format($footer_total_sales)}}</th>
+                                <th>{{number_format($footer_total_amount)}}</th>
+                                <th>{{number_format($footer_paid)}}</th>
+                                <th>{{number_format($footer_total_amount - $footer_paid)}}</th>
+                                <th></th>
                             </tr>
                         </tfoot>
                     </table>                

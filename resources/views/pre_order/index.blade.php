@@ -23,7 +23,7 @@
                 $role = Auth::user()->role->slug;
             @endphp
             <div class="card">
-                <div class="card-body table-responsive mg-t-2">
+                <div class="card-body table-responsive mt-2">
                     <div class="">
                         @include('elements.pagesize')                    
                         @include('pre_order.filter')
