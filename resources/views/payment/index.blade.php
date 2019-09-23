@@ -47,7 +47,7 @@
                                     <td class="" data-path="{{$item->attachment}}">
                                         <span class="tx-info note">{{$item->note}}</span>&nbsp;
                                         @if($item->attachment != "")
-                                            <a href="{{asset($item->attachment)}}" download><i class="fa fa-paperclip"></i></a>
+                                            <a href="{{asset($item->attachment)}}" class="attachment"><i class="fa fa-paperclip"></i></a>
                                         @endif
                                     </td>
                                     @if(in_array($role, ['admin', 'user']))
@@ -160,6 +160,22 @@
             $("#editModal .amount").val(amount);
             $("#editModal .note").val(note);
             $("#editModal").modal();
+        });
+
+        $(".attachment").click(function(e){
+            e.preventDefault();
+            let path = $(this).attr('href');
+            $("#image_preview").html('')
+            $("#image_preview").verySimpleImageViewer({
+                imageSource: path,
+                frame: ['100%', '100%'],
+                maxZoom: '900%',
+                zoomFactor: '10%',
+                mouse: true,
+                keyboard: true,
+                toolbar: true,
+            });
+            $("#attachModal").modal();
         });
 
     });
