@@ -43,6 +43,9 @@ class CategoryController extends Controller
 
     public function delete($id){
         $item = Category::find($id);
+        if(!$item){
+            return back()->withErrors(["delete" => __('page.something_went_wrong')]);
+        }
         $item->delete();
         return back()->with("success", __('page.deleted_successfully'));
     }

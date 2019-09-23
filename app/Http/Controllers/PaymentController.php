@@ -89,12 +89,18 @@ class PaymentController extends Controller
 
     public function delete($id){
         $item = Payment::find($id);
+        if(!$item){
+            return back()->withErrors(["delete" => __('page.something_went_wrong')]);
+        }
         $item->delete();
         return back()->with("success", __('page.deleted_successfully'));
     }
 
     public function approve($id){
         $item = Payment::find($id);
+        if(!$item){
+            return back()->withErrors(["delete" => __('page.something_went_wrong')]);
+        }
         $item->update(['status' => 1]);
         return back()->with("success", __('page.approved_successfully'));
     }

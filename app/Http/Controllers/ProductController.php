@@ -130,6 +130,9 @@ class ProductController extends Controller
 
     public function delete($id){
         $item = Product::find($id);
+        if(!$item){
+            return back()->withErrors(["delete" => __('page.something_went_wrong')]);
+        }
         $item->delete();
         return back()->with("success", __('page.deleted_successfully'));
     }
@@ -139,7 +142,6 @@ class ProductController extends Controller
             'name'=>'required|string',
             'code'=>'required|string',
             'unit'=>'required|string',
-            'cost'=>'required|numeric',
         ]);
         $data = $request->all();
         // dd($data);

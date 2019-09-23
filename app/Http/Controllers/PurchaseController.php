@@ -348,6 +348,9 @@ class PurchaseController extends Controller
             return back()->withErrors(['role_error' => __('page.not_allowed_page')]);
         }
         $item = Purchase::find($id);
+        if(!$item){
+            return back()->withErrors(["delete" => __('page.something_went_wrong')]);
+        }
         $item->orders()->delete();
         $item->payments()->delete();
         $item->delete();

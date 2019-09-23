@@ -99,6 +99,9 @@ class SupplierController extends Controller
 
     public function delete($id){
         $item = Supplier::find($id);
+        if(!$item){
+            return back()->withErrors(["delete" => __('page.something_went_wrong')]);
+        }
         $purchases = $item->purchases()->where('status', 0)->get();
         if($purchases->isNotEmpty()){
             return back()->withErrors(['pending' => __('page.supplier_cant_delete')]);

@@ -216,6 +216,9 @@ class SaleController extends Controller
 
     public function delete($id){
         $item = Sale::find($id);
+        if(!$item){
+            return back()->withErrors(["delete" => __('page.something_went_wrong')]);
+        }
         $item->orders()->delete();
         $item->payments()->delete();
         $item->delete();
