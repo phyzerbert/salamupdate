@@ -190,11 +190,7 @@
                     .then(response => {
                         this.sending = false;
                         this.message = null;
-                        if(response.data.message.is_image == 1){
-                            setTimeout(function(){ this.allMessages.push(response.data.message) }, 1000);
-                        }else{
-                            this.allMessages.push(response.data.message)
-                        }                        
+                        this.allMessages.push(response.data.message)
                         setTimeout(this.scrollToEnd, 50);
                     })
             },
