@@ -98,8 +98,8 @@
                                                 </button>
                                                 <ul class="dropdown-menu dropdown-menu-right">
                                                     <li><a href="javascript:;" data-id="{{$item->id}}" class="dropdown-item btn-edit">{{__('page.edit')}}</a></li>
-                                                    <li><a href="{{route('payment.approve', $item->id)}}" class="dropdown-item" onclick="return window.confirm('Are you sure?')">{{__('page.approve')}}</a></li>
-                                                    <li><a href="{{route('payment.delete', $item->id)}}" class="dropdown-item" onclick="return window.confirm('Are you sure?')">{{__('page.delete')}}</a></li>
+                                                    <li><a href="{{route('payment.approve', $item->id)}}" class="dropdown-item btn-confirm">{{__('page.approve')}}</a></li>
+                                                    <li><a href="{{route('payment.delete', $item->id)}}" class="dropdown-item btn-confirm">{{__('page.delete')}}</a></li>
                                                 </ul>
                                             </div>
                                         </td>

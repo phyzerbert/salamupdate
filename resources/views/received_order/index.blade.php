@@ -96,7 +96,7 @@
                                             <ul class="dropdown-menu dropdown-menu-right">
                                                 <li><a href="{{route('purchase.detail', $item->id)}}" class="dropdown-item">{{__('page.details')}}</a></li>
                                                 <li><a href="{{route('purchase.edit', $item->id)}}" class="dropdown-item">{{__('page.edit')}}</a></li>
-                                                <li><a href="{{route('purchase.delete', $item->id)}}" class="dropdown-item" onclick="return window.confirm('Are you sure?')">{{__('page.delete')}}</a></li>
+                                                <li><a href="{{route('purchase.delete', $item->id)}}" class="dropdown-item btn-confirm">{{__('page.delete')}}</a></li>
                                             </ul>
                                         </div>
                                     </td>
