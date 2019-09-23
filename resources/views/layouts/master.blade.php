@@ -74,7 +74,7 @@
         <script src="{{asset('master/js/jquery.blockUI.js')}}"></script>
         <script src="{{asset('master/js/waves.js')}}"></script>
         <script src="{{asset('master/js/wow.min.js')}}"></script>
-        <script src="{{asset('master/js/jquery.nicescroll.js')}}"></script>
+        <script src="{{asset('master/js/jquery.nicescroll.min.js')}}"></script>
         <script src="{{asset('master/js/jquery.scrollTo.min.js')}}"></script>
         
         <script src="{{asset('master/plugins/notifyjs/dist/notify.min.js')}}"></script>
