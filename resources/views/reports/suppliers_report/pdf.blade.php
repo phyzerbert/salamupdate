@@ -14,7 +14,7 @@
             background-color: #FFF;
         }
         .header-title {
-            margin-top: 27px;
+            margin-top: 25px;
             text-align:center;
             font-size:30px;
             font-weight: 800;
@@ -62,7 +62,7 @@
         $paid = \App\Models\Payment::whereIn('paymentable_id', $purchases_array)->where('paymentable_type', 'App\Models\Purchase')->sum('amount');
     @endphp
 
-    <table class="w-100 mt-5" id="table-supplier">
+    <table class="w-100 mt-3" id="table-supplier">
         <tbody>
             <tr>
                 <td>
