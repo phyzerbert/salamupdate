@@ -118,6 +118,26 @@
                     $.Notification.autoHideNotify('error', 'top right', "{{__('page.error')}}", element)
                 } 
             }
+
+            $(".btn-confirm").click(function(e){
+                e.preventDefault();
+                let url = $(this).attr('href');
+                Swal.fire({
+                    title: "{{__('page.are_you_sure')}}",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: "{{__('page.yes')}}",
+                    cancelButtonText: "{{__('page.cancel')}}",
+                }).then((result) => {
+                    if (result.value) {
+                        location.href = url
+                    }else {
+                        console.log('Cancelled')
+                    }
+                })
+            }) 
         </script>
 	</body>
 </html>

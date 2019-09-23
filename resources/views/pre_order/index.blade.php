@@ -96,7 +96,7 @@
                                                 <li><a href="{{route('received_order.index')}}?order_id={{$item->id}}" class="dropdown-item">{{__('page.received_list')}}</a></li>
                                                 <li><a href="{{route('pre_order.receive', $item->id)}}" class="dropdown-item">{{__('page.receive')}}</a></li>                                                    
                                                 <li><a href="{{route('pre_order.edit', $item->id)}}" class="dropdown-item">{{__('page.edit')}}</a></li>
-                                                <li><a href="{{route('pre_order.delete', $item->id)}}" class="dropdown-item" onclick="return window.confirm('Are you sure?')">{{__('page.delete')}}</a></li>
+                                                <li><a href="{{route('pre_order.delete', $item->id)}}" class="dropdown-item btn-confirm">{{__('page.delete')}}</a></li>
                                             </ul>
                                         </div>
                                     </td>

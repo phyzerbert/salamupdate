@@ -81,6 +81,7 @@ return [
     'save' => 'Save',
     'close' => 'Close',
     'back' => 'Back',
+    'yes' => 'Yes',
     'cancel' => 'Cancel',
     'name' => 'Name',
     'type' => 'Type',
@@ -311,4 +312,5 @@ return [
     'add_payments' => 'Add Payments',
     'this_computer_is_not_allowed' => 'This computer is not allowed.',
     'pending_approval' => 'Pending Approval',
+    'something_went_wrong' => 'Something went wrong!',
 ];

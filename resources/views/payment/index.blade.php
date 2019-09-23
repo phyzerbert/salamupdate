@@ -52,9 +52,9 @@
                                     </td>
                                     @if(in_array($role, ['admin', 'user']))
                                         <td class="py-1">
-                                            <a href="{{route('payment.approve', $item->id)}}" class="btn btn-info btn-icon wave-effect mr-2" onclick="return window.confirm('{{__('page.are_you_sure')}}')" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="{{__('page.approve')}}"><i class="fa fa-check-circle-o"></i></a>
+                                            <a href="{{route('payment.approve', $item->id)}}" class="btn btn-info btn-icon wave-effect mr-2 btn-confirm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="{{__('page.approve')}}"><i class="fa fa-check-circle-o"></i></a>
                                             <a href="#" class="btn btn-primary btn-icon wave-effect mr-2 btn-edit" data-id="{{$item->id}}" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="{{__('page.edit')}}"><i class="fa fa-edit"></i></a>
-                                            <a href="{{route('payment.delete', $item->id)}}" class="btn btn-danger btn-icon wave-effect" data-id="{{$item->id}}" onclick="return window.confirm('{{__('page.are_you_sure')}}')" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="{{__('page.delete')}}"><i class="fa fa-trash-o"></i></a>
+                                            <a href="{{route('payment.delete', $item->id)}}" class="btn btn-danger btn-icon wave-effect btn-confirm" data-id="{{$item->id}}" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="{{__('page.delete')}}"><i class="fa fa-trash-o"></i></a>
                                         </td>
                                     @endif
                                 </tr>

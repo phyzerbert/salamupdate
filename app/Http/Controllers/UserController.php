@@ -134,6 +134,9 @@ class UserController extends Controller
 
     public function delete($id){
         $user = User::find($id);
+        if(!$user){
+            return back()->withErrors(["delete" => __('page.something_went_wrong')]);
+        }
         $user->delete();
         return back()->with("success", __('page.deleted_successfully'));
     }

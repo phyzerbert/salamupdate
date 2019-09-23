@@ -39,7 +39,7 @@
                                     <td class="company" data-id="{{$item->company_id}}">{{$item->company->name}}</td>
                                     <td class="py-1">
                                         <a href="#" class="btn btn-sm btn-primary btn-icon mr-1 btn-edit" data-id="{{$item->id}}"><div><i class="fa fa-edit"></i></div></a>
-                                        <a href="{{route('store.delete', $item->id)}}" class="btn btn-sm btn-danger btn-icon" data-id="{{$item->id}}" onclick="return window.confirm('{{__('page.are_you_sure')}}')"><div><i class="fa fa-trash-o"></i></div></a>
+                                        <a href="{{route('store.delete', $item->id)}}" class="btn btn-sm btn-danger btn-icon btn-confirm" data-id="{{$item->id}}"><div><i class="fa fa-trash-o"></i></div></a>
                                     </td>
                                 </tr>
                             @endforeach

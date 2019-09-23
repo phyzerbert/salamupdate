@@ -79,6 +79,7 @@ return [
     'save' => 'Guardar',
     'close' => 'Cerrar',
     'back' => 'Regresar',
+    'yes' => 'Si',
     'cancel' => 'Cancelar',
     'name' => 'Nombre',
     'type' => 'Tipo',

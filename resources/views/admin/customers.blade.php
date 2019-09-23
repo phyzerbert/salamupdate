@@ -63,7 +63,7 @@
                                                 <li><a href="{{route('customer.email', $item->id)}}" class="dropdown-item">{{__('page.email')}}</a></li>
                                                 <li><a href="{{route('customer.export', $item->id)}}" class="dropdown-item">{{__('page.export')}}</a></li>
                                                 <li><a href="javascript:;" class="dropdown-item btn-edit" data-id="{{$item->id}}">{{__('page.edit')}}</a></li>
-                                                <li><a href="{{route('customer.delete', $item->id)}}" class="dropdown-item" onclick="return window.confirm('{{__('page.are_you_sure')}}')">{{__('page.delete')}}</a></li>
+                                                <li><a href="{{route('customer.delete', $item->id)}}" class="dropdown-item btn-confirm">{{__('page.delete')}}</a></li>
                                             </ul>
                                         </div>
                                     </td>
