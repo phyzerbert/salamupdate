@@ -40,7 +40,7 @@
                 </div>
                 <span class="clearfix"></span>
             </div>
-            <div class="card-body nicescroll" id="privateMessageBox" style="height:calc(100% - 126px)">
+            <div class="card-body nicescroll" id="privateMessageBox">
                 <message-list :user="user" :all-messages="allMessages" v-if="activeFriend"></message-list>
                 <div class="text-center" v-if="!activeFriend">
                     <div><img src="/images/chat.png" width="250" style="margin-top:100px;" alt=""></div>
@@ -317,9 +317,9 @@
 </script>
 
 <style scoped>
-    #privateMessageBox {        
-        overflow: auto;
+    #privateMessageBox {
         position: relative;
+        padding-bottom: 0;
     }
 
     #msgArea {

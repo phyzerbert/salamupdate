@@ -1,6 +1,6 @@
 <template>
     <div class="chat-conversation">
-        <ul class="conversation-list nicescroll">
+        <ul class="conversation-list">
             <li class="clearfix" :class="[message.user.id==user.id ? 'odd' : '']" v-for="(message, index) in allMessages" :key="index" >
                 <div class="chat-avatar">
                     <img src="/images/avatar.png" alt="">

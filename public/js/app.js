@@ -4237,7 +4237,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n#privateMessageBox[data-v-151b8bba] {        \n    overflow: auto;\n    position: relative;\n}\n#msgArea[data-v-151b8bba] {\n    width: 380px;\n    height: 58vh;\n    position: fixed;\n    bottom: -18px;\n    z-index: 10;\n    right: 10px;\n    transition-duration: 0.3s;\n}\n.right-bar-enabled #msgArea[data-v-151b8bba] {\n    right: 250px;\n}\n@media(max-width: 768px) {\n#msgArea[data-v-151b8bba] {\n        width: 95%;\n        height: 80vh;\n        height: calc(100vh - 75px);\n}\n}\n#msgArea .status i.online[data-v-151b8bba] {\n    color: #a0d269;\n}\n#msgArea .status i.offline[data-v-151b8bba] {\n    color: #ef5350;\n}\n#msgArea .card-footer[data-v-151b8bba] {\n    border-top: 1px solid rgba(0, 0, 0, 0.1) !important;\n}\n#chat-input[data-v-151b8bba]:focus {\n    box-shadow: none;\n}\n#btn-send[data-v-151b8bba] {\n    height: 31px;\n}\n.icon-attach[data-v-151b8bba] {\n    font-size: 20px;\n    margin-right: 10px;\n    cursor: pointer;\n}\n.card-header .name[data-v-151b8bba] {\n    font-size: 16px;\n    color: #444444;\n    font-weight: 500;\n}\n#chatbox-footer[data-v-151b8bba] {\n    height: 15px;\n    position: absolute;\n    bottom: 75px;\n    padding-left: 60px;\n}\n.msg-loading[data-v-151b8bba] {\n    margin-top: 47%;\n}\n.msg-loading .spinner-border[data-v-151b8bba] {\n    width: 80px;\n    height: 80px;\n}\n", ""]);
+exports.push([module.i, "\n#privateMessageBox[data-v-151b8bba] {\n    position: relative;\n    padding-bottom: 0;\n}\n#msgArea[data-v-151b8bba] {\n    width: 380px;\n    height: 58vh;\n    position: fixed;\n    bottom: -18px;\n    z-index: 10;\n    right: 10px;\n    transition-duration: 0.3s;\n}\n.right-bar-enabled #msgArea[data-v-151b8bba] {\n    right: 250px;\n}\n@media(max-width: 768px) {\n#msgArea[data-v-151b8bba] {\n        width: 95%;\n        height: 80vh;\n        height: calc(100vh - 75px);\n}\n}\n#msgArea .status i.online[data-v-151b8bba] {\n    color: #a0d269;\n}\n#msgArea .status i.offline[data-v-151b8bba] {\n    color: #ef5350;\n}\n#msgArea .card-footer[data-v-151b8bba] {\n    border-top: 1px solid rgba(0, 0, 0, 0.1) !important;\n}\n#chat-input[data-v-151b8bba]:focus {\n    box-shadow: none;\n}\n#btn-send[data-v-151b8bba] {\n    height: 31px;\n}\n.icon-attach[data-v-151b8bba] {\n    font-size: 20px;\n    margin-right: 10px;\n    cursor: pointer;\n}\n.card-header .name[data-v-151b8bba] {\n    font-size: 16px;\n    color: #444444;\n    font-weight: 500;\n}\n#chatbox-footer[data-v-151b8bba] {\n    height: 15px;\n    position: absolute;\n    bottom: 75px;\n    padding-left: 60px;\n}\n.msg-loading[data-v-151b8bba] {\n    margin-top: 47%;\n}\n.msg-loading .spinner-border[data-v-151b8bba] {\n    width: 80px;\n    height: 80px;\n}\n", ""]);
 
 // exports
 
@@ -30830,7 +30830,7 @@ var render = function() {
   return _c("div", { staticClass: "chat-conversation" }, [
     _c(
       "ul",
-      { staticClass: "conversation-list nicescroll" },
+      { staticClass: "conversation-list" },
       _vm._l(_vm.allMessages, function(message, index) {
         return _c(
           "li",
@@ -31042,7 +31042,6 @@ var render = function() {
           "div",
           {
             staticClass: "card-body nicescroll",
-            staticStyle: { height: "calc(100% - 126px)" },
             attrs: { id: "privateMessageBox" }
           },
           [
