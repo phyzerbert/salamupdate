@@ -318,7 +318,7 @@
 
 <style scoped>
     #privateMessageBox {
-        position: relative;
+        height:calc(100% - 126px);
         padding-bottom: 0;
     }
 

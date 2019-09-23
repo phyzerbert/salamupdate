@@ -45,6 +45,9 @@
 
 
 <style scoped>
+    .chat-conversation {
+        height: 100%;
+    }
     .icon-attach i {
         font-size: 20px;
         color: #5f60b5;
