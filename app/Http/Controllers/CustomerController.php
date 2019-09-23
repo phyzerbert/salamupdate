@@ -97,9 +97,9 @@ class CustomerController extends Controller
         if(filter_var($customer->email, FILTER_VALIDATE_EMAIL)){
             $to_email = $customer->email;
             Mail::to($to_email)->send(new ReportMail($pdf, 'Customer Report'));
-            return back()->with('success', 'Email is sent successfully');
+            return back()->with('success', __('page.email_is_sent_successfully'));
         }else{
-            return back()->withErrors('email', 'Customer email address is invalid.');
+            return back()->withErrors('email', __('page.invalid_email_address'));
         }
     }
 

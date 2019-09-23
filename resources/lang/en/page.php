@@ -313,4 +313,6 @@ return [
     'this_computer_is_not_allowed' => 'This computer is not allowed.',
     'pending_approval' => 'Pending Approval',
     'something_went_wrong' => 'Something went wrong!',
+    'email_is_sent_successfully' => 'Email is sent successfully.',
+    'invalid_email_address' => 'Email address is invalid',
 ];
