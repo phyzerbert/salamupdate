@@ -63,7 +63,7 @@
                                 <tr>
                                     <td>{{ (($data->currentPage() - 1 ) * $data->perPage() ) + $loop->iteration }}</td>
                                     <td class="timestamp">{{date('Y-m-d H:i', strtotime($item->timestamp))}}</td>
-                                    <td class="text-inverse reference_no">{{$item->reference_no}}</td>
+                                    <td class="reference_no">{{$item->reference_no}}</td>
                                     <td class="user">{{$item->biller->name}}</td>
                                     <td class="customer" data-id="{{$item->customer_id}}">{{$item->customer->name}}</td>
                                     {{-- <td class="status">

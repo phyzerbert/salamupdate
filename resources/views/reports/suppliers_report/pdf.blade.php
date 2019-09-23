@@ -143,7 +143,7 @@
                 @endphp
                 <tr>
                     <td class="timestamp">{{date('d/m/Y', strtotime($item->timestamp))}}</td>
-                    <td class="text-inverse reference_no">{{$item->reference_no}}</td>
+                    <td class="reference_no">{{$item->reference_no}}</td>
                     <td class="grand_total"> {{number_format($grand_total)}} </td>
                     <td class="payment">                        
                         @php

@@ -42,7 +42,7 @@
                                 <tr class="@if($item->status == 0) text-danger @endif">
                                     <td>{{ $loop->index + 1 }}</td>
                                     <td class="date">{{date('Y-m-d H:i', strtotime($item->timestamp))}}</td>
-                                    <td class="text-inverse reference_no">{{$item->reference_no}}</td>
+                                    <td class="reference_no">{{$item->reference_no}}</td>
                                     <td class="amount" data-value="{{$item->amount}}">{{number_format($item->amount)}}</td>
                                     <td class="" data-path="{{$item->attachment}}">
                                         <span class="tx-info note">{{$item->note}}</span>&nbsp;

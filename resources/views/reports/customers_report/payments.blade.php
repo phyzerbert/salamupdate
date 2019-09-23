@@ -71,7 +71,7 @@
                                 <tr>
                                     <td>{{ (($data->currentPage() - 1 ) * $data->perPage() ) + $loop->iteration }}</td>
                                     <td class="timestamp">{{date('Y-m-d H:i', strtotime($item->timestamp))}}</td>
-                                    <td class="text-inverse reference_no">{{$item->reference_no}}</td>
+                                    <td class="reference_no">{{$item->reference_no}}</td>
                                     <td class="sale" data-id="{{$item->paymentable_id}}">
                                         @if ($item->paymentable_type == 'App\Models\Sale')
                                             {{$item->paymentable->reference_no}}
