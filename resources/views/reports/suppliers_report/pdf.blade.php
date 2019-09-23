@@ -14,11 +14,12 @@
             background-color: #FFF;
         }
         .header-title {
-            margin-top: 30px;
+            margin-top: 27px;
             text-align:center;
             font-size:30px;
             font-weight: 800;
             text-decoration:underline;
+            clear: both;
         }
         .value {
             text-decoration: underline;
@@ -30,6 +31,10 @@
         .table thead th {
             border-bottom: 2px solid #2d2d2d;
         }
+        #table-purchases td {
+            padding-top: 8px ;
+            padding-bottom: 3px ;
+        }
         #table-supplier {
             font-size: 14px;
             font-weight: 500;
@@ -37,6 +42,12 @@
         }
         #table-supplier tbody td {
             height: 25px;
+        }
+        .table-payment td,
+        .table-payment th {
+            padding: 5px;
+            border: none;
+            font-size: 12px;
         }
     </style>
 </head>
@@ -105,17 +116,16 @@
             </tr>
         </tbody>
     </table>
-    <h3 class="mt-5" style="font-size: 18px; font-weight: 500;">{{__('page.purchases')}}</h3>
-    <table class="table">
+    <h3 class="mt-4" style="font-size: 18px; font-weight: 500;">{{__('page.purchases')}}</h3>
+    <table class="table" id="table-purchases">
         <thead>
             <tr class="bg-blue">
-                <th style="width:25px;">#</th>
                 <th>
                     {{__('page.date')}}
                 </th>
                 <th>{{__('page.reference_no')}}</th>
                 <th>{{__('page.grand_total')}}</th>
-                <th>{{__('page.paid')}}</th>
+                <th>{{__('page.payment')}}</th>
                 <th>{{__('page.balance')}}</th>
             </tr>
         </thead>
@@ -126,24 +136,50 @@
             @endphp
             @foreach ($data as $item)
                 @php
-                    $paid = $item->payments()->where('status', 1)->sum('amount');
+                    $paid = $item->payments()->sum('amount');
                     $grand_total = $item->grand_total;
                     $footer_grand_total += $grand_total;
                     $footer_paid += $paid;
                 @endphp
                 <tr>
-                    <td>{{ $loop->index + 1 }}</td>
-                    <td class="timestamp">{{date('Y-m-d H:i', strtotime($item->timestamp))}}</td>
+                    <td class="timestamp">{{date('d/m/Y', strtotime($item->timestamp))}}</td>
                     <td class="text-inverse reference_no">{{$item->reference_no}}</td>
                     <td class="grand_total"> {{number_format($grand_total)}} </td>
-                    <td class="paid"> {{ number_format($paid) }} </td>
-                    <td class="balance" data-value="{{$grand_total - $paid}}"> {{number_format($grand_total - $paid)}} </td>
+                    <td class="payment">                        
+                        @php
+                            $payments = $item->payments;
+                        @endphp
+                        <table class="table-payment w-100">
+                            <tbody>
+                                @forelse ($payments as $payment)
+                                    <tr>
+                                        <td>{{date('d/m/Y', strtotime($payment->timestamp))}}</td>
+                                        <td>{{$payment->reference_no}}</td>
+                                        <td width="80">{{number_format($payment->amount)}}</td>
+                                    </tr>
+                                @empty
+                                     <tr>
+                                        <td>{{__('page.no_payment')}}</td>
+                                     </tr>                    
+                                @endforelse
+                            </tbody>
+                            @if($payments->isNotEmpty())
+                                <tfoot>
+                                    <tr>
+                                        <th colspan="2" class="text-right">{{__('page.total')}}</th>
+                                        <th>{{ number_format($paid) }} </th>
+                                    </tr>
+                                </tfoot>
+                            @endif
+                        </table>
+                    </td>
+                    <td class="balance"> {{number_format($grand_total - $paid)}} </td>
                 </tr>
             @endforeach
         </tbody>
         <tfoot>
             <tr>
-                <th colspan="3" class="text-right">{{__('page.total')}}</th>
+                <th colspan="2" class="text-right">{{__('page.total')}}</th>
                 <th>{{number_format($footer_grand_total)}}</th>
                 <th>{{number_format($footer_paid)}}</th>
                 <th>{{number_format($footer_grand_total - $footer_paid)}}</th>  

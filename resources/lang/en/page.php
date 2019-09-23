@@ -315,4 +315,5 @@ return [
     'something_went_wrong' => 'Something went wrong!',
     'email_is_sent_successfully' => 'Email is sent successfully.',
     'invalid_email_address' => 'Email address is invalid',
+    'no_payment' => 'No Payment',
 ];

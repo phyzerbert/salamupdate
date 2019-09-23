@@ -113,14 +113,14 @@ class SupplierController extends Controller
     
     public function report($id){
         $supplier = Supplier::find($id);
-        $pdf = PDF::loadView('reports.suppliers_report.pdf', compact('supplier'));        
-        return $pdf->download('supplier_report_'.$supplier->company.'.pdf');        
-        // return view('reports.suppliers_report.pdf', compact('supplier'));
+        $pdf = PDF::loadView('reports.suppliers_report.pdf', compact('supplier'))->setPaper('a4', 'landscape');        
+        // return $pdf->download('supplier_report_'.$supplier->company.'.pdf');        
+        return view('reports.suppliers_report.pdf', compact('supplier'));
     }
     
     public function email($id){
         $supplier = Supplier::find($id);
-        $pdf = PDF::loadView('reports.suppliers_report.pdf', compact('supplier'));   
+        $pdf = PDF::loadView('reports.suppliers_report.pdf', compact('supplier'))->setPaper('a4', 'landscape');   
         if(filter_var($supplier->email, FILTER_VALIDATE_EMAIL)){
             $to_email = $supplier->email;
             Mail::to($to_email)->send(new ReportMail($pdf, 'Supplier Report'));
