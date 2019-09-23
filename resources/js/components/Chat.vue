@@ -40,7 +40,7 @@
                 </div>
                 <span class="clearfix"></span>
             </div>
-            <div class="card-body nicescroll" id="privateMessageBox">
+            <div class="card-body p-0 nicescroll" id="privateMessageBox">
                 <message-list :user="user" :all-messages="allMessages" v-if="activeFriend"></message-list>
                 <div class="text-center" v-if="!activeFriend">
                     <div><img src="/images/chat.png" width="250" style="margin-top:100px;" alt=""></div>
@@ -259,7 +259,7 @@
             }
         },
         mounted() {
-            $("#app").css('opacity', 1)
+            $("#app").css('opacity', 1)            
         },
         created() {            
             this.fetchUsers();
