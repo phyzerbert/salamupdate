@@ -41,8 +41,8 @@
                 <span class="clearfix"></span>
             </div>
             <div class="card-body p-0 nicescroll" id="privateMessageBox">
-                <message-list :user="user" :all-messages="allMessages" v-if="activeFriend"></message-list>
-                <div class="text-center" v-if="!activeFriend">
+                <message-list :user="user" :all-messages="allMessages" v-if="activeFriend && !msg_loading"></message-list>
+                <div class="text-center" v-if="!activeFriend && !msg_loading">
                     <div><img src="/images/chat.png" width="250" style="margin-top:100px;" alt=""></div>
                 </div>
                 <div class="msg-loading text-center" v-if="msg_loading">

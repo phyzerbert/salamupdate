@@ -30827,7 +30827,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "chat-conversation px-3 nicescroll" }, [
+  return _c("div", { staticClass: "chat-conversation px-3" }, [
     _c(
       "ul",
       { staticClass: "conversation-list" },
@@ -31045,13 +31045,13 @@ var render = function() {
             attrs: { id: "privateMessageBox" }
           },
           [
-            _vm.activeFriend
+            _vm.activeFriend && !_vm.msg_loading
               ? _c("message-list", {
                   attrs: { user: _vm.user, "all-messages": _vm.allMessages }
                 })
               : _vm._e(),
             _vm._v(" "),
-            !_vm.activeFriend
+            !_vm.activeFriend && !_vm.msg_loading
               ? _c("div", { staticClass: "text-center" }, [_vm._m(1)])
               : _vm._e(),
             _vm._v(" "),
