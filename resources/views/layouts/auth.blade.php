@@ -14,6 +14,7 @@
         <link href="{{asset('master/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{asset('master/css/icons.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{asset('master/css/style.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{asset('master/plugins/sweetalert2/sweetalert2.min.css')}}" rel="stylesheet" type="text/css">
 
         <script src="{{asset('master/js/modernizr.min.js')}}"></script>
         
@@ -39,6 +40,7 @@
         <script src="{{asset('master/js/wow.min.js')}}"></script>
         <script src="{{asset('master/js/jquery.nicescroll.js')}}"></script>
         <script src="{{asset('master/js/jquery.scrollTo.min.js')}}"></script>
+        <script src="{{asset('master/plugins/sweetalert2/sweetalert2.min.js')}}"></script>
 
         <script src="{{asset('master/js/jquery.app.js')}}"></script>
         

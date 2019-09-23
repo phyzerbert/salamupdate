@@ -64,7 +64,7 @@
                                 <tr>
                                     <td>{{ (($data->currentPage() - 1 ) * $data->perPage() ) + $loop->iteration }}</td>
                                     <td class="timestamp">{{date('Y-m-d H:i', strtotime($item->timestamp))}}</td>
-                                    <td class="reference_no">{{$item->reference_no}}</td>
+                                    <td class="text-inverse reference_no">{{$item->reference_no}}</td>
                                     <td class="user"> @if($item->user) {{$item->user->name}} @endif </td>
                                     <td class="supplier" data-id="{{$item->supplier_id}}"> @isset($item->supplier->company) {{$item->supplier->company}} @endisset</td>
                                     <td class="grand_total"> {{number_format($grand_total)}} </td>

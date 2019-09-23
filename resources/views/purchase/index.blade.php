@@ -71,7 +71,7 @@
                                 <tr class="@if($item->status == 0) text-danger @endif">
                                     <td>{{ (($data->currentPage() - 1 ) * $data->perPage() ) + $loop->iteration }}</td>
                                     <td class="timestamp">{{date('Y-m-d H:i', strtotime($item->timestamp))}}</td>
-                                    <td class="reference_no">{{$item->reference_no}}</td>
+                                    <td class="text-inverse reference_no">{{$item->reference_no}}</td>
                                     <td class="supplier" data-id="{{$item->supplier_id}}">@isset($item->supplier->company){{$item->supplier->company}}@endisset</td>
                                     <td class="grand_total"> {{number_format($grand_total)}} </td>
                                     <td class="paid"> {{ number_format($paid) }} </td>
@@ -89,6 +89,12 @@
                                             <span class="badge badge-primary">{{__('page.partial')}}</span>
                                         @else
                                             <span class="badge badge-success">{{__('page.paid')}}</span>
+                                        @endif
+                                        @php
+                                            $pending_payments = $item->payments()->where('status', 0)->count();
+                                        @endphp
+                                        @if($pending_payments)
+                                            <img src="{{asset('images/pending.png')}}" width="25" height="25" alt="" title="{{__('page.pending_approval')}}" />
                                         @endif
                                     </td>
                                     <td class="py-2" align="center">

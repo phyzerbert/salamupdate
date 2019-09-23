@@ -351,6 +351,10 @@
         color: #ef5350;
     }
 
+    #msgArea .card-footer {
+        border-top: 1px solid rgba(0, 0, 0, 0.1) !important;
+    }
+
     #chat-input:focus {
         box-shadow: none;
     }

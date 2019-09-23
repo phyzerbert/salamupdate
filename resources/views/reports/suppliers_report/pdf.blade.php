@@ -132,7 +132,7 @@
                 <tr>
                     <td>{{ $loop->index + 1 }}</td>
                     <td class="timestamp">{{date('Y-m-d H:i', strtotime($item->timestamp))}}</td>
-                    <td class="reference_no">{{$item->reference_no}}</td>
+                    <td class="text-inverse reference_no">{{$item->reference_no}}</td>
                     <td class="grand_total"> {{number_format($grand_total)}} </td>
                     <td class="paid"> {{ number_format($paid) }} </td>
                     <td class="balance" data-value="{{$grand_total - $paid}}"> {{number_format($grand_total - $paid)}} </td>

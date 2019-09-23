@@ -52,7 +52,7 @@ class LoginController extends Controller
         $ip_address = $_SERVER['REMOTE_ADDR'];
         if($user->hasRole('secretary') && $ip_address != $user->ip_address){
             Auth::logout();
-            return redirect(route('login'))->withErrors(['name' => 'This computer does not allowed.']);
+            return redirect(route('login'))->with('ip_restriction' , __('page.this_computer_is_not_allowed'));
         }else {
             $user->update(['last_ip' => $ip_address]);
         }

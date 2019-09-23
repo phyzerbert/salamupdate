@@ -75,3 +75,15 @@
         </div>
     </div>
 @endsection
+
+@section('script')
+    <script>
+        var notification = '<?php echo session()->get("ip_restriction"); ?>';
+        if(notification != ''){
+            Swal.fire({
+                type: 'error',
+                title: notification,
+            })
+        }
+    </script>
+@endsection
