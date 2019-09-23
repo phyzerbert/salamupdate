@@ -140,5 +140,4 @@ class UserController extends Controller
         $user->delete();
         return back()->with("success", __('page.deleted_successfully'));
     }
-
 }

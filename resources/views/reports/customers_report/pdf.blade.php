@@ -11,6 +11,7 @@
         body {
             border: solid 1px black;
             padding: 10px;
+            background-color: #FFF;
         }
         .title {
             margin-top: 30px;

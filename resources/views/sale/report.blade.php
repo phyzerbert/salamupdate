@@ -13,6 +13,7 @@
                 color: #584747;
                 border: solid 1px black;
                 padding: 10px;
+                background-color: #FFF;
                 /* background: url('{{asset("images/bg_pdf.jpg")}}') no-repeat; */
                 /* background-size: 100% 100%; */
             }

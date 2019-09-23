@@ -13,6 +13,7 @@
                 color: #584747;
                 border: solid 1px black;
                 padding: 10px;
+                background-color: #FFF;
                 /* background: url('{{asset("images/bg_pdf.jpg")}}') no-repeat; */
                 /* background-size: 100% 100%; */
             }
@@ -108,9 +109,8 @@
         </table>
         <h4 class="mt-e" style="font-weight: 600;">{{__('page.order_items')}}</h4>
         <table class="table">
-            <thead class="table-info">
+            <thead>
                 <tr>
-                    <th width="50">#</th>
                     <th>{{__('page.product')}}</th>
                     <th>{{__('page.cost')}}</th>
                     <th>{{__('page.quantity')}}</th>
@@ -123,7 +123,7 @@
                     $total_quantity = 0;
                     $total_tax_rate = 0;
                     $total_amount = 0;
-                    $paid = $purchase->payments()->sum('amount');
+                    $paid = $purchase->payments()->where('status', 1)->sum('amount');
                 @endphp
                 @foreach ($purchase->orders as $item)
                     @php
@@ -138,7 +138,6 @@
                         $total_amount += $subtotal;
                     @endphp
                     <tr>
-                        <td>{{$loop->index+1}}</td>
                         <td>
                             @if($item->product)
                                 {{$item->product->name}}
@@ -153,15 +152,15 @@
                     </tr>
                 @endforeach
             </tbody>
-            <tfoot class="tx-bold tx-black">
+            <tfoot>
                 <tr>
-                    <th colspan="3" class="tx-bold" style="text-align:right">{{__('page.total')}} (COP)</th>
+                    <th colspan="2" style="text-align:right">{{__('page.total')}} (COP)</th>
                     <th>{{$total_quantity}}</th>
                     <th>{{$total_tax_rate}}</th>
                     <th>{{number_format($total_amount)}}</th>
                 </tr>
                 <tr>
-                    <th colspan="5" style="text-align:right">{{__('page.discount')}} (COP)</th>
+                    <th colspan="4" style="text-align:right">{{__('page.discount')}} (COP)</th>
                     <th>
                         @if(strpos( $purchase->discount_string , '%' ) !== false)
                             {{$purchase->discount_string}} ({{number_format($purchase->discount)}})
@@ -171,7 +170,7 @@
                     </th>
                 </tr>
                 <tr>
-                    <th colspan="5" style="text-align:right">{{__('page.shipping')}} (COP)</th>
+                    <th colspan="4" style="text-align:right">{{__('page.shipping')}} (COP)</th>
                     <th>
                         @if(strpos( $purchase->shipping_string , '%' ) !== false)
                             {{$purchase->shipping_string}} ({{number_format($purchase->shipping)}})
@@ -182,30 +181,58 @@
                 </tr>
                 
                 <tr>
-                    <th colspan="5" style="text-align:right">{{__('page.returns')}}</th>
+                    <th colspan="4" style="text-align:right">{{__('page.returns')}}</th>
                     <th>
                         {{number_format($purchase->returns)}}
                     </th>
                 </tr>
                 <tr>
-                    <th colspan="5" style="text-align:right">{{__('page.total_amount')}} (COP)</th>
-                    <th>{{number_format($purchase->grand_total)}}</th>
+                    <th colspan="4" style="text-align:right; vertical-align: middle;">{{__('page.grand_total')}}</th>
+                    <th class="text-primary" style="font-size:25px">{{number_format($purchase->grand_total)}}</th>
                 </tr>
+            </tfoot>
+        </table>
+        <h4 class="mt-e" style="font-weight: 600;">{{__('page.payment_list')}}</h4>
+        <table class="table">
+            <thead>
                 <tr>
-                    <th colspan="5" style="text-align:right">{{__('page.paid')}} (COP)</th>
+                    <th>{{__('page.date')}}</th>
+                    <th>{{__('page.reference_no')}}</th>
+                    <th>{{__('page.amount')}}</th>
+                    <th>{{__('page.status')}}</th>
+                    <th>{{__('page.note')}}</th>
+                </tr>
+            </thead>
+            <tbody>                                
+                @foreach ($purchase->payments as $item)
+                    <tr>
+                        <td>{{date('d/m/Y', strtotime($item->timestamp))}}</td>
+                        <td>{{$item->reference_no}}</td>
+                        <td>{{number_format($item->amount)}}</td>
+                        <td>
+                            @if($item->status)
+                                <span class="text-success">{{__('page.approved')}}</span>
+                            @else
+                                <span class="text-danger">{{__('page.pending')}}</span>
+                            @endif
+                        </td>
+                        <td>
+                            <span class="tx-info note">{{$item->note}}</span>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th colspan="4" style="text-align:right">{{__('page.paid')}}</th>
                     <th>{{number_format($paid)}}</th>
                 </tr>
                 <tr>
-                    <th colspan="5" style="text-align:right">{{__('page.balance')}} (COP)</th>
+                    <th colspan="4" style="text-align:right">{{__('page.balance')}}</th>
                     <th>{{number_format($purchase->grand_total - $paid)}}</th>
                 </tr>
             </tfoot>
         </table>
-        <div class="mt-5">
-            <h4 class="text-right pr-3">
-                {{__('page.grand_total')}} : <span class="text-primary">{{number_format($purchase->grand_total)}}</span> 
-            </h4>
-        </div>
     </div>
 </body>
 </html>

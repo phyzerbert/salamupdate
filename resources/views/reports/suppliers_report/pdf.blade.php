@@ -11,8 +11,9 @@
         body {
             border: solid 1px black;
             padding: 10px;
+            background-color: #FFF;
         }
-        .title {
+        .header-title {
             margin-top: 30px;
             text-align:center;
             font-size:30px;
@@ -40,7 +41,8 @@
     </style>
 </head>
 <body>
-    <h1 class="title">{{__('page.supplier')}} {{__('page.report')}}</h1>
+    <h5 class="float-right">{{__('page.date')}} : {{date('d/m/Y')}}</h5>
+    <h1 class="header-title">{{__('page.supplier_report')}}</h1>
 
     @php
         $purchases_array = $supplier->purchases()->pluck('id');
@@ -87,15 +89,15 @@
                         <tbody>
                             <tr>
                                 <td>{{__('page.total_amount')}} : </td>
-                                <td class="value">{{number_format($total_amount)}}</td>
+                                <td class="value" style="font-size:20px">{{number_format($total_amount)}}</td>
                             </tr>
                             <tr>
                                 <td>{{__('page.paid')}} : </td>
-                                <td class="value">{{number_format($paid)}}</td>
+                                <td class="value" style="font-size:20px">{{number_format($paid)}}</td>
                             </tr>
                             <tr>
                                 <td>{{__('page.balance')}} : </td>
-                                <td class="value">{{number_format($total_amount - $paid)}}</td>
+                                <td class="value" style="font-size:20px">{{number_format($total_amount - $paid)}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -105,7 +107,7 @@
     </table>
     <h3 class="mt-5" style="font-size: 18px; font-weight: 500;">{{__('page.purchases')}}</h3>
     <table class="table">
-        <thead class="table-primary">
+        <thead>
             <tr class="bg-blue">
                 <th style="width:25px;">#</th>
                 <th>
