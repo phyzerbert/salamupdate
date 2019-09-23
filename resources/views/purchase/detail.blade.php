@@ -64,7 +64,7 @@
                                     <p class="text-light" style="font-size:16px;">
                                         <strong>{{__('page.attachment')}} : </strong>
                                         @if ($purchase->attachment != "")
-                                            <a href="#" class="attachment" data-value="{{$purchase->attachment}}">&nbsp;&nbsp;&nbsp;<i class="fa fa-paperclip"></i></a>
+                                            <a href="#" class="attachment" data-value="{{asset($purchase->attachment)}}">&nbsp;&nbsp;&nbsp;<i class="fa fa-paperclip"></i></a>
                                         @endif
                                     </p>
                                 </div>
