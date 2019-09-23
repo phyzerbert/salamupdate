@@ -2099,7 +2099,13 @@ __webpack_require__.r(__webpack_exports__);
         _this3.sending = false;
         _this3.message = null;
 
-        _this3.allMessages.push(response.data.message);
+        if (response.data.message.is_image == 1) {
+          Object(timers__WEBPACK_IMPORTED_MODULE_0__["setTimeout"])(function () {
+            this.allMessages.push(response.data.message);
+          }, 1000);
+        } else {
+          _this3.allMessages.push(response.data.message);
+        }
 
         Object(timers__WEBPACK_IMPORTED_MODULE_0__["setTimeout"])(_this3.scrollToEnd, 50);
       });
