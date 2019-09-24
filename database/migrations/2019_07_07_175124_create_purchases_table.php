@@ -31,6 +31,7 @@ class CreatePurchasesTable extends Migration
             $table->string('attachment')->nullable();
             $table->text('note')->nullable();
             $table->integer('status')->default(0);
+            $table->integer('order_id')->nullable();
             $table->timestamps();
         });
     }

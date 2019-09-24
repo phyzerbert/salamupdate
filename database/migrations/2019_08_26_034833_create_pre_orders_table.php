@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePaymentsTable extends Migration
+class CreatePreOrdersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,21 @@ class CreatePaymentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('payments', function (Blueprint $table) {
+        Schema::create('pre_orders', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer("user_id")->nullable();
             $table->dateTime('timestamp')->nullable();
             $table->string('reference_no')->nullable();
-            $table->integer('amount')->nullable();
+            $table->integer('company_id')->nullable();
+            $table->integer('supplier_id')->nullable();
+            $table->integer('discount')->default(0);
+            $table->string('discount_string')->nullable();
+            $table->integer('grand_total')->default(0);
+            $table->integer('credit_days')->nullable();
+            $table->date('expiry_date')->nullable();
             $table->string('attachment')->nullable();
-            $table->integer('status')->default(0);
             $table->text('note')->nullable();
-            $table->integer('status')->default(0);
-            $table->integer('paymentable_id')->nullable();
-            $table->string('paymentable_type')->nullable();
+            $table->integer('status')->nullable();
             $table->timestamps();
         });
     }
@@ -35,6 +39,6 @@ class CreatePaymentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('payments');
+        Schema::dropIfExists('pre_orders');
     }
 }
