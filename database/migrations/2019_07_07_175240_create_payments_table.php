@@ -19,7 +19,6 @@ class CreatePaymentsTable extends Migration
             $table->string('reference_no')->nullable();
             $table->integer('amount')->nullable();
             $table->string('attachment')->nullable();
-            $table->integer('status')->default(0);
             $table->text('note')->nullable();
             $table->integer('status')->default(0);
             $table->integer('paymentable_id')->nullable();
