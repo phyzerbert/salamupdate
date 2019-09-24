@@ -229,7 +229,12 @@
                 })
             },
             scrollToEnd(){
-                document.getElementById('messageBox').scrollTo(0,99999);
+                document.getElementById('messageBox').scrollTo(0,99999);                
+                $('#messageBox').slimScroll({
+                    start: 'bottom',
+                    height: '405px',
+                    disableFadeOut: true
+                });
             },
             onInput(e){
                 if(!e){
@@ -257,7 +262,12 @@
             }
         },
         mounted() {
-            $("#app").css('opacity', 1)            
+            $("#app").css('opacity', 1)
+            $('#messageBox').slimScroll({
+                start: 'bottom',
+                height: '405px',
+                disableFadeOut: true
+            });
         },
         created() {            
             this.fetchUsers();
@@ -306,8 +316,8 @@
 
 <style scoped>
     .chatbox {
-        width: 380px;
-        height: 58vh;
+        width: 360px;
+        height: 500px;
         margin-bottom: 20px;
         position: fixed;
         bottom: -16px;
@@ -326,9 +336,19 @@
         padding: 8px 20px;
         border-radius: calc(.25rem - 1px) calc(.25rem - 1px) 0 0;
     }
+    
+    .chatbox-header .name {
+        font-size: 16px;
+        color: #444444;
+        font-weight: 500;
+    }
+
+    .chatbox-header .status {
+        font-size: 14px;
+    }
 
     .chatbox-body {        
-        height:calc(100% - 96px);
+        height:420px;
         padding: 1.25rem;        
         padding-bottom: 0;
         overflow: auto;
@@ -368,14 +388,6 @@
         font-size: 20px;
         margin-right: 10px;
         cursor: pointer;
-    }
-    .chatbox-header .name {
-        font-size: 16px;
-        color: #444444;
-        font-weight: 500;
-    }
-    .chatbox-header .status {
-        font-size: 14px;
     }
     #footer-widget {
         height: 5px;

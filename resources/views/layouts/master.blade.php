@@ -102,7 +102,8 @@
 
                
             $(document).ready(function(){
-                $("#ajax-loading").hide();      
+                $("#ajax-loading").hide(); 
+                 
             });
         </script>
 

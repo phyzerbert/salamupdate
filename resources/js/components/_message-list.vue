@@ -9,7 +9,7 @@
                     <div class="ctext-wrap" :title="message.created_at">
                         <p>{{message.message}}</p>
                         <div v-if="message.attachment" class="image-container">
-                            <img v-if="message.is_image" width="180" class="attachment-image my-1" :src="'/'+message.attachment" alt="" @click="imageView('/'+message.attachment)">
+                            <img v-if="message.is_image" width="160" class="attachment-image my-1" :src="'/'+message.attachment" alt="" @click="imageView('/'+message.attachment)">
                             <a v-if="!message.is_image" width="100" :href="'/'+message.attachment" download><span class="icon-attach"><i class="fa fa-paperclip"></i></span></a>
                         </div>
                     </div>
