@@ -30944,7 +30944,7 @@ var render = function() {
           1
         ),
         _vm._v(" "),
-        _c("div", { staticClass: "card-footer p-2" }, [
+        _c("div", { staticClass: "p-0" }, [
           _c("div", { attrs: { id: "card-footer" } }, [
             _c(
               "div",
@@ -30984,7 +30984,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "div",
-            { staticClass: "d-flex" },
+            { staticClass: "card-footer d-flex p-2" },
             [
               _c(
                 "file-upload",

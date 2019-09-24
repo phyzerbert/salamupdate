@@ -51,7 +51,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card-footer p-2">
+            <div class="p-0">
                 <div id="card-footer">
                     <div class="progress progress-sm mb-0" v-show="uploading">
                         <div class="progress-bar progress-bar-success" role="progressbar" :aria-valuenow="uploadProgress" aria-valuemin="0" aria-valuemax="100" :style="{width: uploadProgress + '%'}">
@@ -59,7 +59,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="d-flex">
+                <div class="card-footer d-flex p-2">
                     <file-upload
                         :post-action="'/chat/message/'+activeFriend"
                         ref='upload'
@@ -350,8 +350,7 @@
 
     #btn-send {
         height: 31px;
-    }
-    
+    }   
 
     .icon-attach {
         font-size: 20px;
