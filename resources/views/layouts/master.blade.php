@@ -99,9 +99,10 @@
             function showloader(){
                 $("#ajax-loading").show();
             }
+
                
             $(document).ready(function(){
-                $("#ajax-loading").hide();                
+                $("#ajax-loading").hide();      
             });
         </script>
 

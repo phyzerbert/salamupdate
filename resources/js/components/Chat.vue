@@ -40,7 +40,7 @@
                 </div>
                 <span class="clearfix"></span>
             </div>
-            <div class="card-body p-0 nicescroll" id="privateMessageBox">
+            <div class="card-body" id="privateMessageBox">
                 <message-list :user="user" :all-messages="allMessages" v-if="activeFriend && !msg_loading"></message-list>
                 <div class="text-center" v-if="!activeFriend && !msg_loading">
                     <div><img src="/images/chat.png" width="250" style="margin-top:100px;" alt=""></div>
@@ -51,15 +51,14 @@
                     </div>
                 </div>
             </div>
-            <div id="card-footer">
-                <!-- <img v-show="typing" ref="typing_indicator" src="/images/typing_indicator.gif" width="60" alt=""> -->
-                <div class="progress progress-sm mb-0" v-show="uploading">
-                    <div class="progress-bar progress-bar-success" role="progressbar" :aria-valuenow="uploadProgress" aria-valuemin="0" aria-valuemax="100" :style="{width: uploadProgress + '%'}">
-                        <span class="sr-only">{{uploadProgress}}% Complete</span>
+            <div class="card-footer p-2">
+                <div id="card-footer">
+                    <div class="progress progress-sm mb-0" v-show="uploading">
+                        <div class="progress-bar progress-bar-success" role="progressbar" :aria-valuenow="uploadProgress" aria-valuemin="0" aria-valuemax="100" :style="{width: uploadProgress + '%'}">
+                            <span class="sr-only">{{uploadProgress}}% Complete</span>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="card-footer py-2">
                 <div class="d-flex">
                     <file-upload
                         :post-action="'/chat/message/'+activeFriend"
@@ -302,24 +301,15 @@
                         })
                     }                    
                 })
-                // .listenForWhisper('typing', (e) => {
-                //     if(e.user.id==this.activeFriend){
-                //         this.typing = true;
-                //         if(this.typingClock) clearTimeout();
-                //         this.typingClock=setTimeout(()=>{
-                //             this.typingFriend={};
-                //             this.typing = false;
-                //         },5000);
-                //     }                 
-                // });
         }
     }
 </script>
 
 <style scoped>
     #privateMessageBox {
-        height:calc(100% - 126px);
+        /* height:calc(100% - 90px); */
         padding-bottom: 0;
+        overflow: auto;
     }
 
     #msgArea {
@@ -339,7 +329,6 @@
     @media(max-width: 768px) {
         #msgArea {
             width: 95%;
-            height: 80vh;
             height: calc(100vh - 75px);
         }
     }

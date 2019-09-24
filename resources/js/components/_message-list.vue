@@ -1,5 +1,5 @@
 <template>
-    <div class="chat-conversation px-3">
+    <div class="chat-conversation">
         <ul class="conversation-list">
             <li class="clearfix" :class="[message.user.id==user.id ? 'odd' : '']" v-for="(message, index) in allMessages" :key="index" >
                 <div class="chat-avatar">

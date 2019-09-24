@@ -21,8 +21,7 @@ window.Vue = require('vue');
 
 const VueUploadComponent = require('vue-upload-component')
 Vue.component('file-upload', VueUploadComponent)
-// Vue.component('chat-component', require('./components/ChatComponent.vue').default);
-Vue.component('chat', require('./components/chat.vue').default);
+Vue.component('chat', require('./components/Chat.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
