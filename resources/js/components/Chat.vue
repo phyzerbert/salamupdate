@@ -229,12 +229,14 @@
                 })
             },
             scrollToEnd(){
-                document.getElementById('messageBox').scrollTo(0,99999);                
+                document.getElementById('messageBox').scrollTo(0,99999); 
+                if(jQuery.browser.mobile !== true){               
                 $('#messageBox').slimScroll({
                     start: 'bottom',
                     height: '405px',
                     disableFadeOut: true
                 });
+                }
             },
             onInput(e){
                 if(!e){
@@ -263,11 +265,13 @@
         },
         mounted() {
             $("#app").css('opacity', 1)
-            $('#messageBox').slimScroll({
-                start: 'bottom',
-                height: '405px',
-                disableFadeOut: true
-            });
+            if(jQuery.browser.mobile !== true){                
+                $('#messageBox').slimScroll({
+                    start: 'bottom',
+                    height: '405px',
+                    disableFadeOut: true
+                });
+            }
         },
         created() {            
             this.fetchUsers();
@@ -362,6 +366,10 @@
         #msgArea {
             width: 95%;
             height: calc(100vh - 75px);
+        }
+
+        .chatbox-body {
+            height: calc(100% - 96px);
         }
     }
     #msgArea .status i.online {
