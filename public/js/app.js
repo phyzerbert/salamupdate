@@ -1942,7 +1942,6 @@ __webpack_require__.r(__webpack_exports__);
       typing: false,
       sending: false,
       msg_loading: false,
-      emoStatus: false,
       uploadProgress: 0,
       uploading: false,
       users: [],
@@ -2047,7 +2046,7 @@ __webpack_require__.r(__webpack_exports__);
 
         _this3.allMessages.push(response.data.message);
 
-        Object(timers__WEBPACK_IMPORTED_MODULE_0__["setTimeout"])(_this3.scrollToEnd, 50);
+        Object(timers__WEBPACK_IMPORTED_MODULE_0__["setTimeout"])(_this3.scrollToEnd, 500);
       });
     },
     fetchMessages: function fetchMessages() {
@@ -2063,7 +2062,7 @@ __webpack_require__.r(__webpack_exports__);
         _this4.msg_loading = false;
         _this4.uploading = false;
         _this4.uploadProgress = 0;
-        Object(timers__WEBPACK_IMPORTED_MODULE_0__["setTimeout"])(_this4.scrollToEnd, 50);
+        Object(timers__WEBPACK_IMPORTED_MODULE_0__["setTimeout"])(_this4.scrollToEnd, 500);
       });
     },
     fetchUsers: function fetchUsers() {
@@ -2097,7 +2096,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     scrollToEnd: function scrollToEnd() {
-      document.getElementById('privateMessageBox').scrollTo(0, 99999);
+      document.getElementById('messageBox').scrollTo(0, 99999);
     },
     onInput: function onInput(e) {
       if (!e) {
@@ -2164,7 +2163,7 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         _this7.allMessages.push(e.message);
 
-        Object(timers__WEBPACK_IMPORTED_MODULE_0__["setTimeout"])(_this7.scrollToEnd, 50);
+        Object(timers__WEBPACK_IMPORTED_MODULE_0__["setTimeout"])(_this7.scrollToEnd, 500);
         axios.post('/read_messages/' + e.message.user_id).then(function (response) {
           if (response.data == 'success') {
             _this7.getUnreadMessages();
@@ -4208,7 +4207,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n#privateMessageBox[data-v-0d66c37a] {\n    /* height:calc(100% - 90px); */\n    padding-bottom: 0;\n    overflow: auto;\n}\n#msgArea[data-v-0d66c37a] {\n    width: 380px;\n    height: 58vh;\n    position: fixed;\n    bottom: -18px;\n    z-index: 10;\n    right: 10px;\n    transition-duration: 0.3s;\n}\n.right-bar-enabled #msgArea[data-v-0d66c37a] {\n    right: 250px;\n}\n@media(max-width: 768px) {\n#msgArea[data-v-0d66c37a] {\n        width: 95%;\n        height: calc(100vh - 75px);\n}\n}\n#msgArea .status i.online[data-v-0d66c37a] {\n    color: #a0d269;\n}\n#msgArea .status i.offline[data-v-0d66c37a] {\n    color: #ef5350;\n}\n#msgArea .card-footer[data-v-0d66c37a] {\n    border-top: 1px solid rgba(0, 0, 0, 0.1) !important;\n}\n#chat-input[data-v-0d66c37a]:focus {\n    box-shadow: none;\n}\n#btn-send[data-v-0d66c37a] {\n    height: 31px;\n}\n.icon-attach[data-v-0d66c37a] {\n    font-size: 20px;\n    margin-right: 10px;\n    cursor: pointer;\n}\n.card-header .name[data-v-0d66c37a] {\n    font-size: 16px;\n    color: #444444;\n    font-weight: 500;\n}\n#chatbox-footer[data-v-0d66c37a] {\n    height: 15px;\n    position: absolute;\n    bottom: 75px;\n    padding-left: 60px;\n}\n.msg-loading[data-v-0d66c37a] {\n    margin-top: 47%;\n}\n.msg-loading .spinner-border[data-v-0d66c37a] {\n    width: 80px;\n    height: 80px;\n}\n", ""]);
+exports.push([module.i, "\n.chatbox[data-v-0d66c37a] {\n    width: 380px;\n    height: 58vh;\n    margin-bottom: 20px;\n    position: fixed;\n    bottom: -16px;\n    right: 10px;\n    border-radius: 0px;\n    border: none;\n    word-wrap: break-word;\n    background-color: #fff;\n    background-clip: border-box;\n    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.1);\n    z-index: 10;\n    transition-duration: 0.3s;\n}\n.chatbox-header[data-v-0d66c37a] {\n    padding: 8px 20px;\n    border-radius: calc(.25rem - 1px) calc(.25rem - 1px) 0 0;\n}\n.chatbox-body[data-v-0d66c37a] {        \n    height:calc(100% - 96px);\n    padding: 1.25rem;        \n    padding-bottom: 0;\n    overflow: auto;\n}\n.right-bar-enabled #msgArea[data-v-0d66c37a] {\n    right: 250px;\n}\n@media(max-width: 768px) {\n#msgArea[data-v-0d66c37a] {\n        width: 95%;\n        height: calc(100vh - 75px);\n}\n}\n#msgArea .status i.online[data-v-0d66c37a] {\n    color: #a0d269;\n}\n#msgArea .status i.offline[data-v-0d66c37a] {\n    color: #ef5350;\n}\n#msgArea .chat-form[data-v-0d66c37a] {\n    border-top: 1px solid rgba(0, 0, 0, 0.1) !important;\n}\n#chat-input[data-v-0d66c37a]:focus {\n    box-shadow: none;\n}\n#btn-send[data-v-0d66c37a] {\n    height: 31px;\n}\n.icon-attach[data-v-0d66c37a] {\n    font-size: 20px;\n    margin-right: 10px;\n    cursor: pointer;\n}\n.chatbox-header .name[data-v-0d66c37a] {\n    font-size: 16px;\n    color: #444444;\n    font-weight: 500;\n}\n.chatbox-header .status[data-v-0d66c37a] {\n    font-size: 14px;\n}\n#footer-widget[data-v-0d66c37a] {\n    height: 5px;\n}\n.msg-loading[data-v-0d66c37a] {\n    margin-top: 47%;\n}\n.msg-loading .spinner-border[data-v-0d66c37a] {\n    width: 80px;\n    height: 80px;\n}\n", ""]);
 
 // exports
 
@@ -30888,13 +30887,13 @@ var render = function() {
             expression: "activeFriend"
           }
         ],
-        staticClass: "card",
+        staticClass: "chatbox",
         attrs: { id: "msgArea" }
       },
       [
-        _c("div", { staticClass: "card-header bg-info py-2" }, [
+        _c("div", { staticClass: "chatbox-header bg-info" }, [
           _vm.activeFriend
-            ? _c("h4", { staticClass: "card-title mb-0 mt-1 float-left" }, [
+            ? _c("h4", { staticClass: "chatbox-title mb-0 mt-1 float-left" }, [
                 _c("span", { staticClass: "status mr-1" }, [
                   _vm.is_connected(_vm.activeFriend)
                     ? _c("i", { staticClass: "fa fa-circle online" })
@@ -30907,7 +30906,7 @@ var render = function() {
               ])
             : _vm._e(),
           _vm._v(" "),
-          _c("div", { staticClass: "card-widgets mt-1 float-right" }, [
+          _c("div", { staticClass: "chatbox-widgets mt-1 float-right" }, [
             _c(
               "a",
               {
@@ -30923,7 +30922,7 @@ var render = function() {
         _vm._v(" "),
         _c(
           "div",
-          { staticClass: "card-body", attrs: { id: "privateMessageBox" } },
+          { staticClass: "chatbox-body", attrs: { id: "messageBox" } },
           [
             _vm.activeFriend && !_vm.msg_loading
               ? _c("message-list", {
@@ -30944,8 +30943,8 @@ var render = function() {
           1
         ),
         _vm._v(" "),
-        _c("div", { staticClass: "p-0" }, [
-          _c("div", { attrs: { id: "card-footer" } }, [
+        _c("div", { staticClass: "chatbox-footer p-0" }, [
+          _c("div", { attrs: { id: "footer-widget" } }, [
             _c(
               "div",
               {
@@ -30984,7 +30983,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "div",
-            { staticClass: "card-footer d-flex p-2" },
+            { staticClass: "chat-form d-flex p-2" },
             [
               _c(
                 "file-upload",
@@ -31121,7 +31120,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "chat-conversation" }, [
+  return _c("div", { staticClass: "chat-conversation nicescroll" }, [
     _c(
       "ul",
       { staticClass: "conversation-list" },
