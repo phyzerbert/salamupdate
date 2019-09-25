@@ -1156,7 +1156,7 @@ body.fixed-left .side-menu.left {
 #sidebar-menu > ul > li > a {
   color: #444444;
   display: block;
-  padding: 15px 25px;
+  padding: 15px 20px;
   font-weight: 500;
 }
 
@@ -1174,7 +1174,7 @@ body.fixed-left .side-menu.left {
   font-size: 18px;
   line-height: 17px;
   margin-left: 3px;
-  margin-right: 15px;
+  margin-right: 12px;
   text-align: center;
   vertical-align: middle;
   width: 20px;
