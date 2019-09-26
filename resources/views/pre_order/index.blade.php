@@ -31,7 +31,7 @@
                     @endif
                     @include('elements.keyword')
                 </div>
-                <div class="table-responsive mt-2">
+                <div class="table-responsive mt-2 pb-5">
                     <table class="table table-bordered table-hover">
                         <thead>
                             <tr class="bg-blue">
