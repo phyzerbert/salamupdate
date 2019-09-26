@@ -3,8 +3,8 @@
     $user = Auth::user();
     $role = $user->role->slug;
 @endphp
-<div class="left side-menu nicescroll" style="overflow:auto !important">
-    <div class="sidebar-inner nicescroll slimscrollleft" style="overflow:auto !important">
+<div class="left side-menu">
+    <div class="sidebar-inner slimscrollleft">
         <div class="user-details">
             <div class="pull-left">
                 <img src="@if (Auth::user()->picture != ''){{asset(Auth::user()->picture)}} @else {{asset('images/avatar128.png')}} @endif" class="thumb-md rounded-circle" alt="">
