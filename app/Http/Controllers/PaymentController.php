@@ -89,8 +89,25 @@ class PaymentController extends Controller
         $item->amount = $request->get("amount");
         $item->note = $request->get("note");
         if($request->has("attachment")){
+            if($item->paymentable_type == 'App\Models\Purchase'){                
+                $purchase = $item->paymentable;
+                $supplier_company = $purchase->supplier->company;
+                $company_name = $purchase->company->name;
+                $date_time = date('Y-m-d-H-i-s');
+                $reference_no = $purchase->reference_no;
+                $attach_name = $company_name . "_" . $request->get('reference_no'). "_" . $reference_no . "_" . $supplier_company . "_" . $date_time;
+            }else if($item->paymentable_type == 'App\Models\Sale'){
+                $sale = $item->paymentable;
+                $customer_company = $sale->customer->company;
+                $company_name = $sale->company->name;
+                $date_time = date('Y-m-d-H-i-s');
+                $reference_no = $sale->reference_no;
+                $attach_name = $company_name . "_" . $request->get('reference_no'). "_" . $reference_no . "_" . $customer_company . "_" . $date_time;
+            }else {
+                $attach_name = "payment_image_" . time();
+            }
             $picture = request()->file('attachment');
-            $imageName = "payment_".time().'.'.$picture->getClientOriginalExtension();
+            $imageName = $attach_name . '.' . $picture->getClientOriginalExtension();
             $picture->move(public_path('images/uploaded/payment_images/'), $imageName);
             $item->attachment = 'images/uploaded/payment_images/'.$imageName;
         }
