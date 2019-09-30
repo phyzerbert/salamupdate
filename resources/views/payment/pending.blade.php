@@ -5,6 +5,12 @@
     <link href="{{asset('master/plugins/jquery-ui/jquery-ui.css')}}" rel="stylesheet">
     <link href="{{asset('master/plugins/jquery-ui/timepicker/jquery-ui-timepicker-addon.min.css')}}" rel="stylesheet">
     <link href="{{asset('master/plugins/daterangepicker/daterangepicker.min.css')}}" rel="stylesheet">
+    <style>
+        #purchase_image {
+            max-width: 100%;
+            height: 500px;
+        }
+    </style>
 @endsection
 @section('content')
     <div class="content">
@@ -64,6 +70,13 @@
                             @endphp
                             @foreach ($data as $item)
                                 @php
+                                    if($item->attachment){                                        
+                                        if(file_exists($item->attachment)){
+                                            $image_path = asset($item->attachment);
+                                        }
+                                    }else {                                        
+                                        $image_path = asset('images/no-image.png');
+                                    }
                                     $total_amount += $item->amount;
                                 @endphp
                                 <tr>
@@ -98,7 +111,7 @@
                                                 </button>
                                                 <ul class="dropdown-menu dropdown-menu-right">
                                                     <li><a href="javascript:;" data-id="{{$item->id}}" class="dropdown-item btn-edit">{{__('page.edit')}}</a></li>
-                                                    <li><a href="{{route('payment.approve', $item->id)}}" class="dropdown-item btn-confirm">{{__('page.approve')}}</a></li>
+                                                    <li><a href="{{route('payment.approve', $item->id)}}" data-id="{{$item->id}}" data-path="{{$image_path}}" class="dropdown-item btn-approve">{{__('page.approve')}}</a></li>
                                                     <li><a href="{{route('payment.delete', $item->id)}}" class="dropdown-item btn-confirm">{{__('page.delete')}}</a></li>
                                                 </ul>
                                             </div>
@@ -171,6 +184,19 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="approveModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div id="purchase_image" class="border rounded"></div>
+                </div>                
+                <div class="modal-footer">
+                    <a href="#" class="btn btn-primary" id="btn_approve"><i class="fa fa-check mg-r-10"></i>&nbsp;{{__('page.approve')}}</a>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times mg-r-10"></i>&nbsp;{{__('page.close')}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('script')
@@ -219,6 +245,24 @@
             $("#editModal .note").val(note);
             $("#editModal").modal();
         });
+
+        $(".btn-approve").click(function(e){
+            e.preventDefault();
+            let image_path = $(this).data('path');
+            let url = $(this).attr('href');
+            $("#btn_approve").attr("href", url);
+            $("#purchase_image").html('')
+            $("#purchase_image").verySimpleImageViewer({
+                imageSource: image_path,
+                frame: ['100%', '100%'],
+                maxZoom: '900%',
+                zoomFactor: '10%',
+                mouse: true,
+                keyboard: true,
+                toolbar: true,
+            });
+            $("#approveModal").modal();    
+        }); 
 
     });
 </script>

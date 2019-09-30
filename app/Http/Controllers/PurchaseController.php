@@ -150,7 +150,8 @@ class PurchaseController extends Controller
         if($request->has("attachment")){
             $picture = request()->file('attachment');
             $date_time = date('Y-m-d-H-i-s');
-            $imageName = $company_name."_".$data['reference_number']."_".$date_time.'.'.$picture->getClientOriginalExtension();
+            $supplier_company = Supplier::find($data['supplier'])->company;
+            $imageName = $company_name . "_" . $data['reference_number'] . "_" . $supplier_company . "_" . $date_time . '.' . $picture->getClientOriginalExtension();
             $picture->move(public_path('images/uploaded/purchase_images/'), $imageName);
             $item->attachment = 'images/uploaded/purchase_images/'.$imageName;
         }
@@ -240,11 +241,12 @@ class PurchaseController extends Controller
             $item->expiry_date = date('Y-m-d', strtotime("+".$data['credit_days']."days", strtotime($item->timestamp)));
         }
         $item->note = $data['note'];
-        $company_name = Company::find($item->company_id)->name;
+        $company_name = Company::find($store->company_id)->name;
         if($request->has("attachment")){
             $picture = request()->file('attachment');
-            $date_time = date('Y-m-d-H-i-s');
-            $imageName = $company_name."_".$data['reference_number']."_".$date_time.'.'.$picture->getClientOriginalExtension();
+            $date_time = date('Y-m-d-H-i-s');            
+            $supplier_company = Supplier::find($data['supplier'])->company;
+            $imageName = $company_name . "_" . $data['reference_number'] . "_" . $supplier_company . "_" . $date_time . '.' . $picture->getClientOriginalExtension();
             $picture->move(public_path('images/uploaded/purchase_images/'), $imageName);
             $item->attachment = 'images/uploaded/purchase_images/'.$imageName;
         }

@@ -48,8 +48,20 @@ class PaymentController extends Controller
         $item->note = $request->get('note');
         if($request->get('type') == 'purchase'){
             $item->paymentable_type = Purchase::class;
+            $purchase = Purchase::find($request->get('paymentable_id'));
+            $supplier_company = $purchase->supplier->company;
+            $company_name = $purchase->company->name;
+            $date_time = date('Y-m-d-H-i-s');
+            $reference_no = $purchase->reference_no;
+            $attach_name = $company_name . "_" . $request->get('reference_no'). "_" . $reference_no . "_" . $supplier_company . "_" . $date_time;
         }else if($request->get('type') == 'sale'){
             $item->paymentable_type = Sale::class;
+            $sale = Sale::find($request->get('paymentable_id'));
+            $customer_company = $sale->customer->company;
+            $company_name = $sale->company->name;
+            $date_time = date('Y-m-d-H-i-s');
+            $reference_no = $sale->reference_no;
+            $attach_name = $company_name . "_" . $request->get('reference_no'). "_" . $reference_no . "_" . $customer_company . "_" . $date_time;
         }
         if($user->hasRole('secretary')){
             $item->status = 0;
@@ -58,7 +70,7 @@ class PaymentController extends Controller
         }
         if($request->has("attachment")){
             $picture = request()->file('attachment');
-            $imageName = "payment_".time().'.'.$picture->getClientOriginalExtension();
+            $imageName = $attach_name . '.' . $picture->getClientOriginalExtension();
             $picture->move(public_path('images/uploaded/payment_images/'), $imageName);
             $item->attachment = 'images/uploaded/payment_images/'.$imageName;
         }

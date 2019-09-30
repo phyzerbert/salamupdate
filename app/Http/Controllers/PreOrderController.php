@@ -112,9 +112,12 @@ class PreOrderController extends Controller
         $item->supplier_id = $data['supplier'];
         $item->note = $data['note'];
 
+        $company_name = Company::find($item->company_id)->name;
         if($request->has("attachment")){
             $picture = request()->file('attachment');
-            $imageName = "purchase_order_".time().'.'.$picture->getClientOriginalExtension();
+            $date_time = date('Y-m-d-H-i-s');            
+            $supplier_company = Supplier::find($data['supplier'])->company;
+            $imageName = $company_name . "_" . $data['reference_number'] . "_" . $supplier_company . "_" . $date_time . '.' . $picture->getClientOriginalExtension();
             $picture->move(public_path('images/uploaded/purchase_order_images/'), $imageName);
             $item->attachment = 'images/uploaded/purchase_order_images/'.$imageName;
         }        
@@ -182,9 +185,12 @@ class PreOrderController extends Controller
         // $item->status = $data['status'];
         $item->note = $data['note'];
 
+        $company_name = Company::find($item->company_id)->name;
         if($request->has("attachment")){
             $picture = request()->file('attachment');
-            $imageName = "purchase_order_".time().'.'.$picture->getClientOriginalExtension();
+            $date_time = date('Y-m-d-H-i-s');            
+            $supplier_company = Supplier::find($data['supplier'])->company;
+            $imageName = $company_name . "_" . $data['reference_number'] . "_" . $supplier_company . "_" . $date_time . '.' . $picture->getClientOriginalExtension();
             $picture->move(public_path('images/uploaded/purchase_order_images/'), $imageName);
             $item->attachment = 'images/uploaded/purchase_order_images/'.$imageName;
         }
