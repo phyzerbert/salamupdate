@@ -92,9 +92,13 @@
                                         @endif
                                         @php
                                             $pending_payments = $item->payments()->where('status', 0)->count();
+                                            $pending_preturns = $item->preturns()->where('status', 0)->count();
                                         @endphp
                                         @if($pending_payments)
-                                            <img src="{{asset('images/pending.png')}}" width="25" height="25" alt="" title="{{__('page.pending_approval')}}" />
+                                            <img src="{{asset('images/pending.png')}}" width="25" height="25" alt="" title="{{__('page.payment_pending_approval')}}" />
+                                        @endif
+                                        @if($pending_preturns)
+                                            <img src="{{asset('images/pending1.png')}}" width="25" height="25" alt="" title="{{__('page.return_pending_approval')}}" />
                                         @endif
                                     </td>
                                     <td class="py-2" align="center">
@@ -105,8 +109,10 @@
                                             <ul class="dropdown-menu dropdown-menu-right">
                                                 <li><a href="{{route('purchase.detail', $item->id)}}" class="dropdown-item">{{__('page.details')}}</a></li>
                                                 <li><a href="{{route('payment.index', ['purchase', $item->id])}}" class="dropdown-item">{{__('page.payment_list')}}</a></li>
+                                                <li><a href="{{route('preturn.index', $item->id)}}" class="dropdown-item">{{__('page.return_list')}}</a></li>
                                                 @if ($item->status == 1)
                                                     <li><a href="#" data-id="{{$item->id}}" data-status={{$item->status}} class="dropdown-item btn-add-payment">{{__('page.add_payment')}}</a></li>
+                                                    <li><a href="#" data-id="{{$item->id}}" data-status={{$item->status}} class="dropdown-item btn-add-preturn">{{__('page.add_return')}}</a></li>
                                                 @endif
                                                 @if(in_array($role, ['admin', 'user']))
                                                     <li><a href="{{route('purchase.report', $item->id)}}" class="dropdown-item">{{__('page.report')}}</a></li>
@@ -165,7 +171,49 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label class="control-label">{{__('page.date')}}</label>
-                            <input class="form-control date" type="text" name="date" autocomplete="off" value="{{date('Y-m-d H:i')}}" placeholder="{{__('page.date')}}">
+                            <input class="form-control date datepicker" type="text" name="date" autocomplete="off" value="{{date('Y-m-d H:i')}}" placeholder="{{__('page.date')}}">
+                        </div>                        
+                        <div class="form-group">
+                            <label class="control-label">{{__('page.reference_no')}}</label>
+                            <input class="form-control reference_no" type="text" name="reference_no" required placeholder="{{__('page.reference_no')}}">
+                        </div>                                                
+                        <div class="form-group">
+                            <label class="control-label">{{__('page.amount')}}</label>
+                            <input class="form-control amount" type="text" name="amount" required placeholder="{{__('page.amount')}}">
+                        </div>                                               
+                        <div class="form-group">
+                            <label class="control-label">{{__('page.attachment')}}</label>
+                            <input type="file" name="attachment" id="file2" class="file-input-styled">
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">{{__('page.note')}}</label>
+                            <textarea class="form-control note" type="text" name="note" placeholder="{{__('page.note')}}"></textarea>
+                        </div> 
+                    </div>    
+                    <div class="modal-footer">
+                        <button type="submit" id="btn_create" class="btn btn-primary btn-submit"><i class="fa fa-check mg-r-10"></i>&nbsp;{{__('page.save')}}</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times mg-r-10"></i>&nbsp;{{__('page.close')}}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- The Modal -->
+    <div class="modal fade" id="preturnModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">{{__('page.add_return')}}</h4>
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                </div>
+                <form action="{{route('preturn.create')}}" id="preturn_form" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <input type="hidden" class="purchase_id" name="purchase_id" />
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label class="control-label">{{__('page.date')}}</label>
+                            <input class="form-control date datepicker" type="text" name="date" autocomplete="off" value="{{date('Y-m-d H:i')}}" placeholder="{{__('page.date')}}">
                         </div>                        
                         <div class="form-group">
                             <label class="control-label">{{__('page.reference_no')}}</label>
@@ -202,7 +250,7 @@
 <script src="{{asset('master/plugins/styling/uniform.min.js')}}"></script>
 <script>
     $(document).ready(function () {
-        $("#payment_form input.date").datetimepicker({
+        $(".datepicker").datetimepicker({
             dateFormat: 'yy-mm-dd',
         });
         
@@ -219,18 +267,22 @@
             $("#paymentModal").modal();
         });
 
+                
+        $(".btn-add-preturn").click(function(){
+            let status = $(this).data('status');
+            if(status != 1){
+                return alert("{{__('page.can_not_add_return')}}");
+            }
+            let id = $(this).data('id');
+
+            $("#preturn_form .purchase_id").val(id);
+            $("#preturnModal").modal();
+        });
+
         $('.file-input-styled').uniform({
             fileButtonClass: 'action btn bg-primary text-white'
         });
 
-        // $(".btn-edit").click(function(){
-        //     let id = $(this).data("id");
-        //     let name = $(this).parents('tr').find(".name").text().trim();
-        //     $("#edit_form input.form-control").val('');
-        //     $("#editModal .id").val(id);
-        //     $("#editModal .name").val(name);
-        //     $("#editModal").modal();
-        // });
         $("#period").dateRangePicker({
             autoClose: false,
         });

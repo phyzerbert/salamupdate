@@ -311,9 +311,14 @@ return [
     'view_purchases' => 'View Purchases',
     'add_payments' => 'Add Payments',
     'this_computer_is_not_allowed' => 'This computer is not allowed.',
-    'pending_approval' => 'Pending Approval',
     'something_went_wrong' => 'Something went wrong!',
     'email_is_sent_successfully' => 'Email is sent successfully.',
     'invalid_email_address' => 'Email address is invalid',
     'no_payment' => 'No Payment',
+
+    'payment_pending_approval' => 'Payment Pending Approval',
+    'return_pending_approval' => 'Return Pending Approval',
+    'add_return' => 'Add Return',
+    'edit_return' => 'edit Return',
+    'return_list' => 'Return List',
 ];

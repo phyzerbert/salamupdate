@@ -131,6 +131,13 @@ Route::get('/payment/delete/{id}', 'PaymentController@delete')->name('payment.de
 Route::get('/payment/approve/{id}', 'PaymentController@approve')->name('payment.approve');
 Route::any('/payment/pending_payments', 'PaymentController@pending_payments')->name('payment.pending_payments');
 
+Route::any('/preturn/index/{id}', 'PreturnController@index')->name('preturn.index');
+Route::post('/preturn/create', 'PreturnController@create')->name('preturn.create');
+Route::post('/preturn/edit', 'PreturnController@edit')->name('preturn.edit');
+Route::get('/preturn/delete/{id}', 'PreturnController@delete')->name('preturn.delete');
+Route::get('/preturn/approve/{id}', 'PreturnController@approve')->name('preturn.approve');
+Route::any('/preturn/pending_preturns', 'PreturnController@pending_preturns')->name('preturn.pending_preturns');
+
 Route::get('get_products', 'VueController@get_products');
 Route::post('get_orders', 'VueController@get_orders');
 Route::post('get_product', 'VueController@get_product');

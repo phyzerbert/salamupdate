@@ -183,7 +183,10 @@
                 <tr>
                     <th colspan="4" style="text-align:right">{{__('page.returns')}}</th>
                     <th>
-                        {{number_format($purchase->returns)}}
+                        @php
+                            $preturns = $purchase->preturns()->where('status', 1)->sum('amount');
+                        @endphp
+                        {{number_format($preturns)}}
                     </th>
                 </tr>
                 <tr>

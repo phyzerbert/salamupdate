@@ -36,4 +36,8 @@ class Purchase extends Model
     public function supplier(){
         return $this->belongsTo('App\Models\Supplier');
     }
+
+    public function preturns(){
+        return $this->hasMany(Preturn::class);
+    }
 }
