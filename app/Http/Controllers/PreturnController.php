@@ -19,7 +19,7 @@ class PreturnController extends Controller
 
     public function index(Request $request, $id)
     {
-        
+        config(['site.page' => 'purchase']);
         $purchase = Purchase::find($id);
         $data = $purchase->preturns;
         return view('preturn.index', compact('data', 'id'));
