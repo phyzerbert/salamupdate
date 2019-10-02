@@ -38,7 +38,7 @@
                             </select>
                         @endif
                         <select class="form-control form-control-sm mr-sm-2 mb-2 select2-show-search" name="supplier_id" id="search_supplier" data-placeholder="{{__('page.select_supplier')}}">
-                            <option label="{{__('page.select_supplier')}}"></option>
+                            <option value="">{{__('page.select_supplier')}}</option>
                             @foreach ($suppliers as $item)
                                 <option value="{{$item->id}}" @if ($supplier_id == $item->id) selected @endif>{{$item->name}}</option>
                             @endforeach
@@ -139,6 +139,11 @@
             $("#search_reference_no").val('');
             $("#period").val('');
         });
+
+        $('#search_supplier').wrap('<div class="position-relative" style="width: 200px;"></div>')
+            .select2({
+                width: 'resolve',
+            });
 
     });
 </script>
