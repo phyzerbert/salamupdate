@@ -74,8 +74,9 @@
                             @endphp
                             @foreach ($data as $item)
                             @php
-                                $grand_total = $item->grand_total;
-                                $paid = $item->payments()->sum('amount');
+                                $paid = $item->payments()->where('status', 1)->sum('amount');
+                                $preturn = $item->preturns()->where('status', 1)->sum('amount');
+                                $grand_total = $item->grand_total - $preturn;
                                 $total_grand += $grand_total;
                                 $total_paid += $paid;
                             @endphp

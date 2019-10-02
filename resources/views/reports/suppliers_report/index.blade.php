@@ -47,7 +47,8 @@
                                     $total_purchases = $item->purchases()->count();
                                     // $mod_total_amount = \App\Models\Order::whereIn('orderable_id', $purchases_array)->where('orderable_type', "App\Models\Purchase");
                                     $mod_total_amount = $item->purchases();
-                                    $mod_paid = \App\Models\Payment::whereIn('paymentable_id', $purchases_array)->where('paymentable_type', "App\Models\Purchase");
+                                    $mod_paid = \App\Models\Payment::whereIn('paymentable_id', $purchases_array)->where('status', 1)->where('paymentable_type', "App\Models\Purchase");
+                                    $mod_preturn = \App\Models\Preturn::whereIn('purchase_id', $purchases_array)->where('status', 1);
 
                                     if($company_id != ''){
                                         $company = \App\Models\Company::find($company_id);
@@ -55,10 +56,13 @@
 
                                         $mod_total_amount = $mod_total_amount->where('company_id', $company_id);
                                         $mod_paid = $mod_paid->whereIn('paymentable_id', $company_purchases);
+                                        $mod_preturn = $mod_preturn->whereIn('purchase_id', $company_purchases);
                                     }
 
-                                    $total_amount = $mod_total_amount->sum('grand_total');
                                     $paid = $mod_paid->sum('amount');  
+                                    $preturn = $mod_preturn->sum('amount');
+                                    $total_amount = $mod_total_amount->sum('grand_total');  
+                                    $total_amount = $total_amount - $preturn;
 
                                     $footer_total_purchases += $total_purchases;
                                     $footer_total_amount += $total_amount;
