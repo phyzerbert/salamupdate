@@ -309,9 +309,15 @@ return [
     'view_purchases' => 'Ver compras',
     'add_payments' => 'Agregar pagos',
     'this_computer_is_not_allowed' => 'Estas Ingresando Desde Una Computadora No Autorizada.',
-    'pending_approval' => 'Aprobación pendiente',
     'something_went_wrong' => '¡Algo salió mal!',
     'email_is_sent_successfully' => 'El correo electrónico se envió con éxito.',
     'invalid_email_address' => 'Dirección de correo electrónico es inválida',
     'no_payment' => 'Sin pago',
+
+    'payment_pending_approval' => 'Aprobación Pendiente Pagos',
+    'return_pending_approval' => 'Aprobación Pendiente Devolucion',
+    'add_return' => 'Agregar Devolucion',
+    'edit_return' => 'Editar Devolucion',
+    'return_list' => 'Lista de Devoluciones',
+    'return_management' => 'Gestion Devoluciones',
 ];

@@ -185,13 +185,14 @@
                     <th>
                         @php
                             $preturns = $purchase->preturns()->where('status', 1)->sum('amount');
+                            $grand_total = $purchase->grand_total - $preturns;
                         @endphp
                         {{number_format($preturns)}}
                     </th>
                 </tr>
                 <tr>
                     <th colspan="4" style="text-align:right; vertical-align: middle;">{{__('page.grand_total')}}</th>
-                    <th class="text-primary" style="font-size:25px">{{number_format($purchase->grand_total)}}</th>
+                    <th class="text-primary" style="font-size:25px">{{number_format($grand_total)}}</th>
                 </tr>
             </tfoot>
         </table>
@@ -232,7 +233,7 @@
                 </tr>
                 <tr>
                     <th colspan="4" style="text-align:right">{{__('page.balance')}}</th>
-                    <th>{{number_format($purchase->grand_total - $paid)}}</th>
+                    <th>{{number_format($grand_total - $paid)}}</th>
                 </tr>
             </tfoot>
         </table>

@@ -319,7 +319,7 @@ return [
     'payment_pending_approval' => 'Payment Pending Approval',
     'return_pending_approval' => 'Return Pending Approval',
     'add_return' => 'Add Return',
-    'edit_return' => 'edit Return',
+    'edit_return' => 'Edit Return',
     'return_list' => 'Return List',
     'return_management' => 'Return Management',
 ];
