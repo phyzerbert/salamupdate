@@ -63,7 +63,8 @@
                             @foreach ($data as $item)
                                 @php
                                     $paid = $item->payments()->where('status', 1)->sum('amount');
-                                    $grand_total = $item->grand_total;
+                                    $preturn = $item->preturns()->where('status', 1)->sum('amount');
+                                    $grand_total = $item->grand_total - $preturn;
                                     if(($expiry_period != '') && ($grand_total == $paid)) continue;
                                     $footer_grand_total += $grand_total;
                                     $footer_paid += $paid;
