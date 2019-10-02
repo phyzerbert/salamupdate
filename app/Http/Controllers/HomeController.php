@@ -39,7 +39,7 @@ class HomeController extends Controller
             return redirect(route('pre_order.create'));
         }
         $companies = Company::all();
-        if ($user->role->slug == 'user') {
+        if ($user->hasRole('user') || $user->hasRole('secretary')) {
             $top_company = $user->company->id;
         }else{
             $top_company = Company::first()->id;
