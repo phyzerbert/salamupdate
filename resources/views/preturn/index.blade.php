@@ -8,10 +8,10 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-12">
-                    <h3 class="pull-left page-title"><i class="fa fa-money"></i> {{__('page.return_management')}}</h3>
+                    <h3 class="pull-left page-title"><i class="fa fa-money"></i> {{__('page.return_list')}}</h3>
                     <ol class="breadcrumb pull-right">
                         <li><a href="{{route('home')}}">{{__('page.home')}}</a></li>
-                        <li>{{__('page.return')}}</li>
+                        <li>{{__('page.returns')}}</li>
                         <li class="active">{{__('page.list')}}</li>
                     </ol>
                 </div>
