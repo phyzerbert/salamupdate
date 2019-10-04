@@ -70,12 +70,11 @@
                             @endphp
                             @foreach ($data as $item)
                                 @php
+                                    $image_path = asset('images/no-image.png');
                                     if($item->attachment){                                        
                                         if(file_exists($item->attachment)){
                                             $image_path = asset($item->attachment);
                                         }
-                                    }else {                                        
-                                        $image_path = asset('images/no-image.png');
                                     }
                                     $total_amount += $item->amount;
                                 @endphp
