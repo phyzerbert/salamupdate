@@ -96,15 +96,12 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
+            // $(window).load(function() {
+                $("#ajax-loading").hide(); 
+            // });
             function showloader(){
                 $("#ajax-loading").show();
             }
-
-               
-            $(document).ready(function(){
-                $("#ajax-loading").hide(); 
-                 
-            });
         </script>
 
         <script>
