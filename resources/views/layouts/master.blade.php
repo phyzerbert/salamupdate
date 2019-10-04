@@ -97,8 +97,6 @@
                 }
             });
 
-            $("#ajax-loading").hide(); 
-
             function showloader(){
                 $("#ajax-loading").show();
             }
