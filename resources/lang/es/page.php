@@ -319,5 +319,5 @@ return [
     'add_return' => 'Agregar Devolucion',
     'edit_return' => 'Editar Devolucion',
     'return_list' => 'Lista de Devoluciones',
-    'return_management' => 'Gestion Devoluciones',
+    'return_report' => 'Reporte de Devoluciones',
 ];

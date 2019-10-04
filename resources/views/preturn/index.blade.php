@@ -21,10 +21,10 @@
             @endphp
             <div class="card">
                 <div class="card-body table-responsive mt-2">
-                    {{-- <div class="">
-                        <button type="button" class="btn btn-success btn-sm float-right mg-b-5" id="btn-add"><i class="icon ion-person-add mg-r-2"></i> Add New</button>
-                    </div> --}}
-                    <table class="table table-bordered table-hover">
+                    <div class="clearfix">
+                        <a href="{{route('preturn.report', $id)}}" class="btn btn-primary btn-sm float-right mg-b-5"><i class="fa fa-file-pdf-o mr-2"></i>{{__('page.report')}}</a>
+                    </div>
+                    <table class="table table-bordered table-hover mt-2">
                         <thead>
                             <tr>
                                 <th style="width:40px;">#</th>

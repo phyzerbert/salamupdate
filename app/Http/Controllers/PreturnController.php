@@ -9,6 +9,7 @@ use App\Models\Purchase;
 use App\Models\Company;
 
 use Auth;
+use PDF;
 
 class PreturnController extends Controller
 {
@@ -23,6 +24,13 @@ class PreturnController extends Controller
         $purchase = Purchase::find($id);
         $data = $purchase->preturns;
         return view('preturn.index', compact('data', 'id'));
+    }
+
+    public function report($id){
+        $purchase = Purchase::find($id);
+        $pdf = PDF::loadView('preturn.report', compact('purchase'));        
+        return $pdf->download('return_report_'.$purchase->reference_no.'.pdf');
+        // return view('preturn.report', compact('purchase'));
     }
 
     public function create(Request $request){

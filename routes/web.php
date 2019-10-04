@@ -132,6 +132,7 @@ Route::get('/payment/approve/{id}', 'PaymentController@approve')->name('payment.
 Route::any('/payment/pending_payments', 'PaymentController@pending_payments')->name('payment.pending_payments');
 
 Route::any('/preturn/index/{id}', 'PreturnController@index')->name('preturn.index');
+Route::any('/preturn/report/{id}', 'PreturnController@report')->name('preturn.report');
 Route::post('/preturn/create', 'PreturnController@create')->name('preturn.create');
 Route::post('/preturn/edit', 'PreturnController@edit')->name('preturn.edit');
 Route::get('/preturn/delete/{id}', 'PreturnController@delete')->name('preturn.delete');

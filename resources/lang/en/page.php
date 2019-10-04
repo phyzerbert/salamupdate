@@ -321,5 +321,5 @@ return [
     'add_return' => 'Add Return',
     'edit_return' => 'Edit Return',
     'return_list' => 'Return List',
-    'return_management' => 'Return Management',
+    'return_report' => 'Return Report',
 ];
