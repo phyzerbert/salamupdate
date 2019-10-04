@@ -59,9 +59,9 @@ class ChatController extends Controller
             $message=auth()->user()->messages()->create($input);
         }
         $loaded_message = $message->load('user');
+        broadcast(new MessageSent($loaded_message))->toOthers();
         // return response(['status'=>'success','message'=>$message]);
         echo json_encode(['status'=>'success','message'=>$loaded_message]);
-        broadcast(new MessageSent($loaded_message))->toOthers();
     }
 
     public function users()
