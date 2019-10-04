@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('style')
-    <link href="{{asset('master/plugins/datatables/jquery.dataTables.min.css')}}" rel="stylesheet">
-    <link href="{{asset('master/plugins/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
+    {{-- <link href="{{asset('master/plugins/datatables/jquery.dataTables.min.css')}}" rel="stylesheet">
+    <link href="{{asset('master/plugins/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet"> --}}
 @endsection
 @section('content')
     <div class="content">
@@ -21,6 +21,19 @@
             @endphp
             
             <div class="card card-body">
+                <div class="">
+                    @include('elements.pagesize')
+                    <form action="" method="POST" class="form-inline float-left" id="searchForm">
+                        @csrf
+                        <input type="text" class="form-control form-control-sm mr-sm-2 mb-2" name="name" id="search_name" value="{{$name}}" placeholder="{{__('page.name')}}">
+                        <input type="text" class="form-control form-control-sm mr-sm-2 mb-2" name="company" id="search_company" value="{{$company}}" placeholder="{{__('page.company')}}">
+                        <input type="text" class="form-control form-control-sm mr-sm-2 mb-2" name="phone_number" id="search_phone" value="{{$phone_number}}" placeholder="{{__('page.phone_number')}}">
+                        
+                        <button type="submit" class="btn btn-sm btn-primary mb-2"><i class="fa fa-search"></i>&nbsp;&nbsp;{{__('page.search')}}</button>
+                        <button type="button" class="btn btn-sm btn-info mb-2 ml-1" id="btn-reset"><i class="fa fa-eraser"></i>&nbsp;&nbsp;{{__('page.reset')}}</button>
+                    </form>
+                    <button type="button" class="btn btn-success btn-sm float-right mg-b-5" id="btn-add"><i class="icon ion-person-add mg-r-2"></i> Add New</button>
+                </div>
                 <div class="table-responsive mt-2">
                     <table class="table table-bordered table-hover" id="supplier_table">
                         <thead>
@@ -45,7 +58,6 @@
                                 @php
                                     $purchases_array = $item->purchases()->pluck('id');
                                     $total_purchases = $item->purchases()->count();
-                                    // $mod_total_amount = \App\Models\Order::whereIn('orderable_id', $purchases_array)->where('orderable_type', "App\Models\Purchase");
                                     $mod_total_amount = $item->purchases();
                                     $mod_paid = \App\Models\Payment::whereIn('paymentable_id', $purchases_array)->where('status', 1)->where('paymentable_type', "App\Models\Purchase");
                                     $mod_preturn = \App\Models\Preturn::whereIn('purchase_id', $purchases_array)->where('status', 1);
@@ -104,7 +116,15 @@
                                 <th></th>
                             </tr>
                         </tfoot>
-                    </table>
+                    </table>               
+                    <div class="clearfix mt-2">
+                        <div class="float-left" style="margin: 0;">
+                            <p>{{__('page.total')}} <strong style="color: red">{{ $data->total() }}</strong> {{__('page.items')}}</p>
+                        </div>
+                        <div class="float-right" style="margin: 0;">
+                            {!! $data->appends(['name' => $name, 'company' => $company, 'phone_number' => $phone_number])->links() !!}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>                
@@ -116,16 +136,16 @@
 <script src="{{asset('master/plugins/datatables/dataTables.bootstrap4.min.js')}}"></script>
 <script>
     $(document).ready(function () {
-        $('#supplier_table').DataTable({
-            responsive: true,
-            lengthMenu: [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
-            language: {
-                searchPlaceholder: 'Search...',
-                sSearch: '',
-                lengthMenu: '_MENU_ Items/Page',
-            }
-        });
-        $(".dataTables_length select").addClass("form-control-sm");
+        // $('#supplier_table').DataTable({
+        //     responsive: true,
+        //     lengthMenu: [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
+        //     language: {
+        //         searchPlaceholder: 'Search...',
+        //         sSearch: '',
+        //         lengthMenu: '_MENU_ Items/Page',
+        //     }
+        // });
+        // $(".dataTables_length select").addClass("form-control-sm");
         $("#btn-reset").click(function(){
             $("#search_name").val('');
             $("#search_company").val('');

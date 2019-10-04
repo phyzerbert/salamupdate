@@ -555,16 +555,32 @@ class ReportController extends Controller
         $user = Auth::user();
         $companies = Company::all();
         $mod = new Supplier();
-        $supplier_company = $name = $phone_number = $company_id = '';
+        $company = $name = $phone_number = $company_id = '';
+
         if($user->company){
             $company_id = $user->company_id;            
         }else{
             if ($request->get('company_id') != ""){
                 $company_id = $request->get('company_id');
             }
-        }  
-        $data = $mod->orderBy('created_at', 'desc')->get();
-        return view('reports.suppliers_report.index', compact('data', 'companies', 'company_id'));
+        } 
+
+        if ($request->get('company') != ""){
+            $company = $request->get('company');
+            $mod = $mod->where('company', 'LIKE', "%$company%");
+        }
+        if ($request->get('name') != ""){
+            $name = $request->get('name');
+            $mod = $mod->where('name', 'LIKE', "%$name%");
+        }
+        if ($request->get('phone_number') != ""){
+            $phone_number = $request->get('phone_number');
+            $mod = $mod->where('phone_number', 'LIKE', "%$phone_number%");
+        }
+        $pagesize = session('pagesize');
+        if(!$pagesize){$pagesize = 15;} 
+        $data = $mod->orderBy('created_at', 'desc')->paginate($pagesize);
+        return view('reports.suppliers_report.index', compact('data', 'companies', 'company_id', 'name', 'phone_number', 'company'));
     }
 
     public function suppliers_report1(Request $request){
