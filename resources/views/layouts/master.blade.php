@@ -96,9 +96,9 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            // $(window).load(function() {
-                $("#ajax-loading").hide(); 
-            // });
+
+            $("#ajax-loading").hide(); 
+
             function showloader(){
                 $("#ajax-loading").show();
             }
