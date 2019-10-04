@@ -45,7 +45,6 @@
                                 @php
                                     $purchases_array = $item->purchases()->where('status', 1)->pluck('id');
                                     $total_purchases = $item->purchases()->count();
-                                    // $mod_total_amount = \App\Models\Order::whereIn('orderable_id', $purchases_array)->where('orderable_type', "App\Models\Purchase");
                                     $mod_total_amount = $item->purchases()->where('status', 1);
                                     $mod_paid = \App\Models\Payment::whereIn('paymentable_id', $purchases_array)->where('paymentable_type', "App\Models\Purchase");
 
