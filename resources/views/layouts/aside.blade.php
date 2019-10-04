@@ -58,11 +58,28 @@
                                 @endif
                             </ul>
                         </li>
+                        @php
+                            if($user->company){
+                                $number_of_pending_purchases = $user->company->purchases()->where('status', 0)->count();
+                                $number_of_pending_payments = $user->company->purchases()->where('status', 0)->count();
+                            }else{                                
+                                $number_of_pending_purchases = \App\Models\Purchase::where('status', 0)->count();
+                                $number_of_pending_payments = \App\Models\Payment::where('status', 0)->count();
+                            }
+                        @endphp
                         <li class="@if($page == 'pending_purchases') active @endif">
-                            <a href="{{route('purchase.pending_purchases')}}" class="waves-effect @if($page == 'pending_purchases') active @endif"><i class="fa fa-filter"></i><span> {{__('page.pending_purchases')}} </span></a>
+                            <a href="{{route('purchase.pending_purchases')}}" 
+                                class="waves-effect @if($page == 'pending_purchases') active @endif @if($number_of_pending_purchases > 0) text-danger @endif"
+                            >
+                                <i class="fa fa-filter"></i><span> {{__('page.pending_purchases')}} </span>
+                            </a>
                         </li>
                         <li class="@if($page == 'pending_payments') active @endif">
-                            <a href="{{route('payment.pending_payments')}}" class="waves-effect @if($page == 'pending_payments') active @endif"><i class="fa fa-flask"></i><span> {{__('page.pending_payments')}} </span></a>
+                            <a href="{{route('payment.pending_payments')}}" 
+                                class="waves-effect @if($page == 'pending_payments') active @endif @if($number_of_pending_payments > 0) text-danger @endif"
+                            >
+                                <i class="fa fa-flask"></i><span> {{__('page.pending_payments')}} </span>
+                            </a>
                         </li>
                     @endif
                     <li class="@if($page == 'product') active @endif">
