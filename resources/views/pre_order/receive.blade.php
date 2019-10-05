@@ -33,7 +33,7 @@
                         <table class="table table-bordered table-hover">
                             <thead>
                                 <tr>
-                                    <th class="wd-40">#</th>
+                                    <th>#</th>
                                     <th>{{__('page.product_code')}}</th>
                                     <th>{{__('page.product_name')}}</th>
                                     <th>{{__('page.product_cost')}}</th>
@@ -51,7 +51,7 @@
                                     $total_amount = 0;
                                 @endphp
                                     <tr v-for="(item,i) in filtered_items" :key="i">
-                                        <td class="text-center">
+                                        <td class="text-center" width="40">
                                             <div class="checkbox checkbox-primary pl-4" style="margin-top:-5px;">
                                                 <input :id="item.item_id" type="checkbox" :name="'item[' + item.item_id +']'" :value="item.item_id" v-model="checked_items">
                                                 <label :for="item.item_id"></label>
@@ -70,25 +70,31 @@
                                             <input type="hidden" :name="'subtotal[' + item.item_id + ']'" :value="item.sub_total" />
                                         </td>
                                     </tr>
-                                <tr>
-                                    <td colspan="4" class="tx-bold">{{__('page.total')}} </td>
-                                    <td>@{{formatPrice(total.discount)}}</td>
-                                    <td colspan="4"></td>
-                                    <td>@{{formatPrice(total.cost)}}</td>
-                                </tr>
                             </tbody>
                             <tfoot class="tx-bold tx-black">
                                 <tr>
-                                    <th colspan="9" style="text-align:right">{{__('page.total_amount')}} </th>
+                                    <th colspan="4" class="tx-bold">{{__('page.total')}} </th>
+                                    <th>@{{formatPrice(total.discount)}}</th>
+                                    <th colspan="4"></th>
                                     <th>
-                                        @{{formatPrice(grand_total)}}
-                                        <input type="hidden" name="grand_total" :value="grand_total" />
+                                        @{{formatPrice(total.cost)}}
                                     </th>
                                 </tr>
                             </tfoot>
                         </table>
                         <div class="row mt-4">
-                            <div class="col-lg-3 col-md-6">
+                            <div class="col-lg-4 col-md-6">
+                                <div class="form-group mb-2">
+                                    <label class="form-control-label">{{__('page.reference_number')}}:</label>
+                                    <input class="form-control" type="text" name="reference_number" value="{{ old('reference_number') }}" required placeholder="{{__('page.reference_number')}}">
+                                    @error('reference_number')
+                                        <span class="invalid-feedback d-block" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6">
                                 <div class="form-group mb-2">
                                     <label class="form-control-label">{{__('page.store')}}:</label>
                                     <select class="form-control select2" name="store" data-placeholder="{{__('page.select_store')}}">
@@ -103,24 +109,52 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-lg-3 col-md-6">
-                                <div class="form-group mb-2">
-                                    <label class="form-control-label">{{__('page.reference_number')}}:</label>
-                                    <input class="form-control" type="text" name="reference_number" value="{{ old('reference_number') }}" required placeholder="{{__('page.reference_number')}}">
-                                    @error('reference_number')
-                                        <span class="invalid-feedback d-block" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-6">
+                            <div class="col-lg-4 col-md-6">
                                 <div class="form-group">
                                     <label for="purchase_image">{{__('page.attachment')}}</label>
                                     <input type="file" name="attachment" class="form-control file-input-styled" id="purchase_image" />
                                 </div>
                             </div>
-                            <div class="col-lg-3 col-md-6 mt-4 text-right">
+                        </div>
+                        <div class="row mt-3">                                                  
+                            <div class="col-md-4 mb-3">
+                                <div class="form-group mb-2">
+                                    <label class="form-control-label">{{__('page.discount')}}:</label>
+                                    <input type="text" name="discount_string" class="form-control" v-model="discount_string" placeholder="{{__('page.discount')}}">
+                                    <input type="hidden" name="discount" :value="discount">
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="form-group mb-2">
+                                    <label class="form-control-label">{{__('page.shipping')}}:</label>
+                                    <input type="text" name="shipping_string" class="form-control" v-model="shipping_string" placeholder="{{__('page.shipping')}}">
+                                    <input type="hidden" name="shipping" :value="shipping">
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="form-group mb-2">
+                                    <label class="form-control-label">{{__('page.returns')}}:</label>
+                                    <input type="number" name="returns" class="form-control" min="0" v-model="returns" placeholder="{{__('page.returns')}}">
+                                    <input type="hidden" name="grand_total" :value="grand_total">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p class="text-right">{{__('page.purchase')}}: @{{total.cost | currency}} - {{__('page.discount')}}: @{{discount | currency}} - {{__('page.shipping')}}: @{{shipping | currency}} - {{__('page.returns')}}: @{{returns | currency}} = {{__('page.grand_total')}}: @{{grand_total | currency}}</p>
+                            </div>
+                        </div>
+    
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group mb-2">
+                                    <label class="form-control-label">{{__('page.note')}}:</label>
+                                    <textarea class="form-control" name="note" rows="3" placeholder="{{__('page.note')}}"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-3">                            
+                            <div class="col-12 text-right">
                                 <a href="{{route('pre_order.index')}}" class="btn btn-success"><i class="menu-item-icon icon ion-clipboard tx-16"></i>  {{__('page.purchase_order')}}</a>
                                 <button type="submit" class="btn btn-primary ml-3"><i class="menu-item-icon icon ion-archive tx-16"></i>  {{__('page.receive')}}</button>
                             </div>

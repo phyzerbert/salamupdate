@@ -277,7 +277,16 @@ class PreOrderController extends Controller
         $purchase->company_id = $order->company ? $order->company_id : $store->company_id;
         $purchase->supplier_id = $order->supplier_id;
         $purchase->reference_no = $data['reference_number'];
+        $purchase->note = $data['note'];
         $purchase->timestamp = $order->timestamp;
+
+        $purchase->discount_string = $data['discount_string'];
+        $purchase->discount = $data['discount'];
+
+        $purchase->shipping_string = $data['shipping_string'];
+        $purchase->shipping = -1 * $data['shipping'];
+        $purchase->returns = $data['returns'];
+
         $purchase->grand_total = $data['grand_total'];
         $purchase->note = $order->note;
 
@@ -290,7 +299,8 @@ class PreOrderController extends Controller
         if($request->has("attachment")){
             $picture = request()->file('attachment');
             $date_time = date('Y-m-d-H-i-s');
-            $imageName = $company_name."_".$data['reference_number']."_".$date_time.'.'.$picture->getClientOriginalExtension();
+            $supplier_company = Supplier::find($order->supplier_id)->company;
+            $imageName = $company_name . "_" . $data['reference_number'] . "_" . $supplier_company . "_" . $date_time . '.' . $picture->getClientOriginalExtension();
             $picture->move(public_path('images/uploaded/purchase_images/'), $imageName);
             $purchase->attachment = 'images/uploaded/purchase_images/'.$imageName;
         }
