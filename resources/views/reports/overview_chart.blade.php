@@ -150,7 +150,7 @@
                         </div>
                     @endif
                     <div class="row">
-                        <div class="card card-body">
+                        <div class="col-12">
                             <canvas id="bar_chart" style="height:400px;"></canvas>
                         </div>
                     </div>
