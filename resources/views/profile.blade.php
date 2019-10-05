@@ -21,8 +21,8 @@
                         <div class="text-center profile-image">
                             <img src="@if($user->picture){{asset($user->picture)}}@else{{asset('images/avatar128.png')}}@endif" width="75%" class="rounded-circle" alt="">
                         </div>
-                        <p class="tx-info text-center mt-4">{{$user->first_name}} {{$user->last_name}}</p>
-                        <p class="tx-primary text-center">{{$user->role->name}}</p>
+                        <p class="text-info text-center mt-4">{{$user->first_name}} {{$user->last_name}}</p>
+                        <h3 class="text-primary text-center"><span class="badge badge-primary">{{$user->role->name}}</span></h3>
                     </div>
                 </div>
                 <div class="col-md-8">

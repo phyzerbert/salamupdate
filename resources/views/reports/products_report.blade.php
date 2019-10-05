@@ -34,7 +34,7 @@
                         <input type="text" class="form-control form-control-sm mr-sm-2 mb-2" name="product_name" id="search_name" value="{{$product_name}}" placeholder="{{__('page.product_name')}}">
 
                         <button type="submit" class="btn btn-sm btn-primary mb-2"><i class="fa fa-search"></i>&nbsp;&nbsp;{{__('page.search')}}</button>
-                        <button type="button" class="btn btn-sm btn-info mb-2 ml-1" id="btn-reset"><i class="fa fa-eraser"></i>&nbsp;&nbsp;{{__('page.reset')}}</button>
+                        <button type="button" class="btn btn-sm btn-danger mb-2 ml-1" id="btn-reset"><i class="fa fa-eraser"></i>&nbsp;&nbsp;{{__('page.reset')}}</button>
                     </form>
                 </div>
                 <div class="table-responsive mt-2">
@@ -87,7 +87,15 @@
                                 @endphp                              
                                 <tr>
                                     <td class="wd-40">{{ (($data->currentPage() - 1 ) * $data->perPage() ) + $loop->iteration }}</td>
-                                    <td class="image py-1"><img src="@if($item->image){{asset($item->image)}}@else{{asset('images/no-image.png')}}@endif" class="rounded-circle" width="40" alt=""></td>
+                                    <td class="py-1" width="50">
+                                        @php
+                                            $image_path = asset('images/no-image.png');
+                                            if(file_exists($item->image)){
+                                                $image_path = asset($item->image);
+                                            }
+                                        @endphp
+                                        <img class="bordered rounded-circle attachment" height="40" width="40" src="{{$image_path}}" alt="">
+                                    </td>
                                     <td>{{$item->code}}</td>
                                     <td>{{$item->name}}</td>
                                     <td>{{number_format($purchased_quantity)}}</td>
@@ -114,7 +122,11 @@
                             <p>{{__('page.total')}} <strong style="color: red">{{ $data->total() }}</strong> {{__('page.items')}}</p>
                         </div>
                         <div class="float-right" style="margin: 0;">
-                            {!! $data->appends([])->links() !!}
+                            {!! $data->appends([
+                                'company_id' => $company_id,
+                                'product_code' => $product_code,
+                                'product_name' => $product_name,
+                            ])->links() !!}
                         </div>
                     </div>
                 </div>

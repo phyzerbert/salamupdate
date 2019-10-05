@@ -90,11 +90,11 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colspan="8">{{__('page.total')}}</td>
-                                <td>{{number_format($total_grand)}}</td>
-                                <td>{{number_format($total_paid)}}</td>
-                                <td>{{number_format($total_grand - $total_paid)}}</td>
-                                <td></td>
+                                <th colspan="8">{{__('page.total')}}</th>
+                                <th>{{number_format($total_grand)}}</th>
+                                <th>{{number_format($total_paid)}}</th>
+                                <th>{{number_format($total_grand - $total_paid)}}</th>
+                                <th></th>
                             </tr>
                         </tfoot>
                     </table> 
@@ -143,6 +143,10 @@
                 searchPlaceholder: 'Search...',
                 sSearch: '',
                 lengthMenu: '_MENU_ items/page',
+                paginate: {
+                    next: '>', 
+                    previous: '<'
+                }
             }
         });
         $(".dataTables_length select").addClass("form-control-sm");

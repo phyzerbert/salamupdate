@@ -19,7 +19,7 @@
             @php
                 $role = Auth::user()->role->slug;
             @endphp
-            <div class="br-section-wrapper">
+            <div class="card card-body">
                 <div class="row">
                     <div class="col-md-12 mb-3">
                         <form action="" class="form-inline mx-auto" method="post">
@@ -31,7 +31,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="card card-body">
+                    <div class="col-12">
                         <canvas id="bar_chart" style="height:600px;"></canvas>
                     </div>
                 </div>
