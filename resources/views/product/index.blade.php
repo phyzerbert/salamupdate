@@ -46,7 +46,15 @@
                             @endphp
                                 <tr>
                                     <td>{{ (($data->currentPage() - 1 ) * $data->perPage() ) + $loop->iteration }}</td>
-                                    <td class="py-1" width="50"><img class="bordered rounded-circle attachment" height="40" width="40" src="@if($item->image){{asset($item->image)}}@else{{asset('images/no-image.jpg')}}@endif" alt=""></td>
+                                    <td class="py-1" width="50">
+                                        @php
+                                            $image_path = asset('images/no-image.png');
+                                            if(file_exists($item->image)){
+                                                $image_path = asset($item->image);
+                                            }
+                                        @endphp
+                                        <img class="bordered rounded-circle attachment" height="40" width="40" src="{{$image_path}}" alt="">
+                                    </td>
                                     <td class="code">{{$item->code}}</td>
                                     <td class="name">{{$item->name}}</td>
                                     <td class="category">@isset($item->category->name){{$item->category->name}}@endisset</td>

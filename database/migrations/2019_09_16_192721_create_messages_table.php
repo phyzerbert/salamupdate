@@ -20,6 +20,7 @@ class CreateMessagesTable extends Migration
             $table->string('attachment')->nullable();
             $table->integer('is_image')->nullable();
             $table->integer('receiver_id')->nullable();
+            $table->integer('is_read')->nullable();
             $table->timestamps();
         });
     }

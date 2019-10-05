@@ -27,7 +27,7 @@
                     <div class="row my-3">
                         <div class="col-lg-4 col-md-6 mt-3">
                             <div class="form-group">
-                                <label class="form-control-label">{{__('page.product_name')}}: <span class="tx-danger">*</span></label>
+                                <label class="form-control-label">{{__('page.product_name')}}: <span class="text-danger">*</span></label>
                                 <input class="form-control" type="text" name="name" value="{{$product->name}}" placeholder="{{__('page.product_name')}}" required>
                                 @error('name')
                                     <span class="invalid-feedback d-block" role="alert">
@@ -38,7 +38,7 @@
                         </div>
                         <div class="col-lg-4 col-md-6 mt-3">
                             <div class="form-group">
-                                <label class="form-control-label">{{__('page.product_code')}}: <span class="tx-danger">*</span></label>
+                                <label class="form-control-label">{{__('page.product_code')}}: <span class="text-danger">*</span></label>
                                 <input class="form-control" type="text" name="code" value="{{$product->code}}" placeholder="{{__('page.product_code')}}" required>
                                 @error('code')
                                     <span class="invalid-feedback d-block" role="alert">
@@ -49,9 +49,9 @@
                         </div>
                         <div class="col-lg-4 col-md-6 mt-3">
                             <div class="form-group">
-                                <label class="form-control-label">{{__('page.barcode_symbology')}}: <span class="tx-danger">*</span></label>
+                                <label class="form-control-label">{{__('page.barcode_symbology')}}: <span class="text-danger">*</span></label>
                                 <select class="form-control select2" name="barcode_symbology_id" data-placeholder="Select Barcode Symbology" required>
-                                    <option label="{{__('page.barcode_symbology')}}" hidden></option>
+                                    <option value="" hidden>{{__('page.barcode_symbology')}}</option>
                                     @foreach ($barcode_symbologies as $item)
                                         <option value="{{$item->id}}" @if($product->barcode_symbology_id == $item->id) selected @endif>{{$item->name}}</option>
                                     @endforeach
@@ -65,9 +65,9 @@
                         </div>
                         <div class="col-lg-4 col-md-6 mt-3">
                             <div class="form-group">
-                                <label class="form-control-label">{{__('page.category')}}: <span class="tx-danger">*</span></label>
+                                <label class="form-control-label">{{__('page.category')}}: <span class="text-danger">*</span></label>
                                 <select class="form-control select2" name="category_id" data-placeholder="Select Category" required>
-                                    <option label="{{__('page.select_category')}}" hidden></option>
+                                    <option value="" hidden>{{__('page.select_category')}}</option>
                                     @foreach ($categories as $item)
                                         <option value="{{$item->id}}" @if($product->category_id == $item->id) selected @endif>{{$item->name}}</option>
                                     @endforeach
@@ -81,7 +81,7 @@
                         </div>
                         <div class="col-lg-4 col-md-6 mt-3">
                             <div class="form-group">
-                                <label class="form-control-label">{{__('page.product_unit')}}: <span class="tx-danger">*</span></label>
+                                <label class="form-control-label">{{__('page.product_unit')}}: <span class="text-danger">*</span></label>
                                 <input class="form-control" type="text" name="unit" value="{{$product->unit}}" placeholder="Product Unit" required>
                                 @error('unit')
                                     <span class="invalid-feedback d-block" role="alert">
@@ -92,7 +92,7 @@
                         </div>
                         <div class="col-lg-4 col-md-6 mt-3">
                             <div class="form-group">
-                                <label class="form-control-label">{{__('page.product_cost')}}: <span class="tx-danger">*</span></label>
+                                <label class="form-control-label">{{__('page.product_cost')}}: <span class="text-danger">*</span></label>
                                 <input class="form-control" type="text" name="cost" value="{{$product->cost}}" placeholder="Product Cost" required>
                                 @error('cost')
                                     <span class="invalid-feedback d-block" role="alert">
@@ -103,7 +103,7 @@
                         </div>
                         <div class="col-lg-4 col-md-6 mt-3">
                             <div class="form-group">
-                                <label class="form-control-label">{{__('page.product_price')}}: <span class="tx-danger">*</span></label>
+                                <label class="form-control-label">{{__('page.product_price')}}: <span class="text-danger">*</span></label>
                                 <input class="form-control" type="text" name="price" value="{{$product->price}}" placeholder="Product Price" required>
                                 @error('price')
                                     <span class="invalid-feedback d-block" role="alert">
@@ -143,7 +143,7 @@
                             <div class="form-group">
                                 <label class="form-control-label">{{__('page.supplier')}}:</label>
                                 <select class="form-control select2-show-search" name="supplier_id" id="product_supplier" data-placeholder="{{__('page.product_supplier')}}">
-                                    <option label="{{__('page.product_supplier')}}" hidden>{{__('page.product_supplier')}}</option>
+                                    <option value="" hidden>{{__('page.product_supplier')}}</option>
                                     @foreach ($suppliers as $item)
                                         <option value="{{$item->id}}" @if($product->supplier_id == $item->id) selected @endif>{{$item->name}}</option>
                                     @endforeach                                    
