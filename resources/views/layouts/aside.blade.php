@@ -95,7 +95,7 @@
                     <a href="#" class="waves-effect @if($page == in_array($page, $pre_order_items)) active subdrop @endif"><i class="fa fa-paper-plane-o"></i><span> {{__('page.purchase_orders')}} </span><span class="pull-right"><i class="md md-add"></i></span></a>
                     <ul class="list-unstyled">
                         <li class="@if($page == 'pre_order_list') active @endif"><a href="{{route('pre_order.index')}}" class="@if($page == 'pre_order_list') active @endif">{{__('page.purchase_orders')}}</a></li>
-                        @if($role == 'user' || $role == 'buyer')
+                        @if($role != 'admin')
                             <li class="@if($page == 'pre_order_create') active @endif"><a href="{{route('pre_order.create')}}" class="@if($page == 'pre_order_create') active @endif">{{__('page.add_purchase_order')}}</a></li>
                         @endif
                     </ul>

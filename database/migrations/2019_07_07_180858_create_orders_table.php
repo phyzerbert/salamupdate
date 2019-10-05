@@ -24,6 +24,7 @@ class CreateOrdersTable extends Migration
             $table->string('serial_no')->nullable();
             $table->integer('orderable_id')->nullable();
             $table->string('orderable_type')->nullable();
+            $table->integer('pre_order_item_id')->nullable();
             $table->timestamps();
         });
     }
