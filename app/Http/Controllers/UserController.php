@@ -117,8 +117,12 @@ class UserController extends Controller
             'password'=>'required|string|min:6|confirmed'
         );
         if($request->get('role') == "4"){
-            $validate_array = array_merge($validate_array, ['ip_address' => 'required|ip|ipv4']);
+            $validate_array['ip_address'] = 'required|ip|ipv4';
         }
+        if($request->get('role') == '2' || $request->get('role') == '4'){
+            $validate_array['company_id'] = 'required';
+        }
+        
         $request->validate($validate_array);
         
         User::create([
