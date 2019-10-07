@@ -99,7 +99,7 @@
                                     <label class="form-control-label">{{__('page.store')}}:</label>
                                     <select class="form-control select2" name="store" data-placeholder="{{__('page.select_store')}}">
                                         @foreach ($stores as $item)
-                                            <option value="{{$item->id}}" @if(old('store') == $item->id) selected @endif>{{$item->name}}</option>
+                                            <option value="{{$item->id}}" @if($loop->index == 0) selected @endif>{{$item->name}}</option>
                                         @endforeach
                                     </select>
                                     @error('store')
