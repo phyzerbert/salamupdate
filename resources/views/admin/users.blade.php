@@ -288,6 +288,12 @@
                             $('#role_error').show();
                             $('#create_form #role').focus();
                         }
+                        
+                        if(messages.company_id) {
+                            $('#company_error strong').text(data.responseJSON.errors.company_id[0]);
+                            $('#company_error').show();
+                            $('#create_form #company_id').focus();
+                        }
 
                         if(messages.ip_address) {
                             $('#ip_address_error strong').text(data.responseJSON.errors.ip_address[0]);
