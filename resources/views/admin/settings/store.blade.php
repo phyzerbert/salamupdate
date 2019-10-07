@@ -36,7 +36,7 @@
                                 <tr>
                                     <td>{{ (($data->currentPage() - 1 ) * $data->perPage() ) + $loop->iteration }}</td>
                                     <td class="name">{{$item->name}}</td>
-                                    <td class="company" data-id="{{$item->company_id}}">{{$item->company->name}}</td>
+                                    <td class="company" data-id="{{$item->company_id}}">@if($item->company){{$item->company->name}}@endif</td>
                                     <td class="py-1">
                                         <a href="#" class="btn btn-sm btn-primary btn-icon mr-1 btn-edit" data-id="{{$item->id}}"><div><i class="fa fa-edit"></i></div></a>
                                         <a href="{{route('store.delete', $item->id)}}" class="btn btn-sm btn-danger btn-icon btn-confirm" data-id="{{$item->id}}"><div><i class="fa fa-trash-o"></i></div></a>
