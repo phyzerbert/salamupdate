@@ -70,7 +70,7 @@
                                     <td class="timestamp">{{date('Y-m-d H:i', strtotime($item->timestamp))}}</td>
                                     <td class="expiry_date">{{$item->expiry_date}}</td>
                                     <td class="reference_no">{{$item->reference_no}}</td>
-                                    <td class="company">{{$item->company->name}}</td>
+                                    <td class="company">@if($item->company){{$item->company->name}}@endif</td>
                                     <td class="store">{{$item->store->name}}</td>
                                     <td class="supplier" data-id="{{$item->supplier_id}}">{{$item->supplier->company}}</td>
                                     <td class="product">{{implode(", ", $product_array)}}</td>
