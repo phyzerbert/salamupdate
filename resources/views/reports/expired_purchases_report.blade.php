@@ -72,7 +72,7 @@
                                     <td class="reference_no">{{$item->reference_no}}</td>
                                     <td class="company">@if($item->company){{$item->company->name}}@endif</td>
                                     <td class="store">{{$item->store->name}}</td>
-                                    <td class="supplier" data-id="{{$item->supplier_id}}">{{$item->supplier->company}}</td>
+                                    <td class="supplier" data-id="{{$item->supplier_id}}">@isset($item->supplier->company){{$item->supplier->company}}@endisset</td>
                                     <td class="product">{{implode(", ", $product_array)}}</td>
                                     <td class="grand_total"> {{number_format($grand_total)}} </td>
                                     <td class="paid"> {{ number_format($paid) }} </td>
