@@ -32,7 +32,7 @@
                     <button class="btn btn-sm btn-info float-right ml-2 mb-2" id="btn-export"><i class="fa fa-file-excel-o mr-2"></i>{{__('page.export')}}</button>
                     <input type="text" class="form-control form-control-sm col-md-2 float-right" id="input_keyword" value="{{$keyword}}" placeholder="{{__('page.keyword')}}" />
                 </div>
-                <div class="table-responsive mt-2 pb-5">
+                <div class="table-responsive mt-2" style="padding-bottom: 5rem;">
                     <table class="table table-bordered table-hover">
                         <thead class="">
                             <tr>
