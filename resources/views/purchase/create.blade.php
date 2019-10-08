@@ -76,8 +76,8 @@
                             <div class="form-group mb-2">
                                 <label class="form-control-label">{{__('page.supplier')}}:</label>
                                 <div class="input-group">                                  
-                                    <select class="form-control select2-show-search" name="supplier" id="search_supplier" required data-placeholder="{{__('page.select_supplier')}}">
-                                        <option>{{__('page.select_supplier')}}</option>
+                                    <select class="form-control select2-show-search" name="supplier" id="search_supplier" required>
+                                        <option value="" hidden>{{__('page.select_supplier')}}</option>
                                         @foreach ($suppliers as $item)
                                             <option value="{{$item->id}}" @if(old('supplier') == $item->id) selected @endif>{{$item->company}}</option>
                                         @endforeach

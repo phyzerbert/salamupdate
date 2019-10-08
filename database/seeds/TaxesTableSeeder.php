@@ -36,7 +36,7 @@ class TaxesTableSeeder extends Seeder
         Tax::create([
             'name' => 'No Imp',
             'code' => 'Ni',
-            'rate' => 10,
+            'rate' => 0,
             'type' => 1,
         ]);
     }
