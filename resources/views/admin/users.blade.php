@@ -215,7 +215,7 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label">{{__('page.ip_address')}}</label>
-                            <input class="form-control" type="text" name="ip_address" id="edit_ip_address" placeholder="{{__('page.ip_address')}}">
+                            <input class="form-control ip_address" type="text" name="ip_address" id="edit_ip_address" placeholder="{{__('page.ip_address')}}">
                             <span id="edit_ip_address_error" class="invalid-feedback">
                                 <strong></strong>
                             </span>
@@ -322,6 +322,7 @@
             let username = $(this).parents('tr').find(".username").text().trim();
             let first_name = $(this).parents('tr').find(".first_name").text().trim();
             let last_name = $(this).parents('tr').find(".last_name").text().trim();
+            let ip_address = $(this).parents('tr').find(".ip_address").text().trim();
             let company = $(this).parents('tr').find(".company").data('id');
             let phone = $(this).parents('tr').find(".phone").text().trim();
 
@@ -330,6 +331,7 @@
             $("#edit_form .name").val(username);
             $("#edit_form .first_name").val(first_name);
             $("#edit_form .last_name").val(last_name);
+            $("#edit_form .ip_address").val(ip_address);
             $("#edit_form .company").val(company);
             $("#edit_form .phone_number").val(phone);
 

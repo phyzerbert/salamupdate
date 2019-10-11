@@ -90,9 +90,6 @@ class UserController extends Controller
             'phone_number'=>'required',
             'password' => 'confirmed',
         );
-        if($user->role_id == "4"){
-            $validate_array = array_merge($validate_array, ['ip_address' => 'required|ip|ipv4']);
-        }
         $request->validate($validate_array);
         
         $user->name = $request->get("name");
@@ -116,9 +113,6 @@ class UserController extends Controller
             'phone_number'=>'required',
             'password'=>'required|string|min:6|confirmed'
         );
-        if($request->get('role') == "4"){
-            $validate_array['ip_address'] = 'required|ip|ipv4';
-        }
         if($request->get('role') == '2' || $request->get('role') == '4'){
             $validate_array['company_id'] = 'required';
         }
