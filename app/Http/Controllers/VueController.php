@@ -9,6 +9,7 @@ use App\Models\Sale;
 use App\Models\Order;
 use App\Models\PreOrder;
 use App\Models\PreOrderItem;
+use App\Models\Image;
 
 use App;
 
@@ -76,6 +77,19 @@ class VueController extends Controller
         $item = PreOrderItem::find($id);
         $received_quantity = $item->purchased_items->sum('quantity');
         return response()->json($received_quantity);
+    }
+
+    public function image_migrate(){
+        $data = Purchase::all();
+        foreach ($data as $item) {
+            if($item->attachment){                
+                Image::create([
+                    'imageable_id' => $item->id,
+                    'imageable_type' => 'App\Models\Purchase',
+                    'path' => $item->attachment,
+                ]);
+            }
+        }
     }
     
 }

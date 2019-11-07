@@ -190,5 +190,5 @@ Route::get('/concurrent_payments/supplier_purchases/{id}', 'SupplierController@s
 Route::get('/concurrent_payments/add_payments/{id}', 'SupplierController@add_payments')->name('concurrent_payments.add_payments');
 
 
-Route::get('/image_migrate', 'PurchaseController@image_migrate')->name('image_migrate');
+Route::get('/image_migrate', 'VueController@image_migrate')->name('image_migrate');
 Route::get('/image/delete/{id}', 'PurchaseController@image_delete')->name('purchase.image.delete');
