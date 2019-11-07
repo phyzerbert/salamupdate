@@ -10,6 +10,9 @@
             max-width: 100%;
             height: 500px;
         }
+        .image-control {
+            cursor: pointer;
+        }
     </style>
 @endsection
 @section('content')
@@ -61,12 +64,7 @@
                             @endphp
                             @foreach ($data as $item)
                                 @php
-                                    $image_path = asset('images/no-image.png');
-                                    if($item->attachment){                                        
-                                        if(file_exists($item->attachment)){
-                                            $image_path = asset($item->attachment);
-                                        }
-                                    }
+                                    $image_array = $item->images;
                                     $paid = $item->payments()->sum('amount');
                                     $grand_total = $item->grand_total;
                                     if(($expiry_period != '') && ($grand_total == $paid)) continue;
@@ -74,6 +72,13 @@
                                     // $footer_paid += $paid;
                                 @endphp
                                 <tr>
+                                    <td class="d-none image-array">
+                                        @foreach ($image_array as $image)
+                                            @if (file_exists($image->path))
+                                                <input type="hidden" name="" class="image-path" value="{{asset($image->path)}}" />
+                                            @endif
+                                        @endforeach
+                                    </td>
                                     <td>{{ (($data->currentPage() - 1 ) * $data->perPage() ) + $loop->iteration }}</td>
                                     <td class="timestamp">{{date('Y-m-d H:i', strtotime($item->timestamp))}}</td>
                                     <td class="reference_no">{{$item->reference_no}}</td>
@@ -89,7 +94,7 @@
                                                 <li><a href="{{route('purchase.detail', $item->id)}}" class="dropdown-item">{{__('page.details')}}</a></li>
                                                 @if(in_array($role, ['admin', 'user']))
                                                     <li><a href="{{route('purchase.edit', $item->id)}}" class="dropdown-item">{{__('page.edit')}}</a></li>
-                                                    <li><a href="{{route('purchase.approve', $item->id)}}" data-id="{{$item->id}}" data-path="{{$image_path}}" class="dropdown-item btn-approve">{{__('page.approve')}}</a></li>
+                                                    <li><a href="{{route('purchase.approve', $item->id)}}" data-id="{{$item->id}}" class="dropdown-item btn-approve">{{__('page.approve')}}</a></li>
                                                     <li><a href="{{route('purchase.delete', $item->id)}}" class="dropdown-item btn-confirm">{{__('page.delete')}}</a></li>
                                                 @endif
                                             </ul>
@@ -173,6 +178,10 @@
             <div class="modal-content">
                 <div class="modal-body">
                     <div id="purchase_image" class="border rounded"></div>
+                    <div class="text-center mt-2">
+                        <span class="badge badge-success p-2 mr-3 image-control" id="prev_img"> << </span>
+                        <span class="badge badge-success p-2 image-control" id="next_img"> >> </span>
+                    </div>
                 </div>                
                 <div class="modal-footer">
                     <a href="#" class="btn btn-primary" id="btn_approve"><i class="fa fa-check mg-r-10"></i>&nbsp;{{__('page.approve')}}</a>
@@ -212,14 +221,6 @@
             fileButtonClass: 'action btn bg-primary text-white'
         });
 
-        // $(".btn-edit").click(function(){
-        //     let id = $(this).data("id");
-        //     let name = $(this).parents('tr').find(".name").text().trim();
-        //     $("#edit_form input.form-control").val('');
-        //     $("#editModal .id").val(id);
-        //     $("#editModal .name").val(name);
-        //     $("#editModal").modal();
-        // });
         $("#period").dateRangePicker({
             autoClose: false,
         });
@@ -266,10 +267,16 @@
             e.preventDefault();
             let image_path = $(this).data('path');
             let url = $(this).attr('href');
+            var image_array = [];
+            $(this).parents('tr').find(".image-array").find(".image-path").each(function(){
+                image_array.push($(this).val());
+            });
+            if(image_array.length == 0) image_array.push("{{asset('images/no-image.png')}}");
             $("#btn_approve").attr("href", url);
             $("#purchase_image").html('')
+            let current = 0;
             $("#purchase_image").verySimpleImageViewer({
-                imageSource: image_path,
+                imageSource: image_array[current],
                 frame: ['100%', '100%'],
                 maxZoom: '900%',
                 zoomFactor: '10%',
@@ -277,7 +284,16 @@
                 keyboard: true,
                 toolbar: true,
             });
-            $("#approveModal").modal();    
+            $("#approveModal").modal();
+
+            $("#prev_img").click(function(){
+                if(current > 0) current--;
+                $(".jqvsiv_main_image_content img").attr('src', image_array[current]);
+            });
+            $("#next_img").click(function(){
+                if(current < image_array.length) current++;
+                $(".jqvsiv_main_image_content img").attr('src', image_array[current]);
+            });
         }); 
     });
 </script>
