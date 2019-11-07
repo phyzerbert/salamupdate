@@ -71,7 +71,7 @@ input[type=file][data-fouc] {
 
 /* ******** end uniform.js style ******** */
 .detail-card {
-    min-height: 210px;
+    min-height: 185px;
 }
 .detail-card-icon {
     width: 70px;

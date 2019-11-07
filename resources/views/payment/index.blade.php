@@ -21,9 +21,6 @@
             @endphp
             <div class="card">
                 <div class="card-body table-responsive mt-2">
-                    {{-- <div class="">
-                        <button type="button" class="btn btn-success btn-sm float-right mg-b-5" id="btn-add"><i class="icon ion-person-add mg-r-2"></i> Add New</button>
-                    </div> --}}
                     <table class="table table-bordered table-hover">
                         <thead>
                             <tr>
@@ -38,7 +35,7 @@
                             </tr>
                         </thead>
                         <tbody>                                
-                            @foreach ($data as $item)
+                            @forelse ($data as $item)
                                 <tr class="@if($item->status == 0) text-danger @endif">
                                     <td>{{ $loop->index + 1 }}</td>
                                     <td class="date">{{date('Y-m-d H:i', strtotime($item->timestamp))}}</td>
@@ -58,7 +55,11 @@
                                         </td>
                                     @endif
                                 </tr>
-                            @endforeach
+                            @empty
+                                <tr>
+                                    <td colspan="10" align="center">No Payment</td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
                         

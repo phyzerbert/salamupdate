@@ -44,6 +44,7 @@ return [
     'income_report' => 'Income Report',
     'customer_report' => 'Customer Report',
     'customers_report' => 'Customers Report',
+    'supplier_note' => 'Supplier Note',
     'supplier_report' => 'Supplier Report',
     'suppliers_report' => 'Suppliers Report',
     'users_report' => 'Users Report',

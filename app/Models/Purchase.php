@@ -17,24 +17,29 @@ class Purchase extends Model
 
     public function orders()
     {
-        return $this->morphMany('App\Models\Order', 'orderable');
+        return $this->morphMany(Order::class, 'orderable');
     }
 
     public function payments()
     {
-        return $this->morphMany('App\Models\Payment', 'paymentable');
+        return $this->morphMany(Payment::class, 'paymentable');
+    }
+
+    public function images()
+    {
+        return $this->morphMany(Image::class, 'imageable');
     }
 
     public function store(){
-        return $this->belongsTo('App\Models\Store');
+        return $this->belongsTo(Store::class);
     }
 
     public function company(){
-        return $this->belongsTo('App\Models\Company');
+        return $this->belongsTo(Company::class);
     }
 
     public function supplier(){
-        return $this->belongsTo('App\Models\Supplier');
+        return $this->belongsTo(Supplier::class);
     }
 
     public function preturns(){

@@ -96,7 +96,7 @@
                         <div class="col-lg-4 col-md-6 mb-3">
                             <div class="form-group mb-2">
                                 <label class="form-control-label">{{__('page.attachment')}}:</label>
-                                <input type="file" name="attachment" id="file2" class="file-input-styled">
+                                <input type="file" name="attachment[]" id="file2" class="file-input-styled" multiple />
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6 mb-3">

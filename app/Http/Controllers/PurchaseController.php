@@ -12,6 +12,7 @@ use App\Models\Payment;
 use App\Models\Company;
 use App\Models\Store;
 use App\Models\StoreProduct;
+use App\Models\Image;
 
 use App\Mail\ReportMail;
 use App\Exports\PurchaseExport;
@@ -146,16 +147,6 @@ class PurchaseController extends Controller
             $item->status = 0;
         }
 
-        $company_name = Company::find($item->company_id)->name;
-        if($request->has("attachment")){
-            $picture = request()->file('attachment');
-            $date_time = date('Y-m-d-H-i-s');
-            $supplier_company = Supplier::find($data['supplier'])->company;
-            $imageName = $company_name . "_" . $data['reference_number'] . "_" . $supplier_company . "_" . $date_time . '.' . $picture->getClientOriginalExtension();
-            $picture->move(public_path('images/uploaded/purchase_images/'), $imageName);
-            $item->attachment = 'images/uploaded/purchase_images/'.$imageName;
-        }
-
         $item->discount_string = $data['discount_string'];
         $item->discount = $data['discount'];
 
@@ -166,6 +157,21 @@ class PurchaseController extends Controller
         $item->grand_total = $data['grand_total'];
         
         $item->save();
+
+        $company_name = Company::find($item->company_id)->name ?? '';
+        if($request->has("attachment") && is_array($data['attachment'])){
+            $date_time = date('YmdHis');
+            $supplier_company = Supplier::find($data['supplier'])->company;
+            foreach ($data['attachment'] as $key => $picture) {
+                $imageName = $company_name . "_" . $data['reference_number'] . "_" . $supplier_company . "_" . $date_time . "_" . $key . '.' . $picture->getClientOriginalExtension();
+                $picture->move(public_path('images/uploaded/purchase_images/'), $imageName);
+                Image::create([
+                    'imageable_id' => $item->id,
+                    'imageable_type' => 'App\Models\Purchase',
+                    'path' => 'images/uploaded/purchase_images/'.$imageName,
+                ]);
+            }
+        }
 
         if(isset($data['product_id']) && count($data['product_id']) > 0){
 
@@ -227,7 +233,7 @@ class PurchaseController extends Controller
         if(!isset($data['product_id']) ||  count($data['product_id']) == 0 || in_array(null, $data['product_id'])){
             return back()->withErrors(['product' => 'Please select a prouct.']);
         }
-        // dd($data);
+        
         $item = Purchase::find($request->get("id"));
  
         $item->timestamp = $data['date'].":00";
@@ -241,15 +247,6 @@ class PurchaseController extends Controller
             $item->expiry_date = date('Y-m-d', strtotime("+".$data['credit_days']."days", strtotime($item->timestamp)));
         }
         $item->note = $data['note'];
-        $company_name = Company::find($store->company_id)->name;
-        if($request->has("attachment")){
-            $picture = request()->file('attachment');
-            $date_time = date('Y-m-d-H-i-s');            
-            $supplier_company = Supplier::find($data['supplier'])->company;
-            $imageName = $company_name . "_" . $data['reference_number'] . "_" . $supplier_company . "_" . $date_time . '.' . $picture->getClientOriginalExtension();
-            $picture->move(public_path('images/uploaded/purchase_images/'), $imageName);
-            $item->attachment = 'images/uploaded/purchase_images/'.$imageName;
-        }
 
         $item->discount_string = $data['discount_string'];
         $item->discount = $data['discount'];
@@ -261,6 +258,21 @@ class PurchaseController extends Controller
         $item->grand_total = $data['grand_total'];
         
         $item->save();
+
+        $company_name = Company::find($store->company_id)->name ?? '';
+        if($request->has("attachment") && is_array($data['attachment'])){
+            $date_time = date('YmdHis');
+            $supplier_company = Supplier::find($data['supplier'])->company;
+            foreach ($data['attachment'] as $key => $picture) {
+                $imageName = $company_name . "_" . $data['reference_number'] . "_" . $supplier_company . "_" . $date_time . "_" . $key . '.' . $picture->getClientOriginalExtension();
+                $picture->move(public_path('images/uploaded/purchase_images/'), $imageName);
+                Image::create([
+                    'imageable_id' => $item->id,
+                    'imageable_type' => 'App\Models\Purchase',
+                    'path' => 'images/uploaded/purchase_images/'.$imageName,
+                ]);
+            }
+        }
 
         $purchase_orders = $item->orders->pluck('id')->toArray();
         $diff_orders = array_diff($purchase_orders, $data['order_id']);
@@ -496,5 +508,23 @@ class PurchaseController extends Controller
         }
         $data = $mod->orderBy('timestamp', $sort_by_date)->get();
         return Excel::download(new PurchaseExport($data), 'purchase_report.xlsx');
+    }
+
+    public function image_delete($id) {
+        Image::destroy($id);
+        return back()->with('success', __('page.deleted_successfully'));
+    }
+
+    public function image_migrate(){
+        $data = Purchase::all();
+        foreach ($data as $item) {
+            if($item->attachment){                
+                Image::create([
+                    'imageable_id' => $item->id,
+                    'imageable_type' => 'App\Models\Purchase',
+                    'path' => $item->attachment,
+                ]);
+            }
+        }
     }
 }

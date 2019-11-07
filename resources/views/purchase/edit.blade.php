@@ -11,6 +11,36 @@
             padding-top: .5rem;
             padding-bottom: .5rem;
         }
+        .card-image {
+            position: relative;
+            width: 55px;
+            height: 55px;
+            margin-right: 7px;
+            cursor: pointer;
+            float: left;
+        }
+        .purchase-image {
+            width: 100%;
+            height: 100%;
+        }
+        .btn-delete-image {
+            position: absolute;
+            color: #444;
+            top: 0px;
+            right: 5px;
+        }
+        .custom-uploader {
+            width: 100%;
+            height: 100%;
+            color: #363b4d;
+            background: #d5d5d5;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid #c9c9c9;
+            border-radius: 5px;
+        }
     </style>
 @endsection
 @section('content')
@@ -74,7 +104,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-6 mb-3">
+                        <div class="col-md-6 mb-3">
                             <div class="form-group">
                                 <label class="form-control-label">{{__('page.supplier')}}:</label>
                                 <select class="form-control select2-show-search" name="supplier" data-placeholder="{{__('page.supplier')}}">
@@ -90,16 +120,34 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-6 mb-3">
-                            <div class="form-group">
-                                <label class="form-control-label">{{__('page.attachment')}}:</label>
-                                <input type="file" name="attachment" id="file2" class="file-input-styled">
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 mb-3">
+                        <div class="col-md-6 mb-3">
                             <div class="form-group">
                                 <label class="form-control-label">{{__('page.credit_days')}}:</label>
                                 <input type="number" class="form-control" name="credit_days" min="0" value="{{$purchase->credit_days}}">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <h4 class="mt-2">{{__('page.attachment')}}</h4>
+                            <div class="clearfix">
+                                @foreach ($purchase->images as $image)
+                                    @if (file_exists($image->path))
+                                        <div class="card-image">
+                                            <img src="{{asset($image->path)}}" href="{{asset($image->path)}}" class="purchase-image border rounded" alt="">
+                                            <span class="btn-delete-image btn-confirm" href="{{route('purchase.image.delete', $image->id)}}"><i class="fa fa-times-circle-o"></i></span>
+                                        </div>
+                                    @endif
+                                @endforeach
+                                <div class="card-image">
+                                    <label class="custom-uploader pt-2 pb-1" for="input-custom-uploader">                                                       
+                                        <span style="font-size:28px;">
+                                            <i class="fa fa-plus"></i>
+                                        </span>
+                                        <input class="tg-fileinput d-none" type="file" id="input-custom-uploader" name="attachment[]" accept="image/*" multiple />
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -212,12 +260,14 @@
 <script src="{{asset('master/plugins/jquery-ui/jquery-ui.js')}}"></script>
 <script src="{{asset('master/plugins/jquery-ui/timepicker/jquery-ui-timepicker-addon.min.js')}}"></script>
 <script src="{{asset('master/plugins/styling/uniform.min.js')}}"></script>
+<script src="{{asset('master/plugins/ezview/EZView.js')}}"></script>
 <script>
     $(document).ready(function () {
 
         $("#purchase_date").datetimepicker({
             dateFormat: 'yy-mm-dd',
         });
+
         $(".expire_date").datepicker({
             dateFormat: 'yy-mm-dd',
         });
@@ -226,6 +276,9 @@
             fileButtonClass: 'action btn bg-primary text-white'
         });
 
+        if($(".purchase-image").length) {
+            $(".purchase-image").EZView();
+        }
     });
 </script>
 <script src="{{ asset('js/purchase_edit.js') }}"></script>
