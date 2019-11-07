@@ -201,7 +201,7 @@
                 @endif
                 <h5>{{__('page.payment_list')}}</h5>
                 <div class="row">
-                    <div class="col-12 table-resposnive">
+                    <div class="col-12 table-responsive">
                         <table class="table table-bordered table-hover">
                             <thead>
                                 <tr>
