@@ -50,7 +50,9 @@
                             @endphp
                             @foreach ($data as $item)
                                 @php
-                                    $grand_total = $item->grand_total;
+
+                                    $preturn = $item->preturns()->where('status', 1)->sum('amount');
+                                    $grand_total = $item->grand_total - $preturn;
                                     $paid = $item->payments()->sum('amount');
                                     if($grand_total == $paid) continue;
                                     $orders = $item->orders;
