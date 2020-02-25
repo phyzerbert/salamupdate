@@ -140,7 +140,12 @@
         <tbody>
             @php
                 $footer_grand_total = $footer_paid = 0;
-                $data = $supplier->purchases;
+                if($user->company) {
+                    $data = $supplier->purchases()->where('company_id', $user->company_id)->get();
+                } else {
+                    $data = $supplier->purchases;
+                }
+                
             @endphp
             @foreach ($data as $item)
                 @php
