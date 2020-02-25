@@ -130,8 +130,14 @@ class SupplierController extends Controller
         }
     }
 
-    public function export($id) {        
+    public function export($id) { 
+        $user = Auth::user();
         $supplier = Supplier::find($id);
+        if($user->company) {
+            $company_id = $user->company_id;
+            $purchases = $supplier->purchases()->where('company_id', $company_id)->get();
+            $purchase_array = $supplier->purchases()->where('company_id', $company_id)->pluck('id');
+        }
         $purchases = $supplier->purchases;
         $purchase_array = $supplier->purchases->pluck('id');
         $payments = Payment::whereIn('paymentable_id', $purchase_array)->where('paymentable_type', 'App\Models\Purchase')->get();

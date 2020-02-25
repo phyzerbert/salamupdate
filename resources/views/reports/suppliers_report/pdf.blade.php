@@ -56,9 +56,17 @@
     <h1 class="header-title">{{__('page.supplier_report')}}</h1>
 
     @php
-        $purchases_array = $supplier->purchases()->pluck('id');
-        $total_purchases = $supplier->purchases()->count();
-        $total_amount = $supplier->purchases()->sum('grand_total');
+        $user = Auth::user();
+        if($user->company) {
+            $company_id = $user->company_id;
+            $purchases_array = $supplier->purchases()->where('company_id', $company_id)->pluck('id');
+            $total_purchases = $supplier->purchases()->where('company_id', $company_id)->count();
+            $total_amount = $supplier->purchases()->where('company_id', $company_id)->sum('grand_total');
+        } else {
+            $purchases_array = $supplier->purchases()->pluck('id');
+            $total_purchases = $supplier->purchases()->count();
+            $total_amount = $supplier->purchases()->sum('grand_total');
+        }
         $paid = \App\Models\Payment::whereIn('paymentable_id', $purchases_array)->where('paymentable_type', 'App\Models\Purchase')->sum('amount');
     @endphp
 
@@ -137,7 +145,8 @@
             @foreach ($data as $item)
                 @php
                     $paid = $item->payments()->sum('amount');
-                    $grand_total = $item->grand_total;
+                    $preturn = $item->preturns()->where('status', 1)->sum('amount');
+                    $grand_total = $item->grand_total - $preturn;                    
                     $footer_grand_total += $grand_total;
                     $footer_paid += $paid;
                 @endphp
