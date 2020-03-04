@@ -9,6 +9,7 @@ use App\Models\Purchase;
 use App\Models\Sale;
 use App\Models\Order;
 use App\Models\Payment;
+use App\Models\Preturn;
 
 use Carbon\Carbon;
 use DB;
@@ -94,7 +95,11 @@ class HomeController extends Controller
         $return['month_sales'] = $this->getMonthData('sales', $where);
         $return['overall_purchases'] = $this->getOverallData('purchases', $where);
         $return['overall_sales'] = $this->getOverallData('sales', $where);
-        $return['company_grand_total'] = Purchase::where('company_id', $top_company)->sum('grand_total');
+
+        $top_company_purchase_array = Purchase::where('company_id', $top_company)->where('status', 1)->pluck('id');
+        $company_total_purchase = Purchase::where('company_id', $top_company)->where('status', 1)->sum('grand_total');
+        $company_total_preturn = Preturn::whereIn('purchase_id', $top_company_purchase_array)->where('status', 1)->sum('amount');
+        $return['company_grand_total'] = $company_total_purchase - $company_total_preturn;
 
         $expired_purchases = Purchase::where('company_id', $top_company)->whereNotNull('credit_days')->where("expiry_date", "<=", date('Y-m-d'))->get();
         $expired_count = 0;
