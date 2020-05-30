@@ -12,7 +12,7 @@
                     </ol>
                 </div>
             </div>
-        
+
             @php
                 $role = Auth::user()->role->slug;
             @endphp
@@ -20,7 +20,7 @@
                 <div class="">
                     @include('elements.pagesize')
                     @include('product.filter')
-                    <a href="{{route('product.create')}}" class="btn btn-success btn-sm float-right tx-white mg-b-5" id="btn-add"><i class="fa fa-plus mg-r-2"></i> Add New</a>                    
+                    <a href="{{route('product.create')}}" class="btn btn-success btn-sm float-right tx-white mg-b-5" id="btn-add"><i class="fa fa-plus mg-r-2"></i> Add New</a>
                 </div>
                 <div class="table-responsive mt-2">
                     <table class="table table-bordered table-hover">
@@ -39,7 +39,7 @@
                                 <th>{{__('page.action')}}</th>
                             </tr>
                         </thead>
-                        <tbody>                                
+                        <tbody>
                             @foreach ($data as $item)
                             @php
                                 $quantity = $item->store_products()->sum('quantity');
@@ -73,12 +73,12 @@
                                                 <li><a href="{{route('product.edit', $item->id)}}" class="dropdown-item">{{__('page.edit')}}</a></li>
                                                 <li><a href="{{route('product.delete', $item->id)}}" class="dropdown-item btn-confirm">{{__('page.delete')}}</a></li>
                                             </ul>
-                                        </div>                                       
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach
                         </tbody>
-                    </table>                
+                    </table>
                     <div class="clearfix mt-2">
                         <div class="float-left" style="margin: 0;">
                             <p>{{__('page.total')}} <strong style="color: red">{{ $data->total() }}</strong> {{__('page.items')}}</p>
@@ -89,7 +89,7 @@
                     </div>
                 </div>
             </div>
-        </div>                
+        </div>
     </div>
 @endsection
 
@@ -107,7 +107,7 @@
             $("#image_preview").html('')
             $("#image_preview").verySimpleImageViewer({
                 imageSource: path,
-                frame: ['100%', '100%'],
+                frame: ['498px', '598px', true],
                 maxZoom: '900%',
                 zoomFactor: '10%',
                 mouse: true,

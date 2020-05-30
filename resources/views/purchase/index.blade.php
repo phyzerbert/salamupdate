@@ -184,7 +184,7 @@
                         </div>                                               
                         <div class="form-group">
                             <label class="control-label">{{__('page.attachment')}}</label>
-                            <input type="file" name="attachment" id="file2" class="file-input-styled">
+                            <input type="file" name="attachment" class="file-input-styled">
                         </div>
                         <div class="form-group">
                             <label class="control-label">{{__('page.note')}}</label>
@@ -192,7 +192,7 @@
                         </div> 
                     </div>    
                     <div class="modal-footer">
-                        <button type="submit" id="btn_create" class="btn btn-primary btn-submit"><i class="fa fa-check mg-r-10"></i>&nbsp;{{__('page.save')}}</button>
+                        <button type="submit" id="btn_payment_create" class="btn btn-primary btn-submit"><i class="fa fa-check mg-r-10"></i>&nbsp;{{__('page.save')}}</button>
                         <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times mg-r-10"></i>&nbsp;{{__('page.close')}}</button>
                     </div>
                 </form>
@@ -226,7 +226,7 @@
                         </div>                                               
                         <div class="form-group">
                             <label class="control-label">{{__('page.attachment')}}</label>
-                            <input type="file" name="attachment" id="file2" class="file-input-styled">
+                            <input type="file" name="attachment" class="file-input-styled">
                         </div>
                         <div class="form-group">
                             <label class="control-label">{{__('page.note')}}</label>
@@ -234,7 +234,7 @@
                         </div> 
                     </div>    
                     <div class="modal-footer">
-                        <button type="submit" id="btn_create" class="btn btn-primary btn-submit"><i class="fa fa-check mg-r-10"></i>&nbsp;{{__('page.save')}}</button>
+                        <button type="submit" id="btn_preturn_create" class="btn btn-primary btn-submit"><i class="fa fa-check mg-r-10"></i>&nbsp;{{__('page.save')}}</button>
                         <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times mg-r-10"></i>&nbsp;{{__('page.close')}}</button>
                     </div>
                 </form>
@@ -337,6 +337,7 @@
 
         $("#btn-submit").click(function(){
             $("#searchForm").attr('action', "");
+            $("#ajax-loading").show();
             $("#searchForm").submit();
         });
     });
