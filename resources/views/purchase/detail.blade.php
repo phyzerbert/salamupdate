@@ -265,7 +265,7 @@
             $("#image_preview").html('')
             $("#image_preview").verySimpleImageViewer({
                 imageSource: path,
-                frame: ['100%', '100%'],
+                frame: ['498px', '598px'],
                 maxZoom: '900%',
                 zoomFactor: '10%',
                 mouse: true,
