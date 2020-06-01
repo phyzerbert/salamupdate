@@ -84,7 +84,7 @@
                                                 </button>
                                                 <ul class="dropdown-menu dropdown-menu-right">
                                                     <li><a href="{{route('concurrent_payments.supplier_purchases', $item->id)}}" class="dropdown-item">{{__('page.view_purchases')}}</a></li>
-                                                    <li><a href="{{route('concurrent_payments.add_payments', $item->id)}}" class="dropdown-item">{{__('page.add_payments')}}</a></li>
+                                                    {{-- <li><a href="{{route('concurrent_payments.add_payments', $item->id)}}" class="dropdown-item">{{__('page.add_payments')}}</a></li> --}}
                                                 </ul>
                                             </div>
                                         </td>
