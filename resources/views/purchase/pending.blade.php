@@ -277,7 +277,7 @@
             let current = 0;
             $("#purchase_image").verySimpleImageViewer({
                 imageSource: image_array[current],
-                frame: ['498px', '598px'],
+                frame: ['100%', '100%'],
                 maxZoom: '900%',
                 zoomFactor: '10%',
                 mouse: true,

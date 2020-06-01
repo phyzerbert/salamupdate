@@ -253,7 +253,7 @@
             $("#purchase_image").html('')
             $("#purchase_image").verySimpleImageViewer({
                 imageSource: image_path,
-                frame: ['498px', '598px'],
+                frame: ['100%', '100%'],
                 maxZoom: '900%',
                 zoomFactor: '10%',
                 mouse: true,
