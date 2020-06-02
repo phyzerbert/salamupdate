@@ -33,4 +33,8 @@ class Product extends Model
     public function store_products(){
         return $this->hasMany('App\Models\StoreProduct');
     }
+
+    public function images() {
+        return $this->morphMany(Image::class, 'imageable');
+    }
 }

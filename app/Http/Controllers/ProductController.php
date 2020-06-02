@@ -73,17 +73,23 @@ class ProductController extends Controller
         $item->tax_method = $data['tax_method'];
         $item->alert_quantity = $data['alert_quantity'];
         $item->supplier_id = $data['supplier_id'];
-        $item->detail = $data['detail'];
-
-        if($request->has("image")){
-            $picture = request()->file('image');
-            $imageName = "product_".time().'.'.$picture->getClientOriginalExtension();
-            $picture->move(public_path('images/uploaded/product_images/'), $imageName);
-            $item->image = 'images/uploaded/product_images/'.$imageName;
-        }
+        $item->detail = $data['detail'];        
         $item->save();
 
-        return back()->with('success', 'Created Successfully');
+        if($request->file("image")){
+            foreach ($request->file('image') as $key => $picture) {
+                $imageName = "product_".time() . $key . '.' . $picture->getClientOriginalExtension();
+                $picture->move(public_path('images/uploaded/product_images/'), $imageName);
+                $item->attachment = 'images/uploaded/product_images/'.$imageName;
+                Image::create([
+                    'imageable_id' => $item->id,
+                    'imageable_type' => 'App\Models\Product',
+                    'path' => 'images/uploaded/product_images/'.$imageName,
+                ]);
+            }
+        }
+
+        return back()->with('success', __('page.created_successfully'));
     }
 
     public function edit(Request $request, $id){
@@ -118,13 +124,19 @@ class ProductController extends Controller
         $item = Product::find($request->get("id"));
         $data['image'] = $item->image;
 
-        if($request->has("image")){
-            $picture = request()->file('image');
-            $imageName = "product_".time().'.'.$picture->getClientOriginalExtension();
-            $picture->move(public_path('images/uploaded/product_images/'), $imageName);
-            $data['image'] = 'images/uploaded/product_images/'.$imageName;
-        }
         $item->update($data);
+        if($request->has("image")){
+            foreach ($request->file('image') as $key => $picture) {
+                $imageName = "product_".time() . $key . '.' . $picture->getClientOriginalExtension();
+                $picture->move(public_path('images/uploaded/product_images/'), $imageName);
+                Image::create([
+                    'imageable_id' => $item->id,
+                    'imageable_type' => 'App\Models\Product',
+                    'path' => 'images/uploaded/product_images/'.$imageName,
+                ]);
+            }
+        }
+        
         return back()->with('success', 'Updated Successfully');
     }
 
