@@ -7,6 +7,7 @@ use App\Models\Payment;
 use App\Models\Purchase;
 use App\Models\Sale;
 use App\Models\Company;
+use App\Models\Image;
 
 use Auth;
 
@@ -37,7 +38,6 @@ class PaymentController extends Controller
             'type'=>'required|string',
             'paymentable_id'=>'required',
         ]);
-
         $user = Auth::user();
         
         $item = new Payment();
@@ -68,13 +68,19 @@ class PaymentController extends Controller
         }else{
             $item->status = 1;
         }
-        if($request->has("attachment")){
-            $picture = request()->file('attachment');
-            $imageName = $attach_name . '.' . $picture->getClientOriginalExtension();
-            $picture->move(public_path('images/uploaded/payment_images/'), $imageName);
-            $item->attachment = 'images/uploaded/payment_images/'.$imageName;
-        }
         $item->save();
+        if($request->file("attachment")){
+            foreach ($request->file('attachment') as $key => $picture) {
+                $imageName = $attach_name . $key . '.' . $picture->getClientOriginalExtension();
+                $picture->move(public_path('images/uploaded/payment_images/'), $imageName);
+                $item->attachment = 'images/uploaded/payment_images/'.$imageName;
+                Image::create([
+                    'imageable_id' => $item->id,
+                    'imageable_type' => 'App\Models\Payment',
+                    'path' => 'images/uploaded/payment_images/'.$imageName,
+                ]);
+            }
+        }
         return back()->with('success', __('page.added_successfully'));
     }
 
@@ -88,7 +94,8 @@ class PaymentController extends Controller
         $item->reference_no = $request->get("reference_no");
         $item->amount = $request->get("amount");
         $item->note = $request->get("note");
-        if($request->has("attachment")){
+        $item->save();
+        if($request->file("attachment")){
             if($item->paymentable_type == 'App\Models\Purchase'){                
                 $purchase = $item->paymentable;
                 $supplier_company = $purchase->supplier->company;
@@ -106,12 +113,17 @@ class PaymentController extends Controller
             }else {
                 $attach_name = "payment_image_" . time();
             }
-            $picture = request()->file('attachment');
-            $imageName = $attach_name . '.' . $picture->getClientOriginalExtension();
-            $picture->move(public_path('images/uploaded/payment_images/'), $imageName);
-            $item->attachment = 'images/uploaded/payment_images/'.$imageName;
+            foreach ($request->file('attachment') as $key => $picture) {
+                $imageName = $attach_name . $key . '.' . $picture->getClientOriginalExtension();
+                $picture->move(public_path('images/uploaded/payment_images/'), $imageName);
+                $item->attachment = 'images/uploaded/payment_images/'.$imageName;
+                Image::create([
+                    'imageable_id' => $item->id,
+                    'imageable_type' => 'App\Models\Payment',
+                    'path' => 'images/uploaded/payment_images/'.$imageName,
+                ]);
+            }
         }
-        $item->save();
         return back()->with('success', __('page.updated_successfully'));
     }
 

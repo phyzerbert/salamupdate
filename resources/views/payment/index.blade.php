@@ -2,6 +2,27 @@
 @section('style')    
     <link href="{{asset('master/plugins/jquery-ui/jquery-ui.css')}}" rel="stylesheet">
     <link href="{{asset('master/plugins/jquery-ui/timepicker/jquery-ui-timepicker-addon.min.css')}}" rel="stylesheet">
+    <style>
+        .card-image {
+            position: relative;
+            width: 40px;
+            height: 40px;
+            margin-right: 7px;
+            cursor: pointer;
+            float: left;
+        }
+        .payment-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .btn-delete-image {
+            position: absolute;
+            color: #EFA720;
+            top: -2px;
+            right: 2px;
+        }
+    </style>
 @endsection
 @section('content')
     <div class="content">
@@ -41,14 +62,33 @@
                                     <td class="date">{{date('Y-m-d H:i', strtotime($item->timestamp))}}</td>
                                     <td class="reference_no">{{$item->reference_no}}</td>
                                     <td class="amount" data-value="{{$item->amount}}">{{number_format($item->amount)}}</td>
-                                    <td class="" data-path="{{$item->attachment}}">
+                                    <td class="py-1">
                                         <span class="tx-info note">{{$item->note}}</span>&nbsp;
                                         @if($item->attachment != "")
-                                            <a href="{{asset($item->attachment)}}" class="attachment"><i class="fa fa-paperclip"></i></a>
+                                            <a href="{{asset($item->attachment)}}" class="attachment payment-image"><i class="fa fa-paperclip"></i></a>
                                         @endif
+                                        @forelse ($item->images as $image)
+                                            @if (file_exists($image->path))
+                                                @php
+                                                    $path_parts = pathinfo($image->path);
+                                                    $ext = $path_parts['extension'];
+                                                    if($ext == 'pdf') {
+                                                        $image_path = '/images/pdf.png';
+                                                    } else {
+                                                        $image_path = $image->path;
+                                                    }
+                                                @endphp     
+                                                <div class="card-image">
+                                                    <img src="{{asset($image_path)}}" href="{{asset($image->path)}}" class="payment-image border rounded" alt="">
+                                                    <span class="btn-delete-image btn-confirm" href="{{route('purchase.image.delete', $image->id)}}"><i class="fa fa-times-circle-o"></i></span>
+                                                </div>
+                                            @endif
+                                        @empty
+                                            <p class="text-muted">No Images</p>
+                                        @endforelse
                                     </td>
                                     @if(in_array($role, ['admin', 'user']))
-                                        <td class="py-1">
+                                        <td class="py-2">
                                             <a href="{{route('payment.approve', $item->id)}}" class="btn btn-info btn-icon wave-effect mr-2 btn-confirm" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="{{__('page.approve')}}"><i class="fa fa-check-circle-o"></i></a>
                                             <a href="#" class="btn btn-primary btn-icon wave-effect mr-2 btn-edit" data-id="{{$item->id}}" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="{{__('page.edit')}}"><i class="fa fa-edit"></i></a>
                                             <a href="{{route('payment.delete', $item->id)}}" class="btn btn-danger btn-icon wave-effect btn-confirm" data-id="{{$item->id}}" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="{{__('page.delete')}}"><i class="fa fa-trash-o"></i></a>
@@ -110,7 +150,7 @@
                             </div>                                               
                             <div class="form-group">
                                 <label class="control-label">{{__('page.attachment')}}</label>
-                                <input type="file" name="attachment" id="file2" class="file-input-styled">
+                                <input type="file" name="attachment[]" id="file2" class="file-input-styled" multiple accept="image/*, application/pdf" />
                             </div>
                             <div class="form-group">
                                 <label class="control-label">{{__('page.note')}}</label>
@@ -128,6 +168,7 @@
 @endsection
 
 @section('script')
+<script src="{{asset('master/plugins/ezview/EZView.js')}}"></script>
 <script src="{{asset('master/plugins/jquery-ui/jquery-ui.js')}}"></script>
 <script src="{{asset('master/plugins/jquery-ui/timepicker/jquery-ui-timepicker-addon.min.js')}}"></script>
 <script src="{{asset('master/plugins/styling/uniform.min.js')}}"></script>
@@ -163,21 +204,25 @@
             $("#editModal").modal();
         });
 
-        $(".attachment").click(function(e){
-            e.preventDefault();
-            let path = $(this).attr('href');
-            $("#image_preview").html('')
-            $("#image_preview").verySimpleImageViewer({
-                imageSource: path,
-                frame: ['100%', '100%'],
-                maxZoom: '900%',
-                zoomFactor: '10%',
-                mouse: true,
-                keyboard: true,
-                toolbar: true,
-            });
-            $("#attachModal").modal();
-        });
+        // $(".attachment").click(function(e){
+        //     e.preventDefault();
+        //     let path = $(this).attr('href');
+        //     $("#image_preview").html('')
+        //     $("#image_preview").verySimpleImageViewer({
+        //         imageSource: path,
+        //         frame: ['100%', '100%'],
+        //         maxZoom: '900%',
+        //         zoomFactor: '10%',
+        //         mouse: true,
+        //         keyboard: true,
+        //         toolbar: true,
+        //     });
+        //     $("#attachModal").modal();
+        // });
+
+        if($(".payment-image").length) {
+            $(".payment-image").EZView();
+        }
 
     });
 </script>

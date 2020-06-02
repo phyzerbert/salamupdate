@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Purchase;
+use App\Models\Payment;
 use App\Models\Sale;
 use App\Models\Order;
 use App\Models\PreOrder;
@@ -80,16 +81,18 @@ class VueController extends Controller
     }
 
     public function image_migrate(){
-        $data = Purchase::all();
+        ini_set('max_execution_time', '900000000');
+        $data = Payment::all();
         foreach ($data as $item) {
             if($item->attachment){                
                 Image::create([
                     'imageable_id' => $item->id,
-                    'imageable_type' => 'App\Models\Purchase',
+                    'imageable_type' => 'App\Models\Payment',
                     'path' => $item->attachment,
                 ]);
             }
         }
+        dump('ok');
     }
     
 }

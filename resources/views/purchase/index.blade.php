@@ -184,7 +184,7 @@
                         </div>                                               
                         <div class="form-group">
                             <label class="control-label">{{__('page.attachment')}}</label>
-                            <input type="file" name="attachment" class="file-input-styled">
+                            <input type="file" name="attachment[]" class="file-input-styled" accept="image/*, application/pdf" multiple />
                         </div>
                         <div class="form-group">
                             <label class="control-label">{{__('page.note')}}</label>
@@ -226,7 +226,7 @@
                         </div>                                               
                         <div class="form-group">
                             <label class="control-label">{{__('page.attachment')}}</label>
-                            <input type="file" name="attachment" class="file-input-styled">
+                            <input type="file" name="attachment" class="file-input-styled" accept="image/*, application/pdf" />
                         </div>
                         <div class="form-group">
                             <label class="control-label">{{__('page.note')}}</label>

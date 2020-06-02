@@ -78,7 +78,16 @@
                     <h5>{{__('page.attachment')}}</h5>
                     @forelse ($purchase->images as $image)
                         @if (file_exists($image->path))
-                            <img src="{{asset($image->path)}}" href="{{asset($image->path)}}" class="purchase-image border rounded" alt="">
+                            @php
+                                $path_parts = pathinfo($image->path);
+                                $ext = $path_parts['extension'];
+                                if($ext == 'pdf') {
+                                    $image_path = '/images/pdf.png';
+                                } else {
+                                    $image_path = $image->path;
+                                }
+                            @endphp     
+                            <img src="{{asset($image_path)}}" href="{{asset($image->path)}}" class="purchase-image border rounded" alt="">
                         @endif
                     @empty
                         <p class="text-muted">No Images</p>

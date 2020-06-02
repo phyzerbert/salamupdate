@@ -21,4 +21,9 @@ class Image extends Model
     {
         return $this->morphedByMany(Purchase::class, 'imageable');
     }
+
+    public function payment()
+    {
+        return $this->morphedByMany(Payment::class, 'imageable');
+    }
 }

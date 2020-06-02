@@ -134,8 +134,17 @@
                             <div class="clearfix">
                                 @foreach ($purchase->images as $image)
                                     @if (file_exists($image->path))
+                                        @php
+                                            $path_parts = pathinfo($image->path);
+                                            $ext = $path_parts['extension'];
+                                            if($ext == 'pdf') {
+                                                $image_path = '/images/pdf.png';
+                                            } else {
+                                                $image_path = $image->path;
+                                            }
+                                        @endphp
                                         <div class="card-image">
-                                            <img src="{{asset($image->path)}}" href="{{asset($image->path)}}" class="purchase-image border rounded" alt="">
+                                            <img src="{{asset($image_path)}}" href="{{asset($image->path)}}" class="purchase-image border rounded" alt="">
                                             <span class="btn-delete-image btn-confirm" href="{{route('purchase.image.delete', $image->id)}}"><i class="fa fa-times-circle-o"></i></span>
                                         </div>
                                     @endif
