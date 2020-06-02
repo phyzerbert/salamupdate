@@ -64,9 +64,6 @@
                                     <td class="amount" data-value="{{$item->amount}}">{{number_format($item->amount)}}</td>
                                     <td class="py-1">
                                         <span class="tx-info note">{{$item->note}}</span>&nbsp;
-                                        @if($item->attachment != "")
-                                            <a href="{{asset($item->attachment)}}" class="attachment payment-image"><i class="fa fa-paperclip"></i></a>
-                                        @endif
                                         @forelse ($item->images as $image)
                                             @if (file_exists($image->path))
                                                 @php
