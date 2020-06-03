@@ -94,6 +94,9 @@ class SaleController extends Controller
         ]);
 
         $data = $request->all();
+        if(Sale::where('reference_no', $data['reference_number'])->where('customer_id', $data['customer'])->exists()){
+            return back()->withErrors(['reference_number' => 'The reference number has already been taken.']);
+        }
         $item = new Sale();
         $item->user_id = Auth::user()->id;
         $item->biller_id = $data['user'];
@@ -173,6 +176,9 @@ class SaleController extends Controller
         ]);
         $data = $request->all();
         // dd($data);
+        if(Sale::where('reference_no', $data['reference_number'])->where('customer_id', $data['customer'])->count() > 1){
+            return back()->withErrors(['reference_number' => 'The reference number has already been taken.']);
+        }
         $item = Sale::find($request->get("id"));
  
         $item->biller_id = $data['user'];  

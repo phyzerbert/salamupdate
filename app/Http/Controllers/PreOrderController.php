@@ -103,7 +103,9 @@ class PreOrderController extends Controller
         if(!isset($data['product_id']) ||  count($data['product_id']) == 0 || in_array(null, $data['product_id'])){
             return back()->withErrors(['product' => __('page.select_product')]);
         }
-
+        if(PreOrder::where('reference_no', $data['reference_number'])->where('supplier_id', $data['supplier'])->exists()){
+            return back()->withErrors(['reference_number' => 'The reference number has already been taken.']);
+        }
         $item = new PreOrder();
         $item->user_id = Auth::user()->id;  
         $item->timestamp = $data['date'].":00";

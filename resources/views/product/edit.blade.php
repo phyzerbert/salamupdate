@@ -154,7 +154,7 @@
                             <div class="form-group">
                                 <label class="form-control-label">{{__('page.product_image')}}:</label>                                
                                 <label class="custom-file wd-100p">
-                                    <input type="file" name="image" id="file2" class="file-input-styled" accept="image/*">
+                                    <input type="file" name="image[]" id="file2" class="file-input-styled" multiple accept="image/*, application/pdf">
                                 </label>
                             </div>
                         </div>

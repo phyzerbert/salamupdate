@@ -82,16 +82,26 @@ class VueController extends Controller
 
     public function image_migrate(){
         ini_set('max_execution_time', '900000000');
-        $data = Payment::all();
-        foreach ($data as $item) {
-            if($item->attachment){                
-                Image::create([
-                    'imageable_id' => $item->id,
-                    'imageable_type' => 'App\Models\Payment',
-                    'path' => $item->attachment,
-                ]);
-            }
-        }
+        // $data = Payment::all();
+        // foreach ($data as $item) {
+        //     if($item->attachment){                
+        //         Image::create([
+        //             'imageable_id' => $item->id,
+        //             'imageable_type' => 'App\Models\Payment',
+        //             'path' => $item->attachment,
+        //         ]);
+        //     }
+        // }
+        // $data = Product::all();
+        // foreach ($data as $item) {
+        //     if($item->image){                
+        //         Image::create([
+        //             'imageable_id' => $item->id,
+        //             'imageable_type' => 'App\Models\Product',
+        //             'path' => $item->image,
+        //         ]);
+        //     }
+        // }
         dump('ok');
     }
     

@@ -64,7 +64,7 @@
                                     <td class="amount" data-value="{{$item->amount}}">{{number_format($item->amount)}}</td>
                                     <td class="py-1">
                                         <span class="tx-info note">{{$item->note}}</span>&nbsp;
-                                        @forelse ($item->images as $image)
+                                        @foreach ($item->images as $image)
                                             @if (file_exists($image->path))
                                                 @php
                                                     $path_parts = pathinfo($image->path);
@@ -80,9 +80,7 @@
                                                     <span class="btn-delete-image btn-confirm" href="{{route('purchase.image.delete', $image->id)}}"><i class="fa fa-times-circle-o"></i></span>
                                                 </div>
                                             @endif
-                                        @empty
-                                            <p class="text-muted">No Images</p>
-                                        @endforelse
+                                        @endforeach
                                     </td>
                                     @if(in_array($role, ['admin', 'user']))
                                         <td class="py-2">

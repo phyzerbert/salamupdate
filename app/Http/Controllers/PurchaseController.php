@@ -125,6 +125,9 @@ class PurchaseController extends Controller
         if(!isset($data['product_id']) ||  count($data['product_id']) == 0 || in_array(null, $data['product_id'])){
             return back()->withErrors(['product' => 'Please select a prouct.']);
         }
+        if(Purchase::where('reference_no', $data['reference_number'])->where('supplier_id', $data['supplier'])->exists()){
+            return back()->withErrors(['reference_number' => 'The reference number has already been taken.']);
+        }
 
         // dd($data);
         $item = new Purchase();
@@ -232,6 +235,10 @@ class PurchaseController extends Controller
 
         if(!isset($data['product_id']) ||  count($data['product_id']) == 0 || in_array(null, $data['product_id'])){
             return back()->withErrors(['product' => 'Please select a prouct.']);
+        }
+
+        if(Purchase::where('reference_no', $data['reference_number'])->where('supplier_id', $data['supplier'])->count() > 1){
+            return back()->withErrors(['reference_number' => 'The reference number has already been taken.']);
         }
         
         $item = Purchase::find($request->get("id"));

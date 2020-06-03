@@ -1,4 +1,27 @@
 @extends('layouts.master')
+@section('style')
+    <style>
+        .card-image {
+            position: relative;
+            width: 40px;
+            height: 40px;
+            margin-right: 7px;
+            cursor: pointer;
+            float: left;
+        }
+        .product-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .btn-delete-image {
+            position: absolute;
+            color: #EFA720;
+            top: -2px;
+            right: 2px;
+        }
+    </style>
+@endsection
 @section('content')
     <div class="content">
         <div class="container-fluid">
@@ -27,7 +50,7 @@
                         <thead class="">
                             <tr class="bg-blue">
                                 <th style="width:30px;">#</th>
-                                <th style="width:50px"></th>
+                                <th style="width:200px"></th>
                                 <th>{{__('page.product_code')}}</th>
                                 <th>{{__('page.product_name')}}</th>
                                 <th>{{__('page.category')}}</th>
@@ -46,14 +69,26 @@
                             @endphp
                                 <tr>
                                     <td>{{ (($data->currentPage() - 1 ) * $data->perPage() ) + $loop->iteration }}</td>
-                                    <td class="py-1" width="50">
-                                        @php
-                                            $image_path = asset('images/no-image.png');
-                                            if(file_exists($item->image)){
-                                                $image_path = asset($item->image);
-                                            }
-                                        @endphp
-                                        <img class="bordered rounded-circle attachment" height="40" width="40" src="{{$image_path}}" alt="">
+                                    <td class="py-1">
+                                        @forelse ($item->images as $image)
+                                            @if (file_exists($image->path))
+                                                @php
+                                                    $path_parts = pathinfo($image->path);
+                                                    $ext = $path_parts['extension'];
+                                                    if($ext == 'pdf') {
+                                                        $image_path = '/images/pdf.png';
+                                                    } else {
+                                                        $image_path = $image->path;
+                                                    }
+                                                @endphp     
+                                                <div class="card-image">
+                                                    <img src="{{asset($image_path)}}" href="{{asset($image->path)}}" class="product-image border rounded" alt="">
+                                                    <span class="btn-delete-image btn-confirm" href="{{route('purchase.image.delete', $image->id)}}"><i class="fa fa-times-circle-o"></i></span>
+                                                </div>
+                                            @endif
+                                        @empty
+                                            <p class="text-muted my-2">No Images</p>
+                                        @endforelse
                                     </td>
                                     <td class="code">{{$item->code}}</td>
                                     <td class="name">{{$item->name}}</td>
@@ -94,6 +129,8 @@
 @endsection
 
 @section('script')
+<script src="{{asset('master/plugins/ezview/EZView.js')}}"></script>
+<script src="{{asset('master/plugins/jquery-ui/jquery-ui.js')}}"></script>
 <script>
     $(document).ready(function () {
         $("#btn-reset").click(function(){
@@ -101,21 +138,9 @@
             $("#search_name").val('');
             $("#search_category").val('');
         });
-        $(".attachment").click(function(e){
-            e.preventDefault();
-            let path = $(this).attr('src');
-            $("#image_preview").html('')
-            $("#image_preview").verySimpleImageViewer({
-                imageSource: path,
-                frame: ['498px', '598px', true],
-                maxZoom: '900%',
-                zoomFactor: '10%',
-                mouse: true,
-                keyboard: true,
-                toolbar: true,
-            });
-            $("#attachModal").modal();
-        });
+        if($(".product-image").length) {
+            $(".product-image").EZView();
+        }
     });
 </script>
 @endsection

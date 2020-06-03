@@ -39,7 +39,6 @@ class PaymentController extends Controller
             'paymentable_id'=>'required',
         ]);
         $user = Auth::user();
-        
         $item = new Payment();
         $item->timestamp = $request->get('date').":00";
         $item->reference_no = $request->get('reference_no');
@@ -68,12 +67,19 @@ class PaymentController extends Controller
         }else{
             $item->status = 1;
         }
+
+        if(Payment::where('reference_no', $request->get('reference_no'))
+                    ->where('paymentable_id', $request->get('paymentable_id'))
+                    ->where('paymentable_type', $item->paymentable_type)
+                    ->exists()){
+            return back()->withErrors(['reference_no' => 'The reference number has already been taken.']);
+        }
+
         $item->save();
         if($request->file("attachment")){
             foreach ($request->file('attachment') as $key => $picture) {
                 $imageName = $attach_name . $key . '.' . $picture->getClientOriginalExtension();
                 $picture->move(public_path('images/uploaded/payment_images/'), $imageName);
-                $item->attachment = 'images/uploaded/payment_images/'.$imageName;
                 Image::create([
                     'imageable_id' => $item->id,
                     'imageable_type' => 'App\Models\Payment',
@@ -116,7 +122,6 @@ class PaymentController extends Controller
             foreach ($request->file('attachment') as $key => $picture) {
                 $imageName = $attach_name . $key . '.' . $picture->getClientOriginalExtension();
                 $picture->move(public_path('images/uploaded/payment_images/'), $imageName);
-                $item->attachment = 'images/uploaded/payment_images/'.$imageName;
                 Image::create([
                     'imageable_id' => $item->id,
                     'imageable_type' => 'App\Models\Payment',

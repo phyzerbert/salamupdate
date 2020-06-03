@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Image;
 use App\Models\Category;
 use App\Models\Company;
 use App\Models\Supplier;
@@ -53,7 +54,7 @@ class ProductController extends Controller
     public function save(Request $request){
         $request->validate([
             'name'=>'required|string',
-            'code'=>'required|string',
+            'code'=>'required|string|unique:products',
             'barcode_symbology_id'=>'required',
             'category_id'=>'required',
             'unit'=>'required|string',
@@ -80,7 +81,6 @@ class ProductController extends Controller
             foreach ($request->file('image') as $key => $picture) {
                 $imageName = "product_".time() . $key . '.' . $picture->getClientOriginalExtension();
                 $picture->move(public_path('images/uploaded/product_images/'), $imageName);
-                $item->attachment = 'images/uploaded/product_images/'.$imageName;
                 Image::create([
                     'imageable_id' => $item->id,
                     'imageable_type' => 'App\Models\Product',
