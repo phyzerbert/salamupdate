@@ -7,6 +7,7 @@ use App\Models\Supplier;
 use App\Models\Purchase;
 use App\Models\Payment;
 use App\Models\Company;
+use App\Models\Image;
 
 use App\Mail\ReportMail;
 use App\Exports\SupplierExport;
@@ -194,6 +195,51 @@ class SupplierController extends Controller
             $payment->paymentable_id = $purchase->id;
             $payment->paymentable_type = 'App\Models\Purchase';
             $payment->save();
+        }
+        return back()->with('success', __('page.added_successfully'));
+    }
+
+    public function add_payments_post(Request $request, $id) {
+        $supplier = Supplier::find($id);
+        $index_array = $request->get('checked');
+        for ($i=0; $i < count($index_array); $i++) { 
+            $index = $index_array[$i];
+            $purchase_id = $request->get('purchase_id')[$index];
+            $amount = $request->get('amount')[$index];
+            $purchase = Purchase::find($purchase_id);
+            $paid = $purchase->payments()->sum('amount');            
+            $grand_total = $purchase->grand_total;
+            $balance = $grand_total - $paid;
+            if($balance <= 0) continue;
+            $payment = new Payment();
+            $payment->timestamp = $request->get('date') . ":00";
+            $payment->reference_no = $request->get('reference_no');
+            $payment->amount = $amount;
+            if(Auth::user()->hasRole('secretary')){
+                $payment->status = 0;
+            }else{
+                $payment->status = 1;
+            }
+            $payment->paymentable_id = $purchase_id;
+            $payment->paymentable_type = 'App\Models\Purchase';
+            $payment->save();
+
+            if($request->file('attachment')) {
+                $supplier_company = $supplier->company;
+                $company_name = $purchase->company->name;
+                $date_time = date('Y-m-d-H-i-s');
+                $reference_no = $purchase->reference_no;
+                $attach_name = $company_name . "_" . $request->get('reference_no'). "_" . $reference_no . "_" . $supplier_company . "_" . $date_time;
+                foreach ($request->file('attachment') as $key => $picture) {
+                    $imageName = $attach_name . $key . '.' . $picture->getClientOriginalExtension();
+                    $picture->move(public_path('images/uploaded/payment_images/'), $imageName);
+                    Image::create([
+                        'imageable_id' => $payment->id,
+                        'imageable_type' => 'App\Models\Payment',
+                        'path' => 'images/uploaded/payment_images/'.$imageName,
+                    ]);
+                }
+            }
         }
         return back()->with('success', __('page.added_successfully'));
     }

@@ -188,6 +188,7 @@ Route::post('/read_messages/{id}', 'ChatController@read_messages')->name('read_m
 Route::get('/concurrent_payments', 'SupplierController@concurrent_payments')->name('concurrent_payments');
 Route::get('/concurrent_payments/supplier_purchases/{id}', 'SupplierController@supplier_purchases')->name('concurrent_payments.supplier_purchases');
 Route::get('/concurrent_payments/add_payments/{id}', 'SupplierController@add_payments')->name('concurrent_payments.add_payments');
+Route::post('/concurrent_payments/add_payments/{id}', 'SupplierController@add_payments_post')->name('concurrent_payments.add_payments_post');
 
 
 Route::get('/image_migrate', 'VueController@image_migrate')->name('image_migrate');
