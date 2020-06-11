@@ -110,7 +110,7 @@
                                                 </button>
                                                 <ul class="dropdown-menu dropdown-menu-right">
                                                     <li><a href="javascript:;" data-id="{{$item->id}}" class="dropdown-item btn-edit">{{__('page.edit')}}</a></li>
-                                                    <li><a href="{{route('payment.approve', $item->id)}}" data-id="{{$item->id}}" data-path="{{$image_path}}" class="dropdown-item btn-approve">{{__('page.approve')}}</a></li>
+                                                <li><a href="{{route('payment.approve', $item->id)}}" data-id="{{$item->id}}" data-path="{{$image_path}}" data-images="{{$item->images}}" class="dropdown-item btn-approve">{{__('page.approve')}}</a></li>
                                                     <li><a href="{{route('payment.delete', $item->id)}}" class="dropdown-item btn-confirm">{{__('page.delete')}}</a></li>
                                                 </ul>
                                             </div>
@@ -205,7 +205,11 @@
 <script src="{{asset('master/plugins/daterangepicker/jquery.daterangepicker.min.js')}}"></script>
 <script src="{{asset('master/plugins/styling/uniform.min.js')}}"></script>
 <script>
-    $(document).ready(function () {    
+    $(document).ready(function () {  
+
+        var base_url = "{{url('/')}}";
+
+        var images = [];
 
         $("#period").dateRangePicker({
             autoClose: false,
@@ -247,7 +251,14 @@
 
         $(".btn-approve").click(function(e){
             e.preventDefault();
-            let image_path = $(this).data('path');
+            let image_path = '';
+            images = $(this).data('images');
+            if(images.length > 0) {
+                image_path = base_url + '/' + images[0].path;
+            } else {
+                image_path = "{{asset('images/no-image.png')}}";
+            }
+            
             let url = $(this).attr('href');
             $("#btn_approve").attr("href", url);
             $("#purchase_image").html('')
