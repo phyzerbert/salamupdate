@@ -59,35 +59,18 @@
                         <div class="col-md-6 col-lg-4">
                             <div class="form-group mb-2">
                                 <label class="form-control-label">{{__('page.user')}}</label>
-                                <select class="form-control select2-show-search" name="user" data-placeholder="{{__('page.user')}}" required>
-                                    <option label="{{__('page.user')}}"></option>
-                                    @foreach ($users as $item)
-                                        <option value="{{$item->id}}">{{$item->name}}</option>
-                                    @endforeach
-                                </select>
-                                @error('user')
-                                    <span class="invalid-feedback d-block" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <input type="text" name="user" class="form-control" value="{{Auth::user()->name}}" readonly />
                             </div>
                         </div>
                     </div>
                     <div class="row mb-4">                        
                         <div class="col-md-6 col-lg-4">
+                            @php
+                                $auth_store = Auth::user()->company->stores()->first();
+                            @endphp
                             <div class="form-group mb-2">
                                 <label class="form-control-label">{{__('page.store')}}</label>
-                                <select class="form-control select2" name="store" data-placeholder="{{__('page.select_store')}}" required>
-                                    <option label="{{__('page.select_store')}}"></option>
-                                    @foreach ($stores as $item)
-                                        <option value="{{$item->id}}">{{$item->name}}</option>
-                                    @endforeach
-                                </select>
-                                @error('store')
-                                    <span class="invalid-feedback d-block" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <input type="text" name="store" class="form-control" value="{{$auth_store->name}}" readonly />
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-4">

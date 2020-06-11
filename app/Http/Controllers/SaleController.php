@@ -88,7 +88,6 @@ class SaleController extends Controller
         $request->validate([
             'date'=>'required|string',
             'reference_number'=>'required|string',
-            'store'=>'required',
             'customer'=>'required',
             'user'=>'required',
         ]);
@@ -97,14 +96,14 @@ class SaleController extends Controller
         if(Sale::where('reference_no', $data['reference_number'])->where('customer_id', $data['customer'])->exists()){
             return back()->withErrors(['reference_number' => 'The reference number has already been taken.']);
         }
+        $auth_store = Auth::user()->company->stores()->first();
         $item = new Sale();
-        $item->user_id = Auth::user()->id;
-        $item->biller_id = $data['user'];
+        $item->user_id = Auth::id();
+        $item->biller_id = Auth::id();
         $item->timestamp = $data['date'].":00";
         $item->reference_no = $data['reference_number'];
-        $item->store_id = $data['store'];
-        $store = Store::find($data['store']);
-        $item->company_id = $store->company_id;
+        $item->store_id = $auth_store->id;
+        $item->company_id = $auth_store->company_id;
         $item->customer_id = $data['customer'];
         // $item->status = $data['status'];
 
@@ -120,7 +119,7 @@ class SaleController extends Controller
 
         for ($i=0; $i < count($data['product_id']); $i++) {             
             
-            $store_product = StoreProduct::where('store_id', $data['store'])->where('product_id', $data['product_id'][$i])->first();
+            $store_product = StoreProduct::where('store_id', $auth_store->id)->where('product_id', $data['product_id'][$i])->first();
             if(isset($store_product)){
                 if($store_product->quantity < $data['quantity'][$i]){
                     continue;
