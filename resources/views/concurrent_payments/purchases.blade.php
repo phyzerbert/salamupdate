@@ -214,6 +214,12 @@
 <script src="{{asset('master/plugins/styling/uniform.min.js')}}"></script>
 <script>
     $(document).ready(function () {
+
+        $(".custom-file-input").on("change", function() {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+        
         $("#payment_date").datetimepicker({
             dateFormat: 'yy-mm-dd',
         });

@@ -201,6 +201,17 @@ class SupplierController extends Controller
 
     public function add_payments_post(Request $request, $id) {
         $supplier = Supplier::find($id);
+        $filenames = [];
+        if($request->file('attachment')) {
+            $supplier_company = $supplier->company;
+            $date_time = date('Y-m-d-H-i-s');
+            $attach_name = $request->get('reference_no'). "_" . $supplier_company . "_" . $date_time;
+            foreach ($request->file('attachment') as $key => $picture) {
+                $imageName = $attach_name . $key . '.' . $picture->getClientOriginalExtension();
+                $picture->move(public_path('images/uploaded/payment_images/'), $imageName);
+                array_push($filenames, 'images/uploaded/payment_images/'.$imageName);
+            }
+        }
         $index_array = $request->get('checked');
         for ($i=0; $i < count($index_array); $i++) { 
             $index = $index_array[$i];
@@ -220,25 +231,16 @@ class SupplierController extends Controller
             }else{
                 $payment->status = 1;
             }
+            $payment->note = $request->get('note');
             $payment->paymentable_id = $purchase_id;
             $payment->paymentable_type = 'App\Models\Purchase';
             $payment->save();
-
-            if($request->file('attachment')) {
-                $supplier_company = $supplier->company;
-                $company_name = $purchase->company->name;
-                $date_time = date('Y-m-d-H-i-s');
-                $reference_no = $purchase->reference_no;
-                $attach_name = $company_name . "_" . $request->get('reference_no'). "_" . $reference_no . "_" . $supplier_company . "_" . $date_time;
-                foreach ($request->file('attachment') as $key => $picture) {
-                    $imageName = $attach_name . $key . '.' . $picture->getClientOriginalExtension();
-                    $picture->move(public_path('images/uploaded/payment_images/'), $imageName);
-                    Image::create([
-                        'imageable_id' => $payment->id,
-                        'imageable_type' => 'App\Models\Payment',
-                        'path' => 'images/uploaded/payment_images/'.$imageName,
-                    ]);
-                }
+            for ($i=0; $i < count($filenames); $i++) { 
+                Image::create([
+                    'imageable_id' => $payment->id,
+                    'imageable_type' => 'App\Models\Payment',
+                    'path' => $filenames[$i],
+                ]);
             }
         }
         return back()->with('success', __('page.added_successfully'));

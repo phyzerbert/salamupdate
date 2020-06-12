@@ -274,7 +274,7 @@
 <script src="{{asset('master/plugins/jquery-ui/timepicker/jquery-ui-timepicker-addon.min.js')}}"></script>
 <script src="{{asset('master/plugins/styling/uniform.min.js')}}"></script>
 <script>
-    $(document).ready(function () {
+    $(document).ready(function () {        
 
         $("#purchase_date").datetimepicker({
             dateFormat: 'yy-mm-dd',
