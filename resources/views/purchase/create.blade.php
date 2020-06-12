@@ -190,7 +190,7 @@
                         </div>
                     </div>
                     <div class="mt-3 text-right">
-                        <button type="submit" class="btn btn-primary mr-2"><i class="fa fa-check mr-2"></i>{{__('page.save')}}</button>
+                        <button type="submit" class="btn btn-primary mr-2 btn-submit"><i class="fa fa-check mr-2"></i>{{__('page.save')}}</button>
                         <a href="{{route('purchase.index')}}" class="btn btn-warning"><i class="fa fa-times mr-2"></i>{{__('page.cancel')}}</a>
                     </div>
                 </form>
@@ -296,6 +296,10 @@
             $("#create_form input.form-control").val('');
             $("#create_form .invalid-feedback strong").text('');
             $("#addSupplierModal").modal();
+        });
+
+        $(".btn-submit").click(function () {
+            $("#ajax-loading").show();
         });
 
         $("#btn_create").click(function(){

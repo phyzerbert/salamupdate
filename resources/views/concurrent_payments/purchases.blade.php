@@ -154,7 +154,7 @@
                             </table>
                         </div>
                         <div class="clearfix">
-                            <button type="submit" class="btn btn-success btn-sm float-right" style="min-width: 150px;">Submit</button>
+                            <button type="submit" class="btn btn-success btn-sm float-right btn-submit" style="min-width: 150px;">Submit</button>
                         </div>
                     </div>
                 </form>
@@ -219,7 +219,7 @@
             var fileName = $(this).val().split("\\").pop();
             $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
         });
-        
+
         $("#payment_date").datetimepicker({
             dateFormat: 'yy-mm-dd',
         });
@@ -267,8 +267,13 @@
         $("td input.checked").change(function () {
            calc_total_amount() ;
         });
+
         $("td input.amount").keyup(function () {
            calc_total_amount() ;
+        });
+
+        $(".btn-submit").click(function () {
+            $("#ajax-loading").show();
         });
 
         function calc_total_amount(){

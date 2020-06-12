@@ -157,7 +157,7 @@
                         </div>
                     </div>
                     <div class="form-layout-footer text-right">
-                        <button type="submit" class="btn btn-primary mr-2"><i class="fa fa-check mr-2"></i>{{__('page.save')}}</button>
+                        <button type="submit" class="btn btn-primary mr-2 btn-submit"><i class="fa fa-check mr-2"></i>{{__('page.save')}}</button>
                         <a href="{{route('sale.index')}}" class="btn btn-warning"><i class="fa fa-times mr-2"></i>{{__('page.cancel')}}</a>
                     </div>
                 </form>
@@ -182,7 +182,11 @@
         
         $('.file-input-styled').uniform({
             fileButtonClass: 'action btn bg-primary text-white'
-        });        
+        });
+        
+        $(".btn-submit").click(function () {
+            $("#ajax-loading").show();
+        });    
     });
 </script>
 <script src="{{ asset('js/sale_create.js') }}"></script>

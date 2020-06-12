@@ -255,7 +255,7 @@
                         </div>
                     </div>
                     <div class="form-layout-footer text-right">
-                        <button type="submit" class="btn btn-primary mr-3"><i class="fa fa-check mr-2"></i>{{__('page.save')}}</button>
+                        <button type="submit" class="btn btn-primary mr-3 btm-submit"><i class="fa fa-check mr-2"></i>{{__('page.save')}}</button>
                         <a href="{{route('purchase.index')}}" class="btn btn-warning"><i class="fa fa-times mr-2"></i>{{__('page.cancel')}}</a>
                     </div>
                 </form>
@@ -285,9 +285,13 @@
             fileButtonClass: 'action btn bg-primary text-white'
         });
 
+        $(".btn-submit").click(function () {
+            $("#ajax-loading").show();
+        });
+
         if($(".purchase-image").length) {
             $(".purchase-image").EZView();
-        }
+        }        
     });
 </script>
 <script src="{{ asset('js/purchase_edit.js') }}"></script>
