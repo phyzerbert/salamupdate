@@ -133,7 +133,7 @@
                                                 </td> --}}
                                                 <td class="action py-2 clearfix">
                                                     <input type="hidden" name="purchase_id[]" value="{{$item->id}}" />
-                                                    <input type="number" name="amount[]" value="{{$grand_total - $paid}}" min="0" class="amount form-control form-control-sm">
+                                                    <input type="number" name="amount[]" value="{{$grand_total - $paid}}" min="0" class="amount form-control form-control-sm" style="width: 90px;">
                                                     <label class="form-check-label">
                                                         <input class="form-check-input checked" type="checkbox" name="checked[]" value="{{$i - 1}}" />
                                                     </label>
