@@ -59,17 +59,7 @@
                         <div class="col-md-6 col-lg-4">
                             <div class="form-group mg-b-10-force">
                                 <label class="form-control-label">{{__('page.user')}}:</label>
-                                <select class="form-control select2-show-search" name="user" data-placeholder="{{__('page.user')}}">
-                                    <option label="{{__('page.user')}}"></option>
-                                    @foreach ($users as $item)
-                                        <option value="{{$item->id}}" @if($sale->biller_id == $item->id) selected @endif>{{$item->name}}</option>
-                                    @endforeach
-                                </select>
-                                @error('user')
-                                    <span class="invalid-feedback d-block" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <input type="text" class="form-control" value="{{$item->user->name}}" readonly />
                             </div>
                         </div>
                     </div>
@@ -77,17 +67,7 @@
                         <div class="col-md-6 col-lg-4">
                             <div class="form-group mg-b-10-force">
                                 <label class="form-control-label">{{__('page.store')}}:</label>
-                                <select class="form-control select2" name="store" data-placeholder="Select Store">
-                                    <option label="Select Store"></option>
-                                    @foreach ($stores as $item)
-                                        <option value="{{$item->id}}" @if($sale->store_id == $item->id) selected @endif>{{$item->name}}</option>
-                                    @endforeach
-                                </select>
-                                @error('store')
-                                    <span class="invalid-feedback d-block" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <input type="text" class="form-control" value="{{$item->store->name}}" readonly />
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-4">

@@ -89,7 +89,6 @@ class SaleController extends Controller
             'date'=>'required|string',
             'reference_number'=>'required|string',
             'customer'=>'required',
-            'user'=>'required',
         ]);
 
         $data = $request->all();
@@ -169,9 +168,7 @@ class SaleController extends Controller
         $request->validate([
             'date'=>'required|string',
             'reference_number'=>'required|string',
-            'store'=>'required',
             'customer'=>'required',
-            'user'=>'required',
         ]);
         $data = $request->all();
         // dd($data);
@@ -180,11 +177,11 @@ class SaleController extends Controller
         }
         $item = Sale::find($request->get("id"));
  
-        $item->biller_id = $data['user'];  
+        // $item->biller_id = $data['user'];  
         $item->timestamp = $data['date'].":00";
         $item->reference_no = $data['reference_number'];
-        $item->store_id = $data['store'];
-        $store = Store::find($data['store']);
+        // $item->store_id = $data['store'];
+        $store = $item->store;
         $item->company_id = $store->company_id;
         $item->customer_id = $data['customer'];
         // $item->status = $data['status'];
