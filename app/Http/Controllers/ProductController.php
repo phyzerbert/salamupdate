@@ -71,7 +71,7 @@ class ProductController extends Controller
         $item->cost = $data['cost'];
         $item->price = $data['price'];
         $item->tax_id = $data['tax_id'];
-        $item->tax_method = $data['tax_method'];
+        // $item->tax_method = $data['tax_method'];
         $item->alert_quantity = $data['alert_quantity'];
         $item->supplier_id = $data['supplier_id'];
         $item->detail = $data['detail'];        

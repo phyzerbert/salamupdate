@@ -123,7 +123,7 @@
                                 </select>
                             </div>
                         </div>                 
-                        <div class="col-lg-4 col-md-6 mt-3">
+                        {{-- <div class="col-lg-4 col-md-6 mt-3">
                             <div class="form-group">
                                 <label class="form-control-label">{{__('page.tax_method')}}:</label>
                                 <select class="form-control select2" name="tax_method" data-placeholder="Select Tax Method">
@@ -132,7 +132,7 @@
                                     <option value="1" @if($product->tax_method == 1) selected @endif>Exclusive</option>
                                 </select>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="col-lg-4 col-md-6 mt-3">
                             <div class="form-group">
                                 <label class="form-control-label">{{__('page.alert_quantity')}}:</label>
