@@ -59,7 +59,7 @@
                         <div class="col-md-6 col-lg-4">
                             <div class="form-group mg-b-10-force">
                                 <label class="form-control-label">{{__('page.user')}}:</label>
-                                <input type="text" class="form-control" value="{{$item->user->name}}" readonly />
+                                <input type="text" class="form-control" value="{{$sale->user->name}}" readonly />
                             </div>
                         </div>
                     </div>
@@ -67,7 +67,7 @@
                         <div class="col-md-6 col-lg-4">
                             <div class="form-group mg-b-10-force">
                                 <label class="form-control-label">{{__('page.store')}}:</label>
-                                <input type="text" class="form-control" value="{{$item->store->name}}" readonly />
+                                <input type="text" class="form-control" value="{{$sale->store->name}}" readonly />
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-4">
