@@ -228,11 +228,26 @@
                                         <td class="date">{{date('Y-m-d H:i', strtotime($item->timestamp))}}</td>
                                         <td class="reference_no">{{$item->reference_no}}</td>
                                         <td class="amount" data-value="{{$item->amount}}">{{number_format($item->amount)}}</td>
-                                        <td>
+                                        <td class="py-1">
                                             <span class="tx-info note">{{$item->note}}</span>&nbsp;
-                                            @if($item->attachment != "")
+                                            {{-- @if($item->attachment != "")
                                                 <span data-value="{{asset($item->attachment)}}" class="attachment text-primary"><i class="fa fa-paperclip"></i></span>
-                                            @endif
+                                            @endif --}}
+
+                                            @foreach ($item->images as $image)
+                                                @if (file_exists($image->path))
+                                                    @php
+                                                        $path_parts = pathinfo($image->path);
+                                                        $ext = $path_parts['extension'];
+                                                        if($ext == 'pdf') {
+                                                            $image_path = '/images/pdf.png';
+                                                        } else {
+                                                            $image_path = $image->path;
+                                                        }
+                                                    @endphp     
+                                                    <img src="{{asset($image_path)}}" href="{{asset($image->path)}}" class="purchase-image border rounded" alt="">
+                                                @endif
+                                            @endforeach
                                         </td>
                                     </tr>
                                 @empty
