@@ -100,7 +100,7 @@
             function showloader(){
                 $("#ajax-loading").show();
             }
-            $(document).ready(function () {
+            // $(document).ready(function () {
                 let auth_id = "{{auth()->id()}}";
                 $("#ajax-loading").show();
                 $.ajax({
@@ -116,7 +116,7 @@
                         window.location.href = '/login';
                     }
                 });
-            })
+            // });
         </script>
 
         <script>
