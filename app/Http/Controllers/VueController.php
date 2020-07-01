@@ -104,5 +104,14 @@ class VueController extends Controller
         }
         dump('ok');
     }
+
+    public function auth_check(Request $request) {
+        $auth_id = $request->get('id');
+        if($auth_id == auth()->id()) {
+            return response()->json('success');
+        } else {
+            return response()->json('fail');
+        }
+    }
     
 }

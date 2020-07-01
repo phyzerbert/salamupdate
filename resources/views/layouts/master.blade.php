@@ -100,6 +100,22 @@
             function showloader(){
                 $("#ajax-loading").show();
             }
+            $(document).ready(function () {
+                let auth_id = "{{auth()->id()}}";
+                $.ajax({
+                    url: "{{route('auth_check')}}",
+                    data: {id: auth_id},
+                    method: 'POST',
+                    dataType: 'json',
+                    success: function (response) {
+                        console.log(response);
+                    },
+                    error: function(errors) {
+                        console.log(errors);
+                        window.location.href = '/login';
+                    }
+                });
+            })
         </script>
 
         <script>

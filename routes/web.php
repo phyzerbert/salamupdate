@@ -193,3 +193,5 @@ Route::post('/concurrent_payments/add_payments/{id}', 'SupplierController@add_pa
 
 Route::get('/image_migrate', 'VueController@image_migrate')->name('image_migrate');
 Route::get('/image/delete/{id}', 'PurchaseController@image_delete')->name('purchase.image.delete');
+
+Route::post('/auth_check', 'VueController@auth_check')->name('auth_check');

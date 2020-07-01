@@ -45,5 +45,9 @@
         <script src="{{asset('master/js/jquery.app.js')}}"></script>
         
         @yield('script')
+
+        <script>
+            localStorage.removeItem("auth_user");
+        </script>
 	</body>
 </html>
