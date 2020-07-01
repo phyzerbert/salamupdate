@@ -102,13 +102,14 @@
             }
             $(document).ready(function () {
                 let auth_id = "{{auth()->id()}}";
+                $("#ajax-loading").show();
                 $.ajax({
                     url: "{{route('auth_check')}}",
                     data: {id: auth_id},
                     method: 'POST',
                     dataType: 'json',
                     success: function (response) {
-                        console.log(response);
+                        $("#ajax-loading").hide();
                     },
                     error: function(errors) {
                         console.log(errors);
