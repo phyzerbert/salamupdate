@@ -16,6 +16,7 @@ use Auth;
 use PDF;
 use Mail;
 use Excel;
+use DB;
 
 class SupplierController extends Controller
 {
@@ -202,6 +203,7 @@ class SupplierController extends Controller
     public function add_payments_post(Request $request, $id) {
         $supplier = Supplier::find($id);
         $filenames = [];
+        // dd($request->all());
         if($request->file('attachment')) {
             $supplier_company = $supplier->company;
             $date_time = date('Y-m-d-H-i-s');
@@ -218,30 +220,32 @@ class SupplierController extends Controller
             $purchase_id = $request->get('purchase_id')[$index];
             $amount = $request->get('amount')[$index];
             $purchase = Purchase::find($purchase_id);
-            $paid = $purchase->payments()->sum('amount');            
+            $paid = $purchase->payments()->sum('amount');             
             $grand_total = $purchase->grand_total;
             $balance = $grand_total - $paid;
             if($balance <= 0) continue;
-            $payment = new Payment();
-            $payment->timestamp = $request->get('date') . ":00";
-            $payment->reference_no = $request->get('reference_no');
-            $payment->amount = $amount;
-            if(Auth::user()->hasRole('secretary')){
-                $payment->status = 0;
-            }else{
-                $payment->status = 1;
-            }
-            $payment->note = $request->get('note');
-            $payment->paymentable_id = $purchase_id;
-            $payment->paymentable_type = 'App\Models\Purchase';
-            $payment->save();
-            for ($i=0; $i < count($filenames); $i++) { 
-                Image::create([
-                    'imageable_id' => $payment->id,
-                    'imageable_type' => 'App\Models\Payment',
-                    'path' => $filenames[$i],
-                ]);
-            }
+            DB::transaction(function () use($request, $amount, $purchase_id, $filenames) {
+                $payment = new Payment();
+                $payment->timestamp = $request->get('date') . ":00";
+                $payment->reference_no = $request->get('reference_no');
+                $payment->amount = $amount;
+                if(Auth::user()->hasRole('secretary')){
+                    $payment->status = 0;
+                }else{
+                    $payment->status = 1;
+                }
+                $payment->note = $request->get('note');
+                $payment->paymentable_id = $purchase_id;
+                $payment->paymentable_type = 'App\Models\Purchase';
+                $payment->save();
+                for ($i=0; $i < count($filenames); $i++) { 
+                    Image::create([
+                        'imageable_id' => $payment->id,
+                        'imageable_type' => 'App\Models\Payment',
+                        'path' => $filenames[$i],
+                    ]);
+                }
+            });
         }
         return back()->with('success', __('page.added_successfully'));
     }
