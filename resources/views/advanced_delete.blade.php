@@ -35,7 +35,7 @@
                                 <input class="form-control" id="period" type="text" name="date" placeholder="{{__('page.date')}}" autocomplete="off">
                             </div>
                             @php
-                                $suppliers = \App\Models\Supplier::orderBy('name', 'desc')->get();
+                                $suppliers = \App\Models\Supplier::orderBy('name')->get();
                             @endphp
                             <div class="form-group mb-2">
                                 <label class="form-control-label">{{__('page.supplier')}}</label>
