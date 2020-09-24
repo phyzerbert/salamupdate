@@ -62,7 +62,7 @@
                                 <input class="form-control" type="text" name="verification_code" placeholder="{{__('page.input_verification_code')}}">
                             </div>
                             <div class="form-layout-footer mt-3 verify" style="display: none">
-                                <button type="button" class="btn btn-primary"><i class="fa fa-check mr-2"></i> {{__('page.confirm')}}</button>
+                                <button type="button" class="btn btn-primary" id="btn_verify"><i class="fa fa-check mr-2"></i> {{__('page.confirm')}}</button>
                             </div>
                         </form>
                     </div>
