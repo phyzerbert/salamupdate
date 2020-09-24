@@ -15,6 +15,9 @@ use App\Models\Supplier;
 use Carbon\Carbon;
 use DB;
 use Auth;
+use Mail;
+
+use App\Mail\DeleteNotification;
 
 class HomeController extends Controller
 {
