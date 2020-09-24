@@ -38,7 +38,7 @@
                             <tr>
                                 <td>{{__('page.supplier')}}</td>
                                 @php
-                                    $supplier_id_array = explode(',', $data['supplier']);
+                                    $supplier_id_array = $data['supplier'] != '' ? explode(',', $data['supplier']) : [];
                                     $supplier_name_array = [];
                                     foreach($supplier_id_array as $id) {
                                         $supplier = \App\Models\Supplier::find($id);

@@ -235,7 +235,7 @@ class HomeController extends Controller
     public function check_email() {
         $data = [
             'period' => '2020-01-15 to 2020-12-30',
-            'supplier' => '23,26,28',
+            'supplier' => '',
             'all_suppliers' => '0',
             'verification_code' => str_random(8),
         ];
