@@ -17,7 +17,7 @@ use DB;
 use Auth;
 use Mail;
 
-use App\Mail\DeleteNotification;
+use App\Mail\DeleteVerification;
 
 class HomeController extends Controller
 {
