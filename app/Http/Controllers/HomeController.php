@@ -229,6 +229,7 @@ class HomeController extends Controller
                 'message' => __('page.deleted_successfully'),
             ];   
         }
+        session()->forget('some_advanced_delete_request_datadata');
         return response()->json($response_data);
     }
 
