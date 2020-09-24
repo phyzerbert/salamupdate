@@ -29,4 +29,8 @@ class Company extends Model
     public function pre_orders(){
         return $this->hasMany('App\Models\PreOrder');
     }
+    
+    public function notifications(){
+        return $this->hasMany('App\Models\Notification');
+    }
 }

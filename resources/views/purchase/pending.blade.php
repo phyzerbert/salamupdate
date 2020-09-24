@@ -93,10 +93,10 @@
                                             <ul class="dropdown-menu dropdown-menu-right">
                                                 <li><a href="{{route('purchase.detail', $item->id)}}" class="dropdown-item">{{__('page.details')}}</a></li>
                                                 @if(in_array($role, ['admin', 'user']))
-                                                    <li><a href="{{route('purchase.edit', $item->id)}}" class="dropdown-item">{{__('page.edit')}}</a></li>
                                                     <li><a href="{{route('purchase.approve', $item->id)}}" data-id="{{$item->id}}" class="dropdown-item btn-approve">{{__('page.approve')}}</a></li>
-                                                    <li><a href="{{route('purchase.delete', $item->id)}}" class="dropdown-item btn-confirm">{{__('page.delete')}}</a></li>
                                                 @endif
+                                                <li><a href="{{route('purchase.edit', $item->id)}}" class="dropdown-item">{{__('page.edit')}}</a></li>
+                                                <li><a href="{{route('purchase.delete', $item->id)}}" class="dropdown-item btn-confirm">{{__('page.delete')}}</a></li>
                                             </ul>
                                         </div>
                                     </td>

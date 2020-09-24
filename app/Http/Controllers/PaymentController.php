@@ -8,6 +8,7 @@ use App\Models\Purchase;
 use App\Models\Sale;
 use App\Models\Company;
 use App\Models\Image;
+use App\Models\Notification;
 
 use Auth;
 
@@ -135,10 +136,24 @@ class PaymentController extends Controller
 
     public function delete($id){
         $item = Payment::find($id);
+        if($item->status && Auth::user()->hasRole('secretary')) {
+            return back()->withErrors(['role_error' => __('page.not_allowed_page')]);
+        }
         if(!$item){
             return back()->withErrors(["delete" => __('page.something_went_wrong')]);
         }
         $item->delete();
+        if($item->status == 0 && Auth::user()->hasRole('admin')) {
+            $notification = Notification::create([
+                'company_id' => $item->paymentable->company_id,
+                'reference_no' => $item->reference_no,
+                'message' => 'payment_rejected',
+                'supplier' => $item->paymentable->supplier->name ?? '',
+                'amount' => $item->amount,
+                'notifiable_id' => $item->id,
+                'notifiable_type' => 'App\Models\Payment',
+            ]);
+        }
         return back()->with("success", __('page.deleted_successfully'));
     }
 
@@ -148,6 +163,15 @@ class PaymentController extends Controller
             return back()->withErrors(["delete" => __('page.something_went_wrong')]);
         }
         $item->update(['status' => 1]);
+        $notification = Notification::create([
+            'company_id' => $item->paymentable->company_id,
+            'reference_no' => $item->reference_no,
+            'message' => 'payment_approved',
+            'supplier' => $item->paymentable->supplier->name ?? '',
+            'amount' => $item->amount,
+            'notifiable_id' => $item->id,
+            'notifiable_type' => 'App\Models\Payment',
+        ]);
         return back()->with("success", __('page.approved_successfully'));
     }
 

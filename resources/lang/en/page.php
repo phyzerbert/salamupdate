@@ -323,4 +323,27 @@ return [
     'edit_return' => 'Edit Return',
     'return_list' => 'Return List',
     'return_report' => 'Return Report',
+    
+
+    'password_rule' => 'Password must contain at least one uppercase, one lowercase, one special character.',
+    'same_password' => 'The new password must be different with old password.',
+    'please_change_your_password' => 'Please change your password.',
+
+    'notification' => 'Notification',
+    'message' => 'Message',
+    'time' => 'Time',
+    'view_all_notifications' => 'View all notifications',
+    'purchase_approved' => 'A purchase has been approved.',
+    'payment_approved' => 'A payment has been approved.',
+    'purchase_rejected' => 'A purchase has been rejected.',
+    'payment_rejected' => 'A payment has been rejected.',
+    'advanced_delete' => 'Advanced Delete',
+    'all_suppliers' => 'All Suppliers',
+    'request' => 'Request',
+    'verification_code' => 'Verification Code',
+    'input_verification_code' => 'Please check your email and then enter the verification code.',
+    'confirm' => 'Confirm',
+    'invalid_email_address' => 'Invalid Email Address',
+    'delete_verification_greeting' => 'Hello, Please verify with code.',
+    'your_requested_data' => 'Your Requested Data',
 ];

@@ -10,6 +10,7 @@ use App\Models\Sale;
 use App\Models\Order;
 use App\Models\Payment;
 use App\Models\Preturn;
+use App\Models\Supplier;
 
 use Carbon\Carbon;
 use DB;
@@ -179,6 +180,63 @@ class HomeController extends Controller
         if($pagesize == '') $pagesize = 100000;
         $request->session()->put('pagesize', $pagesize);
         return back();
+    }
+
+    public function advanced_delete_request(Request $request) {
+        $request_data = $request->all();
+        $request_data['verification_code'] = str_random(8);
+        session(['advanced_delete_request_data' => $request_data]);
+        if (filter_var(Auth::user()->email, FILTER_VALIDATE_EMAIL)) {
+            $to_email = Auth::user()->email;
+            Mail::to($to_email)->send(new DeleteVerification($request_data, 'Advanced Delete Verification'));
+        } else {
+            return response()->json(['status' => 400, 'message' => __('page.invalid_email')]);
+        }
+        $data = [
+            'status' => 200,
+            'data' => $request->all(),
+        ];
+        return response()->json($data);
+    }
+
+    public function advanced_delete_verify(Request $request) {
+        $request_data = session(['advanced_delete_request_data']);
+        $verification_code = $request->get('verification_code');
+        if($verification_code != $request_data['verification_code']) {
+            $response_data = ['status' => 400, 'message' => __('page.incorrect_verificaiton_code')];
+        } else {
+            $mod = new Purchase();
+            if($request_data['period'] != '') {
+                $period = $request_data['period'];
+                $from = substr($period, 0, 10);
+                $to = substr($period, 14, 10);
+                $mod = $mod->whereBetween('timestamp', [$from, $to]);
+            }
+            if($request_data['supplier'] != '' && $request_data['all_suppliers'] == 0) {
+                $supplier_array = explode(',', $request_data['supplier']);
+                $mod = $mod->whereIn('supplier_id', $supplier_array);
+            }
+            $purchases = $omd->get();
+            $purchase_array = $purchases->pluck('id')->toArray();
+            Order::whereIn('orderable_id', $purchase_array)->where('orderable_type', 'App\Models\Purchase')->delete();
+            Payment::whereIn('paymentable_id', $purchase_array)->where('paymentable_type', 'App\Models\Purchase')->delete();
+            $purchases->delete();
+            $response_data = [
+                'status' => 200,
+                'message' => __('page.deleted_successfully'),
+            ];   
+        }
+        return response()->json($response_data);
+    }
+
+    public function check_email() {
+        $data = [
+            'period' => '2020-01-15 to 2020-12-30',
+            'supplier' => '23,26,28',
+            'all_suppliers' => '0',
+            'verification_code' => str_random(8),
+        ];
+        return view('email.delete_verification', compact('data'));
     }
 
 }

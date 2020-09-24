@@ -4,7 +4,7 @@
         <meta charset="utf-8" />
         <title>{{config("app.name")}} - Multi Store Management System</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta content="A fully featured Multi Store Management System for Colomnia" name="description" />
+        <meta content="A fully featured Multi Store Management System for Colombia" name="description" />
         <meta content="Yuyuan Zhang" name="author" />
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -83,6 +83,10 @@
         <script src="{{asset('master/plugins/moment/moment.min.js')}}"></script>
         <script src="{{asset('master/plugins/imageviewer/js/jquery.verySimpleImageViewer.min.js')}}"></script>
         <script src="{{asset('master/plugins/sweetalert2/sweetalert2.min.js')}}"></script>
+        {{-- <script src="//js.pusher.com/3.1/pusher.min.js"></script>
+        <script src="{{asset('js/notification.js')}}"></script> --}}
+
+
         @if(!Auth::user()->hasRole('buyer'))
             <script src="{{ asset('js/app.js') }}"></script>
         @endif

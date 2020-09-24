@@ -59,9 +59,7 @@
                                 <th>{{__('page.supplier')}} / {{__('page.customer')}}</th>
                                 <th>{{__('page.amount')}}</th>
                                 <th>{{__('page.note')}}</th>
-                                @if(in_array($role, ['admin', 'user']))
-                                    <th>{{__('page.action')}}</th>
-                                @endif
+                                <th>{{__('page.action')}}</th>
                             </tr>
                         </thead>
                         <tbody> 
@@ -102,20 +100,18 @@
                                     </td>
                                     <td class="amount" data-value="{{$item->amount}}"> {{number_format($item->amount)}} </td>
                                     <td class="note"> {{$item->note}} </td>
-                                    @if(in_array($role, ['admin', 'user']))
-                                        <td class="text-center py-2">
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-sm btn-info dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    {{__('page.action')}}
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-right">
-                                                    <li><a href="javascript:;" data-id="{{$item->id}}" class="dropdown-item btn-edit">{{__('page.edit')}}</a></li>
-                                                <li><a href="{{route('payment.approve', $item->id)}}" data-id="{{$item->id}}" data-path="{{$image_path}}" data-images="{{$item->images}}" class="dropdown-item btn-approve">{{__('page.approve')}}</a></li>
-                                                    <li><a href="{{route('payment.delete', $item->id)}}" class="dropdown-item btn-confirm">{{__('page.delete')}}</a></li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    @endif
+                                    <td class="text-center py-2">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-info dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{__('page.action')}}</button>
+                                            <ul class="dropdown-menu dropdown-menu-right">
+                                                @if(in_array($role, ['admin', 'user']))
+                                                    <li><a href="{{route('payment.approve', $item->id)}}" data-id="{{$item->id}}" data-path="{{$image_path}}" data-images="{{$item->images}}" class="dropdown-item btn-approve">{{__('page.approve')}}</a></li>
+                                                @endif
+                                                <li><a href="javascript:;" data-id="{{$item->id}}" class="dropdown-item btn-edit">{{__('page.edit')}}</a></li>
+                                                <li><a href="{{route('payment.delete', $item->id)}}" class="dropdown-item btn-confirm">{{__('page.delete')}}</a></li>
+                                            </ul>
+                                        </div>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

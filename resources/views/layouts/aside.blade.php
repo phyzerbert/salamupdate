@@ -58,30 +58,30 @@
                                 @endif
                             </ul>
                         </li>
-                        @php
-                            if($user->company){
-                                $number_of_pending_purchases = $user->company->purchases()->where('status', 0)->count();
-                                $number_of_pending_payments = $user->company->purchases()->where('status', 0)->count();
-                            }else{                                
-                                $number_of_pending_purchases = \App\Models\Purchase::where('status', 0)->count();
-                                $number_of_pending_payments = \App\Models\Payment::where('status', 0)->count();
-                            }
-                        @endphp
-                        <li class="@if($page == 'pending_purchases') active @endif">
-                            <a href="{{route('purchase.pending_purchases')}}" 
-                                class="waves-effect @if($page == 'pending_purchases') active @endif @if($number_of_pending_purchases > 0) text-danger @endif"
-                            >
-                                <i class="fa fa-filter"></i><span> {{__('page.pending_purchases')}} </span>
-                            </a>
-                        </li>
-                        <li class="@if($page == 'pending_payments') active @endif">
-                            <a href="{{route('payment.pending_payments')}}" 
-                                class="waves-effect @if($page == 'pending_payments') active @endif @if($number_of_pending_payments > 0) text-danger @endif"
-                            >
-                                <i class="fa fa-flask"></i><span> {{__('page.pending_payments')}} </span>
-                            </a>
-                        </li>
                     @endif
+                    @php
+                        if($user->company){
+                            $number_of_pending_purchases = $user->company->purchases()->where('status', 0)->count();
+                            $number_of_pending_payments = $user->company->purchases()->where('status', 0)->count();
+                        }else{                                
+                            $number_of_pending_purchases = \App\Models\Purchase::where('status', 0)->count();
+                            $number_of_pending_payments = \App\Models\Payment::where('status', 0)->count();
+                        }
+                    @endphp
+                    <li class="@if($page == 'pending_purchases') active @endif">
+                        <a href="{{route('purchase.pending_purchases')}}" 
+                            class="waves-effect @if($page == 'pending_purchases') active @endif @if($number_of_pending_purchases > 0) text-danger @endif"
+                        >
+                            <i class="fa fa-filter"></i><span> {{__('page.pending_purchases')}} </span>
+                        </a>
+                    </li>
+                    <li class="@if($page == 'pending_payments') active @endif">
+                        <a href="{{route('payment.pending_payments')}}" 
+                            class="waves-effect @if($page == 'pending_payments') active @endif @if($number_of_pending_payments > 0) text-danger @endif"
+                        >
+                            <i class="fa fa-flask"></i><span> {{__('page.pending_payments')}} </span>
+                        </a>
+                    </li>
                     <li class="@if($page == 'product') active @endif">
                         <a href="{{route('product.index')}}" class="waves-effect @if($page == 'product') active @endif"><i class="fa fa-cube"></i><span> {{__('page.product')}} </span></a>
                     </li>
@@ -182,6 +182,11 @@
                 <li class="@if($page == 'concurrent_payments') active @endif">
                     <a href="{{route('concurrent_payments')}}" class="waves-effect @if($page == 'concurrent_payments') active @endif"><i class="fa fa-cube"></i><span> {{__('page.concurrent_payments')}} </span></a>
                 </li>
+                @if ($role == 'admin')
+                    <li class="@if($page == 'advanced_delete') active @endif">
+                        <a href="{{route('advanced_delete')}}" class="waves-effect @if($page == 'advanced_delete') active @endif"><i class="fa fa-trash-o"></i><span> {{__('page.advanced_delete')}} </span></a>
+                    </li>
+                @endif
             </ul>
             <div class="clearfix"></div>
         </div>

@@ -38,6 +38,15 @@
                                     </span>
                                 @enderror
                             </div>
+                            <div class="form-group my-3">
+                                <label class="form-control-label">{{__('page.email')}}: <span class="text-danger">*</span></label>
+                                <input class="form-control" type="email" name="email" value="{{$user->email}}" placeholder="{{__('page.email')}}" required>
+                                @error('email')
+                                    <span class="invalid-feedback d-block" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
                             <div class="form-group mb-2">
                                 <label class="form-control-label">{{__('page.first_name')}}: <span class="text-danger">*</span></label>
                                 <input class="form-control" type="text" name="first_name" value="{{$user->first_name}}" placeholder="{{__('page.first_name')}}" required>
@@ -87,7 +96,8 @@
                             </div> 
                             <div class="form-group mb-2">
                                 <label class="form-control-label">{{__('page.password')}}: <span class="text-danger">*</span></label>
-                                <input class="form-control" type="password" name="password" placeholder="Password">
+                                <input class="form-control" type="password" name="password" placeholder="{{__('page.password')}}">
+                                <p class="my-1 font-weight-bold text-danger">{{__('page.password_rule')}}</p>
                             </div>
                             <div class="form-group mb-2">
                                 <label class="form-control-label">{{__('page.confirm_password')}}: <span class="text-danger">*</span></label>

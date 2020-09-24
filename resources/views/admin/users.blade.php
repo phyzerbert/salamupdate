@@ -63,7 +63,7 @@
                                     <td class="role" data-id="{{$item->role_id}}">{{$item->role->name}}</td>
                                     <td class="ip_address">{{$item->ip_address}}</td>
                                     <td class="py-1">
-                                        <a href="#" class="btn btn-sm btn-primary btn-icon mr-1 btn-edit" data-id="{{$item->id}}"><div><i class="fa fa-edit"></i></div></a>
+                                        <a href="javascript:;" class="btn btn-sm btn-primary btn-icon mr-1 btn-edit" data-id="{{$item->id}}"><div><i class="fa fa-edit"></i></div></a>
                                         <a href="{{route('user.delete', $item->id)}}" class="btn btn-sm btn-danger btn-icon mr-1 btn-confirm"><div><i class="fa fa-trash-o"></i></div></a>
                                     </td>
                                 </tr>
@@ -351,7 +351,7 @@
                             window.location.reload();
                         })
                     }
-                    else if(data.message == 'The given data was invalid.') {
+                    else if(data.message) {
                         Swal.fire(data.message)
                     }
                     $("#ajax-loading").hide();

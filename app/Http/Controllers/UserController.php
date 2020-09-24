@@ -59,19 +59,34 @@ class UserController extends Controller
     }
 
     public function updateuser(Request $request){
-        $request->validate([
+        $validation_rules = [
             'name'=>'required',
             'phone_number'=>'required',
-            'password' => 'confirmed',
-        ]);
+        ];
+        if($request->get('password') != '') {
+            $validation_rules['password'] = [
+                'confirmed',
+                'string',
+                'min:8',             // must be at least 10 characters in length
+                'regex:/[a-z]/',      // must contain at least one lowercase letter
+                'regex:/[A-Z]/',      // must contain at least one uppercase letter
+                'regex:/[@$!%*#?&]/', // must contain a special character
+            ];
+        }
+        $request->validate($validation_rules);
         $user = Auth::user();
         $user->name = $request->get("name");
+        $user->email = $request->get("email");
         $user->phone_number = $request->get("phone_number");
         $user->first_name = $request->get("first_name");
         $user->last_name = $request->get("last_name");
 
-        if($request->get('password') != ''){
+        if($request->get('password') != '') {
+            if(Hash::check($request->get('password'), $user->password)) {
+                return back()->withErrors(['password' => __('page.same_password')]);
+            }
             $user->password = Hash::make($request->get('password'));
+            $user->password_updated_at = date('Y-m-d H:i:s');
         }
         if($request->has("picture")){
             $picture = request()->file('picture');
@@ -85,14 +100,24 @@ class UserController extends Controller
 
     public function edituser(Request $request){
         $user = User::find($request->get("id"));
-        $validate_array = array(
+        $validation_rules = [
             'name'=>'required',
             'phone_number'=>'required',
-            'password' => 'confirmed',
-        );
-        $request->validate($validate_array);
+        ];
+        if($request->get('password') != '') {
+            $validation_rules['password'] = [
+                'confirmed',
+                'string',
+                'min:8',             // must be at least 10 characters in length
+                'regex:/[a-z]/',      // must contain at least one lowercase letter
+                'regex:/[A-Z]/',      // must contain at least one uppercase letter
+                'regex:/[@$!%*#?&]/', // must contain a special character
+            ];
+        }
+        $request->validate($validation_rules);
         
         $user->name = $request->get("name");
+        $user->email = $request->get("email");
         $user->first_name = $request->get("first_name");
         $user->last_name = $request->get("last_name");
         $user->phone_number = $request->get("phone_number");
@@ -100,7 +125,11 @@ class UserController extends Controller
         $user->ip_address = $request->get("ip_address");
 
         if($request->get('password') != ''){
+            if(Hash::check($request->get('password'), $user->password)) {
+                return response()->json(['message' => __('page.same_password')]);
+            }
             $user->password = Hash::make($request->get('password'));
+            $user->password_updated_at = date('Y-m-d H:i:s');
         }
         $user->save();
         return response()->json('success');
@@ -111,7 +140,15 @@ class UserController extends Controller
             'name'=>'required|string|unique:users',
             'role'=>'required',
             'phone_number'=>'required',
-            'password'=>'required|string|min:6|confirmed'
+            'password'=> [
+                'required',
+                'confirmed',
+                'string',
+                'min:8',             // must be at least 10 characters in length
+                'regex:/[a-z]/',      // must contain at least one lowercase letter
+                'regex:/[A-Z]/',      // must contain at least one uppercase letter
+                'regex:/[@$!%*#?&]/', // must contain a special character
+            ],
         );
         if($request->get('role') == '2' || $request->get('role') == '4'){
             $validate_array['company_id'] = 'required';
@@ -121,6 +158,7 @@ class UserController extends Controller
         
         User::create([
             'name' => $request->get('name'),
+            'email' => $request->get('email'),
             'phone_number' => $request->get('phone_number'),
             'company_id' => $request->get('company_id'),
             'role_id' => $request->get('role'),

@@ -13,9 +13,11 @@ use App\Models\Company;
 use App\Models\Store;
 use App\Models\StoreProduct;
 use App\Models\Image;
+use App\Models\Notification;
 
 use App\Mail\ReportMail;
 use App\Exports\PurchaseExport;
+use App\Events\SendNotification;
 
 use Auth;
 use Excel;
@@ -208,12 +210,15 @@ class PurchaseController extends Controller
 
     public function edit(Request $request, $id){    
         config(['site.page' => 'purchase']); 
+        $purchase = Purchase::find($id);
         $user = Auth::user(); 
         $allowed = ['user', 'admin'];
+        if($purchase->status == 0) {
+            array_push($allowed, 'secretary');
+        }
         if(!in_array($user->role->slug, $allowed)){
             return back()->withErrors(['role_error' => __('page.not_allowed_page')]);
-        }  
-        $purchase = Purchase::find($id);        
+        }
         $suppliers = Supplier::all();
         $products = Product::all();
         $stores = Store::all();
@@ -363,18 +368,32 @@ class PurchaseController extends Controller
     }
 
     public function delete($id){
+        $item = Purchase::find($id);
         $user = Auth::user();
         $allowed = ['user', 'admin'];
+        if($item->status == 0) {
+            array_push($allowed, 'secretary');
+        }
         if(!in_array($user->role->slug, $allowed)){
             return back()->withErrors(['role_error' => __('page.not_allowed_page')]);
         }
-        $item = Purchase::find($id);
         if(!$item){
             return back()->withErrors(["delete" => __('page.something_went_wrong')]);
         }
         $item->orders()->delete();
         $item->payments()->delete();
         $item->delete();
+        if($item->status == 0 && Auth::user()->hasRole('admin')) {
+            $notification = Notification::create([
+                'company_id' => $item->company_id,
+                'reference_no' => $item->reference_no,
+                'message' => 'purchase_rejected',
+                'supplier' => $item->supplier->name ?? '',
+                'amount' => $item->grand_total,
+                'notifiable_id' => $item->id,
+                'notifiable_type' => 'App\Models\Purchase',
+            ]);
+        }
         return back()->with("success", __('page.deleted_successfully'));
     }
 
@@ -452,6 +471,16 @@ class PurchaseController extends Controller
 
         $item = Purchase::find($id);
         $item->update(['status' => 1]);
+        $notification = Notification::create([
+            'company_id' => $item->company_id,
+            'reference_no' => $item->reference_no,
+            'message' => 'purchase_approved',
+            'supplier' => $item->supplier->name ?? '',
+            'amount' => $item->grand_total,
+            'notifiable_id' => $item->id,
+            'notifiable_type' => 'App\Models\Purchase',
+        ]);
+        // event(new SendNotification($notification));
         return back()->with("success", __('page.approved_successfully'));
     }
 
