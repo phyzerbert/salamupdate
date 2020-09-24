@@ -219,7 +219,7 @@ class HomeController extends Controller
                 $supplier_array = explode(',', $request_data['supplier']);
                 $mod = $mod->whereIn('supplier_id', $supplier_array);
             }
-            $purchases = $omd->get();
+            $purchases = $mod->get();
             $purchase_array = $purchases->pluck('id')->toArray();
             Order::whereIn('orderable_id', $purchase_array)->where('orderable_type', 'App\Models\Purchase')->delete();
             Payment::whereIn('paymentable_id', $purchase_array)->where('paymentable_type', 'App\Models\Purchase')->delete();
