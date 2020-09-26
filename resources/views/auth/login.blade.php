@@ -52,7 +52,7 @@
                         <div class="col-12">
                             <div class="checkbox checkbox-primary">
                                 <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                                <label for="checkbox-signup">
+                                <label for="remember">
                                     {{ __('page.remember_me') }}
                                 </label>
                             </div>                            
