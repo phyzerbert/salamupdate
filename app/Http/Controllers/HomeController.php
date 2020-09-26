@@ -223,7 +223,7 @@ class HomeController extends Controller
             $purchase_array = $purchases->pluck('id')->toArray();
             Order::whereIn('orderable_id', $purchase_array)->where('orderable_type', 'App\Models\Purchase')->delete();
             Payment::whereIn('paymentable_id', $purchase_array)->where('paymentable_type', 'App\Models\Purchase')->delete();
-            $purchases->delete();
+            $mod->delete();
             $response_data = [
                 'status' => 200,
                 'message' => __('page.deleted_successfully'),
