@@ -325,6 +325,9 @@ return [
     'password_rule' => 'La contraseña debe contener al menos una mayúscula, una minúscula y un carácter especial.',
     'same_password' => 'La nueva contraseña debe ser diferente a la anterior.',
     'please_change_your_password' => 'Cambie su contraseña.',
+    'password_expired' => 'Su contraseña ha caducado, cámbiela.',
+    'reset_password' => 'Restablecer la contraseña',
+    'current_password' => 'Contraseña actual',
 
     'notification' => 'Notificación',
     'view_all_notifications' => 'Ver todas las notificaciones',

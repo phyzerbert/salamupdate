@@ -16,12 +16,14 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+Route::get('password/expired', 'Auth\ExpiredPasswordController@expired')->name('password.expired');
+Route::post('password/post_expired', 'Auth\ExpiredPasswordController@postExpired')->name('password.post_expired');
 
 Route::get('lang/{locale}', 'VerifyController@lang')->name('lang');
 Route::get('/verify', 'VerifyController@show')->name('verify');
 Route::post('/verify', 'VerifyController@verify')->name('verify');
 
-Route::any('/home', 'HomeController@index')->name('home');
+Route::any('/home', 'HomeController@index')->name('home')->middleware('password_expired');
 
 Route::get('/profile', 'UserController@profile')->name('profile');
 Route::post('/updateuser', 'UserController@updateuser')->name('updateuser');
@@ -82,9 +84,9 @@ Route::post('/product/update', 'ProductController@update')->name('product.update
 Route::get('/product/detail/{id}', 'ProductController@detail')->name('product.detail');
 Route::get('/product/delete/{id}', 'ProductController@delete')->name('product.delete');
 
-Route::any('/purchase/index', 'PurchaseController@index')->name('purchase.index');
+Route::any('/purchase/index', 'PurchaseController@index')->name('purchase.index')->middleware('password_expired');
 Route::any('/purchase/pending_purchases', 'PurchaseController@pending_purchases')->name('purchase.pending_purchases');
-Route::get('/purchase/create', 'PurchaseController@create')->name('purchase.create');
+Route::get('/purchase/create', 'PurchaseController@create')->name('purchase.create')->middleware('password_expired');
 Route::post('/purchase/save', 'PurchaseController@save')->name('purchase.save');
 Route::get('/purchase/edit/{id}', 'PurchaseController@edit')->name('purchase.edit');
 Route::post('/purchase/update', 'PurchaseController@update')->name('purchase.update');

@@ -328,6 +328,9 @@ return [
     'password_rule' => 'Password must contain at least one uppercase, one lowercase, one special character.',
     'same_password' => 'The new password must be different with old password.',
     'please_change_your_password' => 'Please change your password.',
+    'password_expired' => 'Your password has expired, please change it.',
+    'reset_password' => 'Reset Password',
+    'current_password' => 'Current Password',
 
     'notification' => 'Notification',
     'message' => 'Message',

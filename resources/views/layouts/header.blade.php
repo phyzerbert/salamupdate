@@ -13,29 +13,6 @@
                             <i class="fa fa-bars"></i>
                         </a>
                     </div>
-                    {{-- Check last password updated date --}}
-                    @php
-                        $password_change_flag = 0;
-                        if(Auth::user()->password_updated_at) {
-                            $password_updated_at = new \Carbon\Carbon(Auth::user()->password_updated_at);
-                            $now = \Carbon\Carbon::now();
-                            $difference = $password_updated_at->diff($now)->days;
-                            if($difference >= 30) {
-                                $password_change_flag = 1;
-                            }
-                        } else {
-                            $password_change_flag = 1;
-                        }
-                    @endphp
-                    @if ($password_change_flag)
-                        <div class="pl-md-3 flex-grow-1 text-center">
-                            <div class="alert alert-danger mb-0 mt-3 py-2 alert-dismissible">
-                                <button type="button" class="close py-2" data-dismiss="alert">&times;</button>
-                                {{__('page.please_change_your_password')}}
-                            </div>
-                        </div>
-                    @endif
-                    
                 </div>
     
                 <ul class="nav navbar-right float-right list-inline">
