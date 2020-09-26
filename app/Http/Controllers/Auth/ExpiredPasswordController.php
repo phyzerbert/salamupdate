@@ -28,6 +28,6 @@ class ExpiredPasswordController extends Controller
             'password' => bcrypt($request->password),
             'password_updated_at' => Carbon::now()->toDateTimeString()
         ]);
-        return redirect()->back()->with(['status' => 'Password changed successfully']);
+        return redirect(route('home'))->with(['status' => 'Password changed successfully']);
     }
 }
