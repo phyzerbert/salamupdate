@@ -45,21 +45,13 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="form-group mt-3">
-                                <div class="checkbox checkbox-primary">
-                                    <input type="checkbox" name="all_suppliers" id="all_suppliers">
-                                    <label for="all_suppliers">
-                                        {{ __('page.all_suppliers') }}
-                                    </label>
-                                </div>
-                            </div>
                             
                             <div class="form-layout-footer mt-3">
                                 <button type="submit" class="btn btn-primary" id="btn_request"><i class="fa fa-paper-plane mr-2"></i> {{__('page.request')}}</button>
                             </div>
                             <div class="form-group mt-3 verify" style="display: none">
                                 <label class="form-control-label">{{__('page.verification_code')}}</label>
-                                <input class="form-control" type="text" name="verification_code" placeholder="{{__('page.input_verification_code')}}">
+                                <input class="form-control" type="text" name="verification_code" id="verification_code" placeholder="{{__('page.input_verification_code')}}">
                             </div>
                             <div class="form-layout-footer mt-3 verify" style="display: none">
                                 <button type="button" class="btn btn-primary" id="btn_verify"><i class="fa fa-check mr-2"></i> {{__('page.confirm')}}</button>
@@ -96,7 +88,6 @@
             let request_data = {
                 period: $("#period").val(),
                 supplier: $("#search_supplier").val().toString(),
-                all_suppliers: $("#all_suppliers").is(":checked") ? 1 : 0,
             };
             $.ajax({
                 url: "{{route('advanced_delete.request')}}",

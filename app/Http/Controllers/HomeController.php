@@ -197,13 +197,13 @@ class HomeController extends Controller
         }
         $data = [
             'status' => 200,
-            'data' => $request->all(),
+            'data' => $request_data,
         ];
         return response()->json($data);
     }
 
     public function advanced_delete_verify(Request $request) {
-        $request_data = session(['advanced_delete_request_data']);
+        $request_data = session('advanced_delete_request_data');
         $verification_code = $request->get('verification_code');
         if($verification_code != $request_data['verification_code']) {
             $response_data = ['status' => 400, 'message' => __('page.incorrect_verificaiton_code')];
@@ -215,21 +215,22 @@ class HomeController extends Controller
                 $to = substr($period, 14, 10);
                 $mod = $mod->whereBetween('timestamp', [$from, $to]);
             }
-            if($request_data['supplier'] != '' && $request_data['all_suppliers'] == 0) {
+            if($request_data['supplier'] != '') {
                 $supplier_array = explode(',', $request_data['supplier']);
                 $mod = $mod->whereIn('supplier_id', $supplier_array);
             }
             $purchases = $mod->get();
             $purchase_array = $purchases->pluck('id')->toArray();
-            // Order::whereIn('orderable_id', $purchase_array)->where('orderable_type', 'App\Models\Purchase')->delete();
-            // Payment::whereIn('paymentable_id', $purchase_array)->where('paymentable_type', 'App\Models\Purchase')->delete();
-            // $mod->delete();
+            Order::whereIn('orderable_id', $purchase_array)->where('orderable_type', 'App\Models\Purchase')->delete();
+            Payment::whereIn('paymentable_id', $purchase_array)->where('paymentable_type', 'App\Models\Purchase')->delete();
+            $mod->delete();
             $response_data = [
                 'status' => 200,
+                'data' => $purchases,
                 'message' => __('page.deleted_successfully'),
             ];   
         }
-        session()->forget('some_advanced_delete_request_datadata');
+        session()->forget('advanced_delete_request_data');
         return response()->json($response_data);
     }
 
@@ -237,7 +238,6 @@ class HomeController extends Controller
         $data = [
             'period' => '2020-01-15 to 2020-12-30',
             'supplier' => '',
-            'all_suppliers' => '0',
             'verification_code' => str_random(8),
         ];
         return view('email.delete_verification', compact('data'));

@@ -197,7 +197,7 @@ Route::get('/image_migrate', 'VueController@image_migrate')->name('image_migrate
 Route::get('/image/delete/{id}', 'PurchaseController@image_delete')->name('purchase.image.delete');
 Route::get('/notifications', 'NotificationController@index')->name('notification.index');
 
-Route::get('/advanced_delete', function(){return view('advanced_delete');})->name('advanced_delete');
+Route::get('/advanced_delete', function(){return view('advanced_delete');})->name('advanced_delete')->middleware('auth');
 Route::post('/advanced_delete/request', 'HomeController@advanced_delete_request')->name('advanced_delete.request');
 Route::post('/advanced_delete/verify', 'HomeController@advanced_delete_verify')->name('advanced_delete.verify');
 Route::get('check_email', 'HomeController@check_email');
