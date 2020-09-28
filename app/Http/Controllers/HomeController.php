@@ -193,7 +193,7 @@ class HomeController extends Controller
             $to_email = Auth::user()->email;
             Mail::to($to_email)->send(new DeleteVerification($request_data, 'Advanced Delete Verification'));
         } else {
-            return response()->json(['status' => 400, 'message' => __('page.invalid_email')]);
+            return response()->json(['status' => 400, 'message' => __('page.invalid_email_address')]);
         }
         $data = [
             'status' => 200,
