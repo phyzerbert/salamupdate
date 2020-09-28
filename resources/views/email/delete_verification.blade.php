@@ -45,13 +45,11 @@
                                         array_push($supplier_name_array, $supplier->name);
                                     }
                                 @endphp
-                                <td>{{implode(", ", $supplier_name_array)}}</td>
-                            </tr>
-                            <tr>
-                                <td>{{__('page.all_suppliers')}}</td>
                                 <td>
-                                    @if ($data['all_suppliers'] == 1)
-                                        {{__('page.yes')}}
+                                    @if ()
+                                        {{implode(", ", $supplier_name_array)}}
+                                    @else
+                                        {{__('page.all_suppliers')}}
                                     @endif
                                 </td>
                             </tr>
