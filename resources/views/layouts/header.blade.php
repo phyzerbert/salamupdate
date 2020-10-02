@@ -44,7 +44,7 @@
                     @php
                         if (Auth::user()->hasRole('user') || Auth::user()->hasRole('secretary')) {
                             $notification_count = Auth::user()->company->notifications()->count();
-                            $notifications = Auth::user()->company->notifications()->orderBy('created_at', 'desc')->get()->take(10);
+                            $notifications = Auth::user()->company->notifications()->orderBy('created_at', 'desc')->get()->take(5);
                         } else {
                             $notification_count = \App\Models\Notification::count();
                             $notifications = \App\Models\Notification::orderBy('created_at', 'desc')->get()->take(10);
