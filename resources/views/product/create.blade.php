@@ -20,7 +20,7 @@
                 $role = Auth::user()->role->slug;
             @endphp
             <div class="card card-body p-lg-5">
-                <form class="form-layout form-layout-1" action="{{route('product.save')}}" method="POST" enctype="multipart/form-data">
+                <form class="form-layout form-layout-1" id="form_create_product" action="{{route('product.save')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="row my-3">
                         <div class="col-lg-4 col-md-6 mt-3">

@@ -31,7 +31,7 @@
                 $role = Auth::user()->role->slug;
             @endphp
             <div class="card card-body card-fill p-md-5" id="page">
-                <form class="form-layout form-layout-1" action="{{route('purchase.save')}}" method="POST" enctype="multipart/form-data">
+                <form class="form-layout form-layout-1" id="form_create_purchase" action="{{route('purchase.save')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="row mb-3">
                         <div class="col-lg-4 col-md-6 mb-3">
@@ -298,7 +298,7 @@
             $("#addSupplierModal").modal();
         });
 
-        $(".btn-submit").click(function () {
+        $("#form_create_purchase").submit(function () {
             $("#ajax-loading").show();
         });
 
