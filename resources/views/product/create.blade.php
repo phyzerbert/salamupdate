@@ -141,7 +141,7 @@
                             <div class="form-group">
                                 <label class="form-control-label">{{__('page.supplier')}}:</label>
                                 <select class="form-control select2-show-search" name="supplier_id" id="product_supplier" data-placeholder="{{__('page.product_supplier')}}">
-                                    <option>{{__('page.product_supplier')}}</option>
+                                    <option value=""></option>
                                     @foreach ($suppliers as $item)
                                         <option value="{{$item->id}}">{{$item->name}}</option>
                                     @endforeach                                    
@@ -187,6 +187,7 @@
         $('#product_supplier').wrap('<div class="position-relative"></div>')
                     .select2({
                         width: 'resolve',
+                        placeholder: "{{__('page.product_supplier')}}",
                     });
     });
 </script>
