@@ -46,7 +46,7 @@
                                     }
                                 @endphp
                                 <td>
-                                    @if ()
+                                    @if (count($supplier_name_array))
                                         {{implode(", ", $supplier_name_array)}}
                                     @else
                                         {{__('page.all_suppliers')}}
