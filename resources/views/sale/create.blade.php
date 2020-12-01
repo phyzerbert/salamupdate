@@ -184,7 +184,7 @@
             fileButtonClass: 'action btn bg-primary text-white'
         });
         
-        $("#form_create_sale").click(function () {
+        $("#form_create_sale").submit(function () {
             $("#ajax-loading").show();
         });    
     });
